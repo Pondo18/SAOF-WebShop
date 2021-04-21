@@ -1,10 +1,14 @@
 package de.hdbw.webshop.model.auth;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
-import java.util.Optional;
 
 @Entity
 @Table(name = "user_role")
+@Data
+@NoArgsConstructor
 public class UserRoleEntity {
 
     @Id
@@ -22,9 +26,5 @@ public class UserRoleEntity {
     public UserRoleEntity(UserEntity user, RolesEntity role) {
         this.user = user;
         this.role = role;
-    }
-
-    public UserRoleEntity(UserEntity userEntity, Optional<RolesEntity> rolesEntity) {
-
     }
 }
