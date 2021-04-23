@@ -1,76 +1,40 @@
 package de.hdbw.webshop.dto;
 
-import java.time.Year;
+import de.hdbw.webshop.annotation.PasswordMatches;
+import de.hdbw.webshop.annotation.ValidEmail;
+import de.hdbw.webshop.annotation.ValidPassword;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
+@Data
+@NoArgsConstructor
+@PasswordMatches
 public class UserRegistrationFormDTO {
+
+    @NotNull
+    @Size(min = 3)
     private String firstName;
+
+    @NotNull
+    @Size(min = 3)
     private String secondName;
+
+//    @NotNull
     private Date dob;
+
+    @NotNull
+    @ValidEmail
     private String email;
+
+    @ValidPassword
     private String password;
+
+    @NotNull
+    @Size(min = 1)
     private String repeatPassword;
-
-    public UserRegistrationFormDTO() {
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
-
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRepeatPassword() {
-        return repeatPassword;
-    }
-
-    public void setRepeatPassword(String repeatPassword) {
-        this.repeatPassword = repeatPassword;
-    }
-
-    @Override
-    public String toString() {
-        return "UserRegistrationFormDTO{" +
-                "firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
-                ", dob=" + dob +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", repeatPassword='" + repeatPassword + '\'' +
-                '}';
-    }
 }
