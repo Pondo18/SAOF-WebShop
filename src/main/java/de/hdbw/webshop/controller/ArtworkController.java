@@ -13,17 +13,17 @@ import java.util.List;
 @RequestMapping("/artworks")
 public class ArtworkController {
 
-    private final ArtworkService productService;
+    private final ArtworkService artworkService;
 
     @Autowired
     public ArtworkController(ArtworkService productService) {
-        this.productService = productService;
+        this.artworkService = productService;
     }
 
 
     @GetMapping
     public List<ArtworkEntity> getAllBooks() {
-        return productService.getAllArtworks();
+        return artworkService.getAllArtworks();
     }
 
 }

@@ -1,6 +1,5 @@
 package de.hdbw.webshop.security;
 
-import de.hdbw.webshop.model.auth.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,10 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
@@ -34,13 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select username, password, enabled from users where username=?")
+                .usersByUsernameQuery("select email, password, enabled from users where email=?")
                 .authoritiesByUsernameQuery("with table1 as (\n" +
-                        "    SELECT users.username, user_role.role_id\n" +
+                        "    SELECT users.email, user_role.role_id\n" +
                         "    FROM user_role\n" +
-                        "             left join users ON user_role.user_id = users.id WHERE username =?\n " +
+                        "             left join users ON user_role.user_id = users.id WHERE email =?\n " +
                         ")\n" +
-                        "SELECT username, role\n" +
+                        "SELECT email, role\n" +
                         "from table1 left join roles on table1.role_id = roles.id");
 
     }
@@ -48,6 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/artworks").permitAll()
+                .antMatchers("/**").permitAll()
+                .antMatchers("/registration/user").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -56,8 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Bean
-    public PasswordEncoder getPasswordEncoder() {
-//        return new BCryptPasswordEncoder();
-        return NoOpPasswordEncoder.getInstance();
+    public BCryptPasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

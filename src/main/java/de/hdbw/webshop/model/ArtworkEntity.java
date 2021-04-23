@@ -10,15 +10,15 @@ public class ArtworkEntity {
     @Column(nullable = false, updatable = false)
     private Long id;
     @Column(nullable = false)
-    private String ArtworkName;
-    private String Artist;
+    private String artworkName;
+    private String artist;
     @Column(nullable = false)
     private double price;
 
     public ArtworkEntity(Long id, String artworkName, String artist, double price) {
         this.id = id;
-        ArtworkName = artworkName;
-        Artist = artist;
+        this.artworkName = artworkName;
+        this.artist = artist;
         this.price = price;
     }
 
@@ -35,19 +35,19 @@ public class ArtworkEntity {
     }
 
     public String getArtworkName() {
-        return ArtworkName;
+        return artworkName;
     }
 
     public void setArtworkName(String artworkName) {
-        ArtworkName = artworkName;
+        this.artworkName = artworkName;
     }
 
     public String getArtist() {
-        return Artist;
+        return artist;
     }
 
     public void setArtist(String artist) {
-        Artist = artist;
+        this.artist = artist;
     }
 
     public double getPrice() {
@@ -63,8 +63,8 @@ public class ArtworkEntity {
     public String toString() {
         return "Artwork{" +
                 "id=" + id +
-                ", ArtworkName='" + ArtworkName + '\'' +
-                ", Artist='" + Artist + '\'' +
+                ", ArtworkName='" + artworkName + '\'' +
+                ", Artist='" + artist + '\'' +
                 ", price=" + price +
                 '}';
     }
