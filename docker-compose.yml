@@ -1,25 +1,16 @@
-version: '3.5'
-
+version: '3.7'
 services:
-  postgres:
-    container_name: postgres_container
-    image: postgres
+  mongodb_container:
+    image: mongo:latest
     environment:
-      POSTGRES_DB: webshop
-      POSTGRES_USER: ${POSTGRES_USER:-root}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pass}
-      PGDATA: /data/postgres
-    volumes:
-       - postgres:/data/postgres
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pass
     ports:
-      - "5432:5432"
-    networks:
-      - postgres
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+
     restart: unless-stopped
 
-networks:
-  postgres:
-    driver: bridge
-
 volumes:
-    postgres:
+  mongodb_data_container:
