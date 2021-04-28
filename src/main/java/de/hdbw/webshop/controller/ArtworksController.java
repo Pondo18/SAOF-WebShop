@@ -6,24 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/artworks")
-public class ArtworkController {
+public class ArtworksController {
 
     private final ArtworkService artworkService;
 
     @Autowired
-    public ArtworkController(ArtworkService productService) {
+    public ArtworksController(ArtworkService productService) {
         this.artworkService = productService;
     }
 
 
-    @GetMapping
-    public List<ArtworkEntity> getAllBooks() {
-        return artworkService.getAllArtworks();
+    @GetMapping("/all")
+    public ModelAndView getAllArtworks() {
+        List<ArtworkEntity> artworks = artworkService.getAllArtworks();
+        return new ModelAndView("artworks/artworks", "artworks", artworks);
     }
 
 }
