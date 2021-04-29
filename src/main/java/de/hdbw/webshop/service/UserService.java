@@ -50,8 +50,8 @@ public class UserService {
                 true);
     }
 
-    public RolesEntity getRolesEntity(int roleId) {
-        return rolesRepository.findById((long) roleId).orElseThrow(() -> new RoleNotFoundException(
+    public RolesEntity getRolesEntity(long roleId) {
+        return rolesRepository.findById(roleId).orElseThrow(() -> new RoleNotFoundException(
                 "RoleEntityDTO by Id " +
                         roleId +
                         " was not found"));

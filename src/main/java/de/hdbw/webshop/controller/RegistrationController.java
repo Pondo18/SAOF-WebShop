@@ -26,7 +26,7 @@ public class RegistrationController {
     @GetMapping("/user")
     public ModelAndView getUserRegistrationForm() {
         UserRegistrationFormDTO userRegistrationForm = new UserRegistrationFormDTO();
-        return new ModelAndView("registrationUser", "user", userRegistrationForm);
+        return new ModelAndView("user/registrationUser", "user", userRegistrationForm);
     }
 
     @PostMapping("/user")
@@ -34,13 +34,13 @@ public class RegistrationController {
                                   BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult.getAllErrors());
-            return new ModelAndView("registrationUser", "user", userRegistrationForm);
+            return new ModelAndView("user/registrationUser", "user", userRegistrationForm);
         } else {
             try {
                 userService.registerNewUser(userRegistrationForm);
                 return new ModelAndView("index");
             } catch (UserAlreadyExistsException uaeEx) {
-                return new ModelAndView("registrationUser", "user", userRegistrationForm);
+                return new ModelAndView("user/registrationUser", "user", userRegistrationForm);
             }
 
         }

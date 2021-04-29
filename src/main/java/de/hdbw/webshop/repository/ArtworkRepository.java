@@ -1,6 +1,6 @@
 package de.hdbw.webshop.repository;
 
-import de.hdbw.webshop.model.ArtworkEntity;
+import de.hdbw.webshop.model.artwork.ArtworkEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
