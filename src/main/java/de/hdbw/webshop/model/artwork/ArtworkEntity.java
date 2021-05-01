@@ -1,9 +1,10 @@
-package de.hdbw.webshop.model;
+package de.hdbw.webshop.model.artwork;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "artwork")
@@ -16,9 +17,15 @@ public class ArtworkEntity {
     private Long id;
     @Column(nullable = false)
     private String artworkName;
+    private String generatedArtworkName;
     private String artist;
+    private String description;
     @Column(nullable = false)
     private double price;
+
+    @OneToMany(mappedBy = "artwork")
+    private List<ImageEntity> images;
+
 
     public ArtworkEntity(String artworkName, String artist, double price) {
         this.artworkName = artworkName;
