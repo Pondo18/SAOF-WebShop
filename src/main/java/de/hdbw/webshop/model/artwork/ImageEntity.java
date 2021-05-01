@@ -6,13 +6,11 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.persistence.*;
 
-import de.hdbw.webshop.util.images.FileNameHelper;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 import org.springframework.util.FileCopyUtils;
@@ -26,14 +24,10 @@ import lombok.Data;
 @NoArgsConstructor
 public class ImageEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
-    private Long id;
-    private String fileName;
+    private String uuid;
     private String fileType;
     private long size;
-    private String uuid;
-    private String systemName;
     private int position;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -44,12 +38,10 @@ public class ImageEntity {
     @Type(type = "org.hibernate.type.BinaryType")
     private byte[] data;
 
-    public ImageEntity(String fileName, String fileType, long size, String uuid, String systemName, byte[] data) {
-        this.fileName = fileName;
+    public ImageEntity(String fileType, long size, String uuid, byte[] data) {
         this.fileType = fileType;
         this.size = size;
         this.uuid = uuid;
-        this.systemName = systemName;
         this.data = data;
     }
 
@@ -58,7 +50,6 @@ public class ImageEntity {
         String uuid = UUID.randomUUID().toString();
         ImageEntity image = new ImageEntity();
         image.setUuid(uuid);
-        image.setSystemName("default");
         return image;
     }
 
@@ -117,42 +108,16 @@ public class ImageEntity {
      */
     @Transient
     public static ImageEntity defaultImage() throws Exception {
-        InputStream is = getResourceFileAsInputStream("notfound.jpg");
-        String fileType = "image/jpeg";
+        InputStream is = getResourceFileAsInputStream("src/main/resources/static/images/image_missing.png");
+        String fileType = "image/png";
         byte[] bdata = FileCopyUtils.copyToByteArray(is);
-        ImageEntity image = new ImageEntity(null, fileType, 0, null, null, bdata);
+        ImageEntity image = new ImageEntity(fileType, 0, null, bdata);
         return image;
     }
 
-    /**
-     * Generate scaled no context image with `notfound.jpg` image in asset with
-     * given width and height.
-     *
-     * @param width  scale width
-     * @param height scale height
-     * @return create scaled default image.
-     */
     @Transient
-    public static ImageEntity defaultImage(int width, int height) throws Exception {
-        ImageEntity defaultImage = defaultImage();
-        defaultImage.scale(width, height);
-        return defaultImage;
-    }
-
-    /**
-     * Generate scaled no context image with `notfound.jpg` image in asset with
-     * given width and height.
-     *
-     * @param file   multipartfile data to build.
-     * @param helper filenamehelper class to generate name.
-     * @return return new Image class related with file.
-     */
-    @Transient
-    public static ImageEntity buildImage(MultipartFile file, FileNameHelper helper, int position) {
-        String fileName = helper.generateDisplayName(file.getOriginalFilename());
-
+    public static ImageEntity buildImage(MultipartFile file, int position) {
         ImageEntity image = ImageEntity.build();
-        image.setFileName(fileName);
         image.setFiles(file);
         image.setPosition(position);
 

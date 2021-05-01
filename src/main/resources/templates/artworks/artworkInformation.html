@@ -6,5 +6,6 @@
 </head>
 <body>
 <p th:text="${artwork.artworkName}"></p>
+<img th:each="imageUrl: ${artwork.imagesUrl}" th:src="${imageUrl}">
 </body>
 </html>

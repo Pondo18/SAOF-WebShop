@@ -1,4 +1,4 @@
-package de.hdbw.webshop.payload;
+package de.hdbw.webshop.dto;
 
 import de.hdbw.webshop.model.artwork.ImageEntity;
 import lombok.AllArgsConstructor;
@@ -8,15 +8,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ImageResponse {
+public class ImageResponseDTO {
     private String uuid;
-    private String fileName;
     private String fileType;
     private long size;
 
-    public ImageResponse(ImageEntity image) {
+    public ImageResponseDTO(ImageEntity image) {
         setUuid(image.getUuid());
-        setFileName(image.getFileName());
         setFileType(image.getFileType());
         setSize(image.getSize());
     }

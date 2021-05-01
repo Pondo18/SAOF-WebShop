@@ -1,6 +1,8 @@
 package de.hdbw.webshop.controller;
 
-import de.hdbw.webshop.model.artwork.ArtworkEntity;
+import de.hdbw.webshop.dto.ArtworkForArtworkInformationPageDTO;
+import de.hdbw.webshop.dto.ArtworkForArtworksPageDTO;
+import de.hdbw.webshop.service.ArtworkDTOService;
 import de.hdbw.webshop.service.ArtworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,23 +18,24 @@ import java.util.List;
 public class ArtworkController {
 
     private final ArtworkService artworkService;
+    private final ArtworkDTOService artworkDTOService;
 
     @Autowired
-    public ArtworkController(ArtworkService productService) {
+    public ArtworkController(ArtworkService productService, ArtworkDTOService artworkDTOService) {
         this.artworkService = productService;
+        this.artworkDTOService = artworkDTOService;
     }
 
 
-    @GetMapping("/all")
+    @GetMapping
     public ModelAndView getAllArtworks() {
-        List<ArtworkEntity> artworks = artworkService.getAllArtworks();
+        List<ArtworkForArtworksPageDTO> artworks = artworkDTOService.getAllArtworksForArtworksPage();
         return new ModelAndView("artworks/artworks", "artworks", artworks);
     }
 
-    @GetMapping("/{artworkId}")
-    public ModelAndView getArtworkPage(@PathVariable Long artworkId) {
-        ArtworkEntity artwork = artworkService.getArtworkById(artworkId);
+    @GetMapping("/{generatedArtworkName}")
+    public ModelAndView getArtworkPage(@PathVariable String generatedArtworkName) {
+        ArtworkForArtworkInformationPageDTO artwork = artworkDTOService.getArtworkForDetailedInformationPage(generatedArtworkName);
         return new ModelAndView("artworks/artworkInformation", "artwork", artwork);
     }
-
 }

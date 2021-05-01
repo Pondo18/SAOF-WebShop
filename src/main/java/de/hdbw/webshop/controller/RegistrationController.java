@@ -44,20 +44,5 @@ public class RegistrationController {
             }
 
         }
-//        if (error.hasErrors()) {
-//            return "registration_user";
-//        } else {
-//            model.addAttribute("message", "Success");
-//            return "registration_user";
-//        }
-//        try {
-//           userService.registerNewUser(userRegistrationForm);
-//        } catch (UserAlreadyExistsException uaeEx) {
-//            ModelAndView modelAndView = new ModelAndView("registration_user", "user", userRegistrationForm);
-//            String errMessage = "User mit dieser Email existiert bereits";
-//            return modelAndView;
-//        }
-//        return new ModelAndView("index", "user", userRegistrationForm);
-//    }
     }
 }

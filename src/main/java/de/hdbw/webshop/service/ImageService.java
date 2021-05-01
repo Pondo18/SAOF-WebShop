@@ -1,12 +1,9 @@
 package de.hdbw.webshop.service;
 
 import de.hdbw.webshop.model.artwork.ImageEntity;
-import de.hdbw.webshop.payload.ImageResponse;
 import de.hdbw.webshop.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @Service
@@ -26,12 +23,23 @@ public class ImageService {
         return imageRepository.save(image);
     }
 
-    public ImageEntity findByFileName(String fileName) {
-        return this.imageRepository.findByFileName(fileName);
-    }
-
     public ImageEntity findByUuid(String uuid) {
         return this.imageRepository.findByUuid(uuid);
     }
 
+    public ImageEntity findImageByArtworkAndPosition(long artworkId, int position) {
+        return imageRepository.findByArtworkIdAfterAndPosition(artworkId, position);
+    }
+
+//    public List<String> findAllImageNamesByArtworkAndOrderByPosition(long artworkId) {
+//        return imageRepository.findAllImageFileNamesByArtworkAndOrderByPosition(artworkId);
+//    }
+
+    public ImageEntity getImageByUuid(String uuid) throws Exception {
+        ImageEntity image = findByUuid(uuid);
+        if (image == null) {
+            return ImageEntity.defaultImage();
+        }
+        return image;
+    }
 }
