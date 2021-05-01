@@ -9,8 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/artwork/{artworkName}/images")
@@ -34,11 +32,4 @@ public class ArtworkImageController {
         ImageEntity imageByArtworkAndPosition = imageService.findImageByArtworkAndPosition(artworkId, position);
         return ResponseEntity.ok().contentType(MediaType.valueOf(imageByArtworkAndPosition.getFileType())).body(imageByArtworkAndPosition.getData());
     }
-
-//    @GetMapping
-//    public List<String> getImageFileNamesByArtworkName(@PathVariable String artworkName) {
-//        int artworkId = artworkService.getArtworkIdByArtworkName(artworkName);
-//        return imageService.findAllImageNamesByArtworkAndOrderByPosition(artworkId);
-//    }
-
 }
