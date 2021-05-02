@@ -25,11 +25,4 @@ public class ArtworkEntity {
 
     @OneToMany(mappedBy = "artwork")
     private List<ImageEntity> images;
-
-
-    public ArtworkEntity(String artworkName, String artist, double price) {
-        this.artworkName = artworkName;
-        this.artist = artist;
-        this.price = price;
-    }
 }
