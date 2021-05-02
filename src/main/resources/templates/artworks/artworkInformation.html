@@ -7,5 +7,9 @@
 <body>
 <p th:text="${artwork.artworkName}"></p>
 <img th:each="imageUrl: ${artwork.imagesUrl}" th:src="${imageUrl}">
+<form action="#" th:action="@{/registration/user}" th:object="${user}" method="post">
+
+</form>
+<button type="submit"
 </body>
 </html>
