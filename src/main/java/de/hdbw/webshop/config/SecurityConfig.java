@@ -1,4 +1,4 @@
-package de.hdbw.webshop.security;
+package de.hdbw.webshop.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,8 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.sql.DataSource;
-
-import static de.hdbw.webshop.model.auth.Roles.*;
 
 @Configuration
 @EnableWebSecurity

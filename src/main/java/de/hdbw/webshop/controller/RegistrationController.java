@@ -3,8 +3,6 @@ package de.hdbw.webshop.controller;
 import de.hdbw.webshop.dto.UserRegistrationFormDTO;
 import de.hdbw.webshop.exception.UserAlreadyExistsException;
 import de.hdbw.webshop.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +15,6 @@ import javax.validation.Valid;
 public class RegistrationController {
 
     private final UserService userService;
-    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     public RegistrationController(UserService userService) {
         this.userService = userService;
