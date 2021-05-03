@@ -1,7 +1,7 @@
 package de.hdbw.webshop.controller;
 
 import de.hdbw.webshop.dto.UserRegistrationFormDTO;
-import de.hdbw.webshop.exception.UserAlreadyExistsException;
+import de.hdbw.webshop.exception.exceptions.UserAlreadyExistsException;
 import de.hdbw.webshop.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

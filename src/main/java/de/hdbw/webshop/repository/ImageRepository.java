@@ -1,6 +1,7 @@
 package de.hdbw.webshop.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import de.hdbw.webshop.model.artwork.ArtworkEntity;
 import de.hdbw.webshop.model.artwork.ImageEntity;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ImageRepository extends JpaRepository<ImageEntity, Long> {
 
-    ImageEntity findByUuid(String uuid);
+    Optional<ImageEntity> findByUuid(String uuid);
 
     List<ImageEntity> findAllByArtwork(ArtworkEntity artworkEntity);
 

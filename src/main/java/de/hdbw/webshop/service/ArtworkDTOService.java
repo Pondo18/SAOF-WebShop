@@ -2,7 +2,7 @@ package de.hdbw.webshop.service;
 
 import de.hdbw.webshop.dto.ArtworkForArtworkInformationPageDTO;
 import de.hdbw.webshop.dto.ArtworkForArtworksPageDTO;
-import de.hdbw.webshop.exception.ArtworkNotFoundException;
+import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.model.artwork.ArtworkEntity;
 import de.hdbw.webshop.repository.ArtworkRepository;
 import de.hdbw.webshop.repository.ImageRepository;
@@ -27,10 +27,9 @@ public class ArtworkDTOService {
     }
 
     public ArtworkForArtworkInformationPageDTO getArtworkForDetailedInformationPage(String generatedArtworkName) {
-        ArtworkEntity artworkEntity = artworkRepository.findByGeneratedArtworkName(generatedArtworkName).orElseThrow(() -> new ArtworkNotFoundException(
-                "Artwork by generated ArtworkName " +
-                        generatedArtworkName +
-                        " was not found"));
+        ArtworkEntity artworkEntity = artworkRepository.findByGeneratedArtworkName(generatedArtworkName).orElseThrow(
+                () -> new ArtworkNotFoundException()
+        );
         ArtworkForArtworkInformationPageDTO artwork = new ArtworkForArtworkInformationPageDTO();
         artwork.build(artworkEntity);
         List<String> artworkImageUuids = imageRepository.findAllImageUuidsByArtworkAndOrderByPosition(artworkEntity.getId());
