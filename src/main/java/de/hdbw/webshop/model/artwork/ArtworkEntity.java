@@ -17,6 +17,7 @@ public class ArtworkEntity {
     private Long id;
     @Column(nullable = false)
     private String artworkName;
+    @Column(nullable = false, unique = true)
     private String generatedArtworkName;
     private String artist;
     private String description;
