@@ -26,6 +26,7 @@ public class ImageEntity {
     @Id
     @Column(nullable = false, updatable = false)
     private String uuid;
+    @Column(nullable = false)
     private String fileType;
     private long size;
     private int position;
