@@ -12,5 +12,5 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Long> {
     Optional<ArtworkEntity> findByGeneratedArtworkName (String generatedArtworkName);
 
     @Query("SELECT id FROM ArtworkEntity WHERE generatedArtworkName = ?1")
-    long findArtworkIdByGeneratedArtworkName(String generatedArtworkName);
+    Optional<Long> findArtworkIdByGeneratedArtworkName(String generatedArtworkName);
 }

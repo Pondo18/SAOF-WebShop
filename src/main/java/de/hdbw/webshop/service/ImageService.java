@@ -1,12 +1,14 @@
 package de.hdbw.webshop.service;
 
-import de.hdbw.webshop.exception.exceptions.FileNotFoundException;
+import de.hdbw.webshop.exception.exceptions.ImageNotFoundException;
 import de.hdbw.webshop.model.artwork.ImageEntity;
 import de.hdbw.webshop.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.util.FileCopyUtils;
+
+import javax.persistence.Transient;
+import java.io.InputStream;
 
 
 @Service
@@ -25,27 +27,30 @@ public class ImageService {
         return imageRepository.save(image);
     }
 
-    public ImageEntity findByUuid(String uuid) {
-        return imageRepository.findByUuid(uuid).orElseThrow(() -> new FileNotFoundException());
+    public ImageEntity findImageByUuid(String uuid) {
+        return imageRepository.findByUuid(uuid).orElseThrow(
+                () -> new ImageNotFoundException()
+        );
     }
 
     public ImageEntity findImageByArtworkAndPosition(long artworkId, int position) {
-        return imageRepository.findByArtworkIdAfterAndPosition(artworkId, position);
+        return imageRepository.findByArtworkIdAfterAndPosition(artworkId, position).orElseThrow(
+                () -> new ImageNotFoundException()
+        );
     }
 
-    public ImageEntity getImageByUuid(String uuid) throws Exception {
-        try {
-            ImageEntity image = findByUuid(uuid);
-            if (image == null) {
-                return ImageEntity.defaultImage();
-            }
-            return image;
-        } catch (FileNotFoundException fileNotFoundException) {
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR,
-                    "File not Found",
-                    fileNotFoundException
-            );
-        }
+    @Transient
+    public ImageEntity getDefaultImage() throws Exception {
+        InputStream is = getResourceFileAsInputStream("src/main/resources/static/images/image_missing.png");
+        String fileType = "image/png";
+        byte[] bdata = FileCopyUtils.copyToByteArray(is);
+        ImageEntity image = new ImageEntity(fileType, 0, null, bdata);
+        return image;
+    }
+
+
+    private static InputStream getResourceFileAsInputStream(String fileName) {
+        ClassLoader classLoader = ImageEntity.class.getClassLoader();
+        return classLoader.getResourceAsStream(fileName);
     }
 }
