@@ -46,9 +46,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/artworks").permitAll()
                 .antMatchers("/**").permitAll()
                 .antMatchers("/registration/user").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().authenticated() 
                 .and()
                 .formLogin()
+                .loginPage("/login.html")
                 .defaultSuccessUrl("/artworks");
     }
 
