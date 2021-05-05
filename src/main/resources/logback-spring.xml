@@ -36,7 +36,7 @@
         <appender-ref ref="Console" />
     </root>
 
-    <logger name="com.hdbw" level="debug" additivity="false">
+    <logger name="de.hdbw" level="debug" additivity="false">
         <appender-ref ref="Console" />
     </logger>
 </configuration>
