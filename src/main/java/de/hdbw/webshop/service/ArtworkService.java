@@ -1,5 +1,6 @@
 package de.hdbw.webshop.service;
 
+import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.repository.ArtworkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ public class ArtworkService {
     }
 
     public long getArtworkIdByArtworkName(String artworkName) {
-        return artworkRepository.findArtworkIdByGeneratedArtworkName(artworkName);
+        return artworkRepository.findArtworkIdByGeneratedArtworkName(artworkName).orElseThrow(
+                () -> new ArtworkNotFoundException()
+        );
     }
 }

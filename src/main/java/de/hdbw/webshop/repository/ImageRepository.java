@@ -15,12 +15,9 @@ public interface ImageRepository extends JpaRepository<ImageEntity, Long> {
 
     Optional<ImageEntity> findByUuid(String uuid);
 
-    List<ImageEntity> findAllByArtwork(ArtworkEntity artworkEntity);
-
     @Query("SELECT im from ImageEntity im where im.artwork.id = ?1 and im.position=?2")
-    ImageEntity findByArtworkIdAfterAndPosition(long artworkId, int position);
+    Optional<ImageEntity> findByArtworkIdAfterAndPosition(long artworkId, int position);
 
-//        @Query("SELECT ImageEntity.generatedFileName FROM ImageEntity WHERE ImageEntity.artwork.id = ?1 ORDER BY position")
     @Query("SELECT uuid FROM ImageEntity WHERE artwork.id = ?1 order by position")
     List<String> findAllImageUuidsByArtworkAndOrderByPosition(long artworkId);
 

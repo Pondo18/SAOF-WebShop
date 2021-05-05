@@ -92,30 +92,6 @@ public class ImageEntity {
         }
     }
 
-    /**
-     * @param fileName - filename of the resources.
-     *
-     * @return inputstream for image
-     * */
-    private static InputStream getResourceFileAsInputStream(String fileName) {
-        ClassLoader classLoader = ImageEntity.class.getClassLoader();
-        return classLoader.getResourceAsStream(fileName);
-    }
-
-    /**
-     * Generate no context image with `notfound.jpg` image in asset.
-     *
-     * @return create default image.
-     */
-    @Transient
-    public static ImageEntity defaultImage() throws Exception {
-        InputStream is = getResourceFileAsInputStream("src/main/resources/static/images/image_missing.png");
-        String fileType = "image/png";
-        byte[] bdata = FileCopyUtils.copyToByteArray(is);
-        ImageEntity image = new ImageEntity(fileType, 0, null, bdata);
-        return image;
-    }
-
     @Transient
     public static ImageEntity buildImage(MultipartFile file, int position) {
         ImageEntity image = ImageEntity.build();

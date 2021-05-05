@@ -1,6 +1,7 @@
 package de.hdbw.webshop.controller;
 
 import de.hdbw.webshop.exception.ErrorPayload;
+import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,10 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
+@CommonsLog
 public class MyErrorController implements ErrorController {
+
+
 
     @RequestMapping("/error")
     public ModelAndView handleError(HttpServletRequest request) {
@@ -25,15 +29,19 @@ public class MyErrorController implements ErrorController {
                     statusCode,
                     (String) request.getAttribute(RequestDispatcher.FORWARD_REQUEST_URI));
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
+                log.info("Not Found : 404");
                 return new ModelAndView("error/notFound_404", "error", errorPayload);
             }
             else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+                log.warn("Internal Server Error : 500 (" + errorPayload.getMessage() + ")");
                 return new ModelAndView("error/internalServerError_500", "error", errorPayload);
             }
             else if(statusCode == HttpStatus.BAD_REQUEST.value()) {
+                log.info("Bad Request : 403");
                 return new ModelAndView("error/badRequest_403", "error", errorPayload);
             }
         }
+        log.warn("Unknown");
         return new ModelAndView("error/defaultError");
     }
 
