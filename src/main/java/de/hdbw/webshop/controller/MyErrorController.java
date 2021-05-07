@@ -24,11 +24,11 @@ public class MyErrorController implements ErrorController {
                 (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE),
                 statusCode,
                 (String) request.getAttribute(RequestDispatcher.FORWARD_REQUEST_URI));
-        if (400 > statusCode && statusCode >= 300) {
-            log.info("Not Found : 404");
+        if (500 > statusCode && statusCode >= 400) {
+            log.info(errorPayload.getStatusCode() + " : " + errorPayload.getMessage());
             return new ModelAndView("error/400erErrors", "error", errorPayload);
-        } else if (50 > statusCode && statusCode >= 400) {
-            log.warn("Internal Server Error : 500 (" + errorPayload.getMessage() + ")");
+        } else if (statusCode >= 500) {
+            log.warn(errorPayload.getStatusCode() + " : " + errorPayload.getMessage());
             return new ModelAndView("error/500erErrors", "error", errorPayload);
         }
         log.warn("Unknown");
