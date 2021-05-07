@@ -16,34 +16,29 @@ import javax.servlet.http.HttpServletRequest;
 public class MyErrorController implements ErrorController {
 
 
-
     @RequestMapping("/error")
     public ModelAndView handleError(HttpServletRequest request) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        Integer statusCode = Integer.valueOf(status.toString());
 
-        if (status != null) {
-            Integer statusCode = Integer.valueOf(status.toString());
-
-            ErrorPayload errorPayload = new ErrorPayload(
-                    (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE),
-                    statusCode,
-                    (String) request.getAttribute(RequestDispatcher.FORWARD_REQUEST_URI));
-            if(statusCode == HttpStatus.NOT_FOUND.value()) {
-                log.info("Not Found : 404");
-                return new ModelAndView("error/400erErrors", "error", errorPayload);
-            }
-            else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                log.warn("Internal Server Error : 500 (" + errorPayload.getMessage() + ")");
-                return new ModelAndView("error/500erErrors", "error", errorPayload);
-            }
-            else if(statusCode == HttpStatus.BAD_REQUEST.value()) {
-                log.info("Bad Request : 403");
-                return new ModelAndView("error/400erErrors", "error", errorPayload);
-            }
+        ErrorPayload errorPayload = new ErrorPayload(
+                (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE),
+                statusCode,
+                (String) request.getAttribute(RequestDispatcher.FORWARD_REQUEST_URI));
+        if (statusCode == HttpStatus.NOT_FOUND.value()) {
+            log.info("Not Found : 404");
+            return new ModelAndView("error/400erErrors", "error", errorPayload);
+        } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+            log.warn("Internal Server Error : 500 (" + errorPayload.getMessage() + ")");
+            return new ModelAndView("error/500erErrors", "error", errorPayload);
+        } else if (statusCode == HttpStatus.FORBIDDEN.value()) {
+            log.info("Forbidden : 403");
+            return new ModelAndView("error/400erErrors", "error", errorPayload);
         }
         log.warn("Unknown");
-        return new ModelAndView("error/defaultError");
+        return new ModelAndView("error/defaultError", "error", errorPayload);
     }
+
 
     @Override
     public String getErrorPath() {
