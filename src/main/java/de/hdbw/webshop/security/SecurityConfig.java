@@ -1,8 +1,5 @@
 package de.hdbw.webshop.security;
 
-import de.hdbw.webshop.repository.ArtistRepository;
-import de.hdbw.webshop.repository.RegisteredUserRepository;
-import de.hdbw.webshop.repository.UserPasswordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,22 +12,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import static de.hdbw.webshop.model.auth.Roles.*;
+import static de.hdbw.webshop.model.users.Roles.*;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final RegisteredUserRepository registeredUserRepository;
-    private final ArtistRepository artistRepository;
-    private final UserPasswordRepository userPasswordRepository;
+    private final UserDetailsService userDetailsService;
 
     @Autowired
-    public SecurityConfig(RegisteredUserRepository registeredUserRepository, ArtistRepository artistRepository, UserPasswordRepository userPasswordRepository) {
-        this.registeredUserRepository = registeredUserRepository;
-        this.artistRepository = artistRepository;
-        this.userPasswordRepository = userPasswordRepository;
+    public SecurityConfig(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 
     @Bean
@@ -40,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new MyUserDetailsService(artistRepository, registeredUserRepository, userPasswordRepository);
+        return userDetailsService;
     }
 
     @Bean

@@ -1,6 +1,6 @@
 package de.hdbw.webshop.service;
 
-import de.hdbw.webshop.model.user.AllUsersEntity;
+import de.hdbw.webshop.model.users.AllUsersEntity;
 import org.springframework.stereotype.Service;
 
 @Service

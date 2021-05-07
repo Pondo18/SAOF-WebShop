@@ -1,8 +1,8 @@
 package de.hdbw.webshop.security;
 
-import de.hdbw.webshop.model.user.ArtistEntity;
-import de.hdbw.webshop.model.user.User;
-import de.hdbw.webshop.model.user.UserPasswordEntity;
+import de.hdbw.webshop.model.users.ArtistEntity;
+import de.hdbw.webshop.model.users.User;
+import de.hdbw.webshop.model.users.UserPasswordEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static de.hdbw.webshop.model.auth.Roles.*;
+import static de.hdbw.webshop.model.users.Roles.*;
 
 public class MyUserDetails implements UserDetails {
 

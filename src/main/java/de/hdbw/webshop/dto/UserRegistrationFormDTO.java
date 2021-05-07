@@ -25,9 +25,6 @@ public class UserRegistrationFormDTO {
     @Size(min = 3)
     private String secondName;
 
-//    @NotNull
-    private Date dob;
-
     @NotNull
     @ValidEmail
     @EmailNotUsed

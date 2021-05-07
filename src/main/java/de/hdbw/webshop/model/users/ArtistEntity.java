@@ -1,4 +1,4 @@
-package de.hdbw.webshop.model.user;
+package de.hdbw.webshop.model.users;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

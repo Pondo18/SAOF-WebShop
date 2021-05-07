@@ -1,7 +1,7 @@
 package de.hdbw.webshop.repository;
 
-import de.hdbw.webshop.model.user.ArtistEntity;
-import de.hdbw.webshop.model.user.RegisteredUserEntity;
+import de.hdbw.webshop.model.users.ArtistEntity;
+import de.hdbw.webshop.model.users.RegisteredUserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

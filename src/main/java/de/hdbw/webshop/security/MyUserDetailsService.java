@@ -1,11 +1,12 @@
 package de.hdbw.webshop.security;
 
-import de.hdbw.webshop.model.user.ArtistEntity;
-import de.hdbw.webshop.model.user.RegisteredUserEntity;
-import de.hdbw.webshop.model.user.UserPasswordEntity;
-import de.hdbw.webshop.repository.ArtistRepository;
-import de.hdbw.webshop.repository.RegisteredUserRepository;
-import de.hdbw.webshop.repository.UserPasswordRepository;
+import de.hdbw.webshop.model.users.ArtistEntity;
+import de.hdbw.webshop.model.users.RegisteredUserEntity;
+import de.hdbw.webshop.model.users.UserPasswordEntity;
+import de.hdbw.webshop.service.ArtistService;
+import de.hdbw.webshop.service.RegisteredUserService;
+import de.hdbw.webshop.service.UserPasswordService;
+import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,45 +14,38 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@CommonsLog
 public class MyUserDetailsService implements UserDetailsService {
 
-    private final ArtistRepository artistRepository;
-    private final RegisteredUserRepository registeredUserRepository;
-    private final UserPasswordRepository userPasswordRepository;
+    private final RegisteredUserService registeredUserService;
+    private final UserPasswordService userPasswordService;
+    private final ArtistService artistService;
 
     @Autowired
-    public MyUserDetailsService(ArtistRepository artistRepository, RegisteredUserRepository registeredUserRepository, UserPasswordRepository userPasswordRepository) {
-        this.artistRepository = artistRepository;
-        this.registeredUserRepository = registeredUserRepository;
-        this.userPasswordRepository = userPasswordRepository;
+    public MyUserDetailsService(RegisteredUserService registeredUserService, UserPasswordService userPasswordService, ArtistService artistService) {
+        this.registeredUserService = registeredUserService;
+        this.userPasswordService = userPasswordService;
+        this.artistService = artistService;
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        RegisteredUserEntity registeredUserEntity = findRegisteredUserEntity(email);
-        if (registeredUserEntity!= null) {
-            ArtistEntity artistEntity = findArtistIfUserIsArtist(registeredUserEntity);
-            UserPasswordEntity userPasswordEntity = findUserPasswordEntity(registeredUserEntity);
+        try {
+            RegisteredUserEntity registeredUserEntity = registeredUserService.findRegisteredUserEntity(email);
+            ArtistEntity artistEntity = artistService.findArtistIfUserIsArtist(registeredUserEntity);
+            UserPasswordEntity userPasswordEntity = userPasswordService.findUserPasswordEntity(registeredUserEntity);
             if (artistEntity!=null) {
                 artistEntity.setRegisteredUserEntity(registeredUserEntity);
+                log.info("Logging in artist with the email: " + email );
                 return new MyUserDetails(artistEntity, userPasswordEntity);
             } else {
+                log.info("Logging in user with the email: " + email );
                 return new MyUserDetails(registeredUserEntity, userPasswordEntity);
             }
-        } else {
+        } catch (UsernameNotFoundException notFoundException) {
+            log.info("User login failed: There is no user with the email: " + email);
             throw new UsernameNotFoundException("There is no registered user with the email: " + email);
         }
-    }
-
-    public ArtistEntity findArtistIfUserIsArtist(RegisteredUserEntity registeredUserEntity) {
-        return artistRepository.findByRegisteredUserEntity(registeredUserEntity).orElse(null);
-    }
-
-    public RegisteredUserEntity findRegisteredUserEntity (String email) {
-        return registeredUserRepository.findByEmail(email).orElse(null);
-    }
-
-    public UserPasswordEntity findUserPasswordEntity (RegisteredUserEntity registeredUserEntity) {
-        return userPasswordRepository.findByRegisteredUser(registeredUserEntity);
     }
 }
