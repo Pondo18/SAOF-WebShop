@@ -27,13 +27,13 @@ public class MyErrorController implements ErrorController {
                 (String) request.getAttribute(RequestDispatcher.FORWARD_REQUEST_URI));
         if (statusCode == HttpStatus.NOT_FOUND.value()) {
             log.info("Not Found : 404");
-            return new ModelAndView("error/notFound_404", "error", errorPayload);
+            return new ModelAndView("error/400erErrors", "error", errorPayload);
         } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
             log.warn("Internal Server Error : 500 (" + errorPayload.getMessage() + ")");
-            return new ModelAndView("error/internalServerError_500", "error", errorPayload);
+            return new ModelAndView("error/500erErrors", "error", errorPayload);
         } else if (statusCode == HttpStatus.FORBIDDEN.value()) {
             log.info("Forbidden : 403");
-            return new ModelAndView("error/Forbidden_403", "error", errorPayload);
+            return new ModelAndView("error/400erErrors", "error", errorPayload);
         }
         log.warn("Unknown");
         return new ModelAndView("error/defaultError", "error", errorPayload);
