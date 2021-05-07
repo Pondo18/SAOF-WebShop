@@ -1,5 +1,6 @@
 package de.hdbw.webshop.dto;
 
+import de.hdbw.webshop.annotation.EmailNotUsed;
 import de.hdbw.webshop.annotation.PasswordMatches;
 import de.hdbw.webshop.annotation.ValidEmail;
 import de.hdbw.webshop.annotation.ValidPassword;
@@ -29,6 +30,7 @@ public class UserRegistrationFormDTO {
 
     @NotNull
     @ValidEmail
+    @EmailNotUsed
     private String email;
 
     @ValidPassword

@@ -17,8 +17,13 @@ public class UserPasswordEntity implements Serializable {
     @Column(name = "id", nullable = false, updatable = false)
     private long id;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private RegisteredUserEntity registeredUser;
     private String passwordHash;
+
+    public UserPasswordEntity(RegisteredUserEntity registeredUser, String passwordHash) {
+        this.registeredUser = registeredUser;
+        this.passwordHash = passwordHash;
+    }
 }

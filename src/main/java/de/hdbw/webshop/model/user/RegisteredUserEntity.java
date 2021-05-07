@@ -20,7 +20,7 @@ public class RegisteredUserEntity implements User, Serializable {
     private String secondName;
     private boolean enabled;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private AllUsersEntity allUsers;
 
@@ -29,4 +29,13 @@ public class RegisteredUserEntity implements User, Serializable {
 
     @OneToOne(mappedBy = "registeredUserEntity")
     private ArtistEntity artistEntity;
+
+    public RegisteredUserEntity(String email, String firstName, String secondName,
+                                boolean enabled, AllUsersEntity allUsers) {
+        this.email = email;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.enabled = enabled;
+        this.allUsers = allUsers;
+    }
 }
