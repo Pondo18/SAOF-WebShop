@@ -4,11 +4,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
+@Table(name = "registered_user")
 @Data
 @NoArgsConstructor
-public class RegisteredUser {
+public class RegisteredUserEntity implements User, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
@@ -20,9 +22,11 @@ public class RegisteredUser {
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private AllUsers allUsers;
+    private AllUsersEntity allUsers;
 
     @OneToOne(mappedBy = "registeredUser")
-    private UserPassword userPassword;
+    private UserPasswordEntity userPassword;
 
+    @OneToOne(mappedBy = "registeredUserEntity")
+    private ArtistEntity artistEntity;
 }

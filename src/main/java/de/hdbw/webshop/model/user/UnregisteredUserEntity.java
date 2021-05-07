@@ -6,17 +6,19 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "unregistered_user")
 @Data
 @NoArgsConstructor
-public class AllUsers {
+public class UnregisteredUserEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
+    private String sessionId;
 
-    @OneToOne(mappedBy = "allUsers")
-    private RegisteredUser registeredUser;
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private AllUsersEntity allUsers;
 
-    @OneToOne(mappedBy = "allUsers")
-    private UnregisteredUser unregisteredUser;
 }
