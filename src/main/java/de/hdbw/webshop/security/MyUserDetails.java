@@ -26,11 +26,11 @@ public class MyUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(REGISTERED_USER.name()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + REGISTERED_USER.name()));
 
 
         if (user.getClass().equals(ArtistEntity.class)) {
-            authorities.add(new SimpleGrantedAuthority(ARTIST.name()));
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + ARTIST.name()));
         }
         return authorities;
     }
