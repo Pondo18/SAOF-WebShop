@@ -1,7 +1,7 @@
 package de.hdbw.webshop.controller;
 
 import de.hdbw.webshop.dto.UserRegistrationFormDTO;
-import de.hdbw.webshop.service.UserRegistrationService;
+import de.hdbw.webshop.service.authentication.UserRegistrationService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

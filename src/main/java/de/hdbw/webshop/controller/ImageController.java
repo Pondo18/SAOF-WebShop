@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import de.hdbw.webshop.exception.exceptions.ImageNotFoundException;
 import de.hdbw.webshop.model.artwork.ImageEntity;
 import de.hdbw.webshop.dto.ImageResponseDTO;
-import de.hdbw.webshop.service.ImageService;
+import de.hdbw.webshop.service.artwork.ImageService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

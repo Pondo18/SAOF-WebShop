@@ -1,4 +1,4 @@
-package de.hdbw.webshop.service;
+package de.hdbw.webshop.service.artwork;
 
 import de.hdbw.webshop.dto.ArtworkForArtworkInformationPageDTO;
 import de.hdbw.webshop.dto.ArtworkForArtworksPageDTO;

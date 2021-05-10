@@ -3,8 +3,8 @@ package de.hdbw.webshop.controller;
 import de.hdbw.webshop.dto.ArtworkForArtworkInformationPageDTO;
 import de.hdbw.webshop.dto.ArtworkForArtworksPageDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
-import de.hdbw.webshop.service.ArtworkDTOService;
-import de.hdbw.webshop.service.ArtworkService;
+import de.hdbw.webshop.service.artwork.ArtworkDTOService;
+import de.hdbw.webshop.service.artwork.ArtworkService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @CommonsLog
@@ -54,6 +55,4 @@ public class ArtworkController {
             );
         }
     }
-
-
 }
