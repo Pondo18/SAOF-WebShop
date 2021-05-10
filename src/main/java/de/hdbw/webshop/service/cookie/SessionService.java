@@ -34,7 +34,9 @@ public class SessionService {
             token.setDetails(new WebAuthenticationDetails(request));
             Authentication authentication = authenticationManager.authenticate(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            log.debug("Login user with the email: " + email);
         } catch (Exception e) {
+            log.warn("Couldnt Login user with the email: " + email + " After Registration");
             SecurityContextHolder.getContext().setAuthentication(null);
         }
     }
@@ -45,6 +47,7 @@ public class SessionService {
             Cookie cookie = cookieService.createNewAnonymousCookie(response);
             LocalDate currentDate = LocalDate.now();
             LocalDate expiringDate = currentDate.plusDays(cookie.getMaxAge()/1440);
+            log.debug("Creating new Unregistered User for session: " + cookie.getValue());
             unregisteredUserService.createNewUnregisteredUser(cookie.getValue(), expiringDate);
         }
     }
