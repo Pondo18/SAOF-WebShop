@@ -1,4 +1,4 @@
-package de.hdbw.webshop.service;
+package de.hdbw.webshop.service.artwork;
 
 import de.hdbw.webshop.exception.exceptions.ImageNotFoundException;
 import de.hdbw.webshop.model.artwork.ImageEntity;

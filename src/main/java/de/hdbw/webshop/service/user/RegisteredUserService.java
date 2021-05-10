@@ -1,4 +1,4 @@
-package de.hdbw.webshop.service;
+package de.hdbw.webshop.service.user;
 
 import de.hdbw.webshop.dto.UserRegistrationFormDTO;
 import de.hdbw.webshop.exception.exceptions.UserNotFoundException;

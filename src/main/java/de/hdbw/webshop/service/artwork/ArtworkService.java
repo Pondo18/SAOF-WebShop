@@ -1,4 +1,4 @@
-package de.hdbw.webshop.service;
+package de.hdbw.webshop.service.artwork;
 
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.repository.ArtworkRepository;

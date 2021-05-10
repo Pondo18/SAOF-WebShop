@@ -1,4 +1,4 @@
-package de.hdbw.webshop.service;
+package de.hdbw.webshop.service.user;
 
 import de.hdbw.webshop.model.users.RegisteredUserEntity;
 import de.hdbw.webshop.model.users.UserPasswordEntity;
