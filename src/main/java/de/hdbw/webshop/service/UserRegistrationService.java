@@ -7,6 +7,8 @@ import de.hdbw.webshop.model.users.UserPasswordEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Service
 public class UserRegistrationService {
 
@@ -14,12 +16,21 @@ public class UserRegistrationService {
     private final AllUsersService allUsersService;
     private final UserPasswordService userPasswordService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final SessionService sessionService;
 
-    public UserRegistrationService(RegisteredUserService registeredUserService, AllUsersService allUsersService, UserPasswordService userPasswordService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserRegistrationService(RegisteredUserService registeredUserService, AllUsersService allUsersService, UserPasswordService userPasswordService, BCryptPasswordEncoder bCryptPasswordEncoder, SessionService sessionService) {
         this.registeredUserService = registeredUserService;
         this.allUsersService = allUsersService;
         this.userPasswordService = userPasswordService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.sessionService = sessionService;
+    }
+
+    public void doRegistration(UserRegistrationFormDTO userRegistrationFormDTO, HttpServletRequest request) {
+        registerNewUser(userRegistrationFormDTO);
+        String email = userRegistrationFormDTO.getEmail();
+        String password = userRegistrationFormDTO.getPassword();
+        sessionService.doAutoLogin(email, password, request);
     }
 
     public UserPasswordEntity registerNewUser (UserRegistrationFormDTO userRegistrationFormDTO) {
