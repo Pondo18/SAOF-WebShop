@@ -1,5 +1,6 @@
 package de.hdbw.webshop.service.cookie;
 
+import de.hdbw.webshop.service.user.UnregisteredUserService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,18 +12,20 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.time.LocalDate;
 
 @CommonsLog
 @Service
 public class SessionService {
 
+    private final CookieService cookieService;
     private final AuthenticationManager authenticationManager;
+    private final UnregisteredUserService unregisteredUserService;
 
-    public SessionService(AuthenticationManager authenticationManager) {
+    public SessionService(CookieService cookieService, AuthenticationManager authenticationManager, UnregisteredUserService unregisteredUserService) {
+        this.cookieService = cookieService;
         this.authenticationManager = authenticationManager;
+        this.unregisteredUserService = unregisteredUserService;
     }
 
     public void doAutoLogin(String email, String password, HttpServletRequest request) {
@@ -36,18 +39,13 @@ public class SessionService {
         }
     }
 
-    public Cookie createNewSessionCookie(HttpServletRequest request, HttpServletResponse response) {
-        if (!sessionCookieAlreadyExists(request)) {
-            String randomUUID = UUID.randomUUID().toString();
-            Cookie cookie = new Cookie("JSESSIONID", randomUUID);
-            response.addCookie(cookie);
-
+    public void createSessionIfNotExisting (HttpServletRequest request, HttpServletResponse response) {
+        if (!(cookieService.cookieDoesExist(request, "session")
+                || cookieService.cookieDoesExist(request, "JSESSIONID"))) {
+            Cookie cookie = cookieService.createNewAnonymousCookie(response);
+            LocalDate currentDate = LocalDate.now();
+            LocalDate expiringDate = currentDate.plusDays(cookie.getMaxAge()/1440);
+            unregisteredUserService.createNewUnregisteredUser(cookie.getValue(), expiringDate);
         }
-        return null;
-    }
-
-    public boolean sessionCookieAlreadyExists(HttpServletRequest request) {
-        List<Cookie> cookies = Arrays.asList(request.getCookies());
-        return cookies.stream().anyMatch(cookie -> cookie.getName().equals("JSESSIONID"));
     }
 }

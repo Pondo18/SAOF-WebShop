@@ -13,9 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-
-import static de.hdbw.webshop.model.users.Roles.*;
 
 @Configuration
 @EnableWebSecurity
@@ -66,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .csrf().disable()
-                .authorizeRequests().antMatchers("/artwork*").hasRole(REGISTERED_USER.name())
+                .authorizeRequests().antMatchers("/artwork*").permitAll()
                 .antMatchers("/**").permitAll()
                 .antMatchers("/registration/user").permitAll()
                 .anyRequest().authenticated()
