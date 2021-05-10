@@ -1,4 +1,4 @@
-package de.hdbw.webshop.util.images;
+package de.hdbw.webshop.util.artworks;
 
 import de.hdbw.webshop.model.artwork.ArtworkEntity;
 

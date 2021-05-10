@@ -17,6 +17,7 @@ public class ArtworkEntity {
     private Long id;
     @Column(nullable = false)
     private String artworkName;
+    @Column(nullable = false, unique = true)
     private String generatedArtworkName;
     private String artist;
     private String description;
@@ -25,11 +26,4 @@ public class ArtworkEntity {
 
     @OneToMany(mappedBy = "artwork")
     private List<ImageEntity> images;
-
-
-    public ArtworkEntity(String artworkName, String artist, double price) {
-        this.artworkName = artworkName;
-        this.artist = artist;
-        this.price = price;
-    }
 }
