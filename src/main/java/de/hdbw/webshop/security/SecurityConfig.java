@@ -1,6 +1,8 @@
 package de.hdbw.webshop.security;
 
+import de.hdbw.webshop.listener.MySessionListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,16 +22,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
+    private final MySessionListener mySessionListener;
 
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService) {
+    public SecurityConfig(UserDetailsService userDetailsService, MySessionListener mySessionListener) {
         this.userDetailsService = userDetailsService;
+        this.mySessionListener = mySessionListener;
     }
 
     @Bean
     public BCryptPasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -54,6 +59,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
+    }
+
+    @Bean
+    public ServletListenerRegistrationBean<MySessionListener> sessionListenerWithMetrics() {
+        ServletListenerRegistrationBean<MySessionListener> listenerRegBean =
+                new ServletListenerRegistrationBean<>();
+
+        listenerRegBean.setListener(mySessionListener);
+        return listenerRegBean;
     }
 
 

@@ -16,16 +16,21 @@ public class UnregisteredUserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
-    private String sessionId;
+    private String jsessionid;
     private LocalDate expireDate;
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private AllUsersEntity allUsers;
 
-    public UnregisteredUserEntity(String sessionId, LocalDate expireDate, AllUsersEntity allUsers) {
-        this.sessionId = sessionId;
+    public UnregisteredUserEntity(String jsessionid, LocalDate expireDate, AllUsersEntity allUsers) {
+        this.jsessionid = jsessionid;
         this.expireDate = expireDate;
+        this.allUsers = allUsers;
+    }
+
+    public UnregisteredUserEntity(String jsessionid, AllUsersEntity allUsers) {
+        this.jsessionid = jsessionid;
         this.allUsers = allUsers;
     }
 }
