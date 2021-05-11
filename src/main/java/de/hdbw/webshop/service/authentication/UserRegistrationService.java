@@ -4,7 +4,7 @@ import de.hdbw.webshop.dto.UserRegistrationFormDTO;
 import de.hdbw.webshop.model.users.AllUsersEntity;
 import de.hdbw.webshop.model.users.RegisteredUserEntity;
 import de.hdbw.webshop.model.users.UserPasswordEntity;
-import de.hdbw.webshop.service.cookie.SessionService;
+import de.hdbw.webshop.service.session.SessionService;
 import de.hdbw.webshop.service.user.AllUsersService;
 import de.hdbw.webshop.service.user.RegisteredUserService;
 import de.hdbw.webshop.service.user.UserPasswordService;

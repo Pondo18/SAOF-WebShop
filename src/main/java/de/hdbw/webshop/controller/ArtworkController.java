@@ -5,7 +5,7 @@ import de.hdbw.webshop.dto.ArtworkForArtworksPageDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.service.artwork.ArtworkDTOService;
 import de.hdbw.webshop.service.artwork.ArtworkService;
-import de.hdbw.webshop.service.cookie.SessionService;
+import de.hdbw.webshop.service.session.SessionService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,8 +38,8 @@ public class ArtworkController {
 
 
     @GetMapping
-    public ModelAndView getAllArtworks(HttpServletRequest request, HttpServletResponse response) {
-        sessionService.createSessionIfNotExisting(request, response);
+    public ModelAndView getAllArtworks(HttpServletRequest request) {
+        request.getSession();
         List<ArtworkForArtworksPageDTO> artworks = artworkDTOService.getAllArtworksForArtworksPage();
         log.debug("Returning artworks page");
         return new ModelAndView("artworks/artworks", "artworks", artworks);
