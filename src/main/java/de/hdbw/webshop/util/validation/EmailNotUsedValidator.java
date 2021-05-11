@@ -1,7 +1,7 @@
 package de.hdbw.webshop.util.validation;
 
 import de.hdbw.webshop.annotation.EmailNotUsed;
-import de.hdbw.webshop.repository.RegisteredUserRepository;
+import de.hdbw.webshop.repository.user.RegisteredUserRepository;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

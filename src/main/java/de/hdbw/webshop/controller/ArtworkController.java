@@ -30,8 +30,8 @@ public class ArtworkController {
     private final SessionService sessionService;
 
     @Autowired
-    public ArtworkController(ArtworkService productService, ArtworkDTOService artworkDTOService, SessionService sessionService) {
-        this.artworkService = productService;
+    public ArtworkController(ArtworkService artworkService, ArtworkDTOService artworkDTOService, SessionService sessionService) {
+        this.artworkService = artworkService;
         this.artworkDTOService = artworkDTOService;
         this.sessionService = sessionService;
     }

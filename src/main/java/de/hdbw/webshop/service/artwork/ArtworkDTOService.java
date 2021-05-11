@@ -4,8 +4,8 @@ import de.hdbw.webshop.dto.ArtworkForArtworkInformationPageDTO;
 import de.hdbw.webshop.dto.ArtworkForArtworksPageDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.model.artwork.ArtworkEntity;
-import de.hdbw.webshop.repository.ArtworkRepository;
-import de.hdbw.webshop.repository.ImageRepository;
+import de.hdbw.webshop.repository.artwork.ArtworkRepository;
+import de.hdbw.webshop.repository.artwork.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

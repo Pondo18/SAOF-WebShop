@@ -4,7 +4,7 @@ import de.hdbw.webshop.dto.UserRegistrationFormDTO;
 import de.hdbw.webshop.exception.exceptions.UserNotFoundException;
 import de.hdbw.webshop.model.users.AllUsersEntity;
 import de.hdbw.webshop.model.users.RegisteredUserEntity;
-import de.hdbw.webshop.repository.RegisteredUserRepository;
+import de.hdbw.webshop.repository.user.RegisteredUserRepository;
 import org.springframework.stereotype.Service;
 
 @Service

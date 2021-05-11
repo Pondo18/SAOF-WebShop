@@ -2,7 +2,7 @@ package de.hdbw.webshop.service.user;
 
 import de.hdbw.webshop.model.users.AllUsersEntity;
 import de.hdbw.webshop.model.users.UnregisteredUserEntity;
-import de.hdbw.webshop.repository.UnregisteredUserRepository;
+import de.hdbw.webshop.repository.user.UnregisteredUserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

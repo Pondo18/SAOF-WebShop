@@ -1,4 +1,4 @@
-package de.hdbw.webshop.repository;
+package de.hdbw.webshop.repository.artwork;
 
 import de.hdbw.webshop.model.artwork.ArtworkEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

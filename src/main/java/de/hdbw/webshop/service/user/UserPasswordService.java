@@ -2,7 +2,7 @@ package de.hdbw.webshop.service.user;
 
 import de.hdbw.webshop.model.users.RegisteredUserEntity;
 import de.hdbw.webshop.model.users.UserPasswordEntity;
-import de.hdbw.webshop.repository.UserPasswordRepository;
+import de.hdbw.webshop.repository.user.UserPasswordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

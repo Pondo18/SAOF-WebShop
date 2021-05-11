@@ -1,7 +1,7 @@
 package de.hdbw.webshop.service.artwork;
 
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
-import de.hdbw.webshop.repository.ArtworkRepository;
+import de.hdbw.webshop.repository.artwork.ArtworkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
