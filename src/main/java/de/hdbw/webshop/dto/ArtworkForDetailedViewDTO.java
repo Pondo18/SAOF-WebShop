@@ -7,11 +7,12 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArtworkForArtworkInformationPageDTO {
+public class ArtworkForDetailedViewDTO {
     private String generatedArtworkName;
     private String artworkName;
     private String artist;
@@ -29,11 +30,9 @@ public class ArtworkForArtworkInformationPageDTO {
     }
 
     public static List<String> buildImageUrls(List<String> artworkImageUuids) {
-        List<String> artworkImageUrls = new ArrayList<>();
-        for (String imageUuid : artworkImageUuids) {
-            String imageUrl = "http://localhost:8080/image/" + imageUuid;
-            artworkImageUrls.add(imageUrl);
-        }
+        List<String> artworkImageUrls = artworkImageUuids.stream().map(
+                uuid -> "http://localhost:8080/image/" + uuid
+        ).collect(Collectors.toList());
         return artworkImageUrls;
     }
 }

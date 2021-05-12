@@ -1,7 +1,7 @@
 package de.hdbw.webshop.controller;
 
-import de.hdbw.webshop.dto.ArtworkForArtworkInformationPageDTO;
-import de.hdbw.webshop.dto.ArtworkForArtworksPageDTO;
+import de.hdbw.webshop.dto.ArtworkForDetailedViewDTO;
+import de.hdbw.webshop.dto.ArtworkForListViewDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.service.artwork.ArtworkDTOService;
 import lombok.extern.apachecommons.CommonsLog;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @CommonsLog
@@ -30,7 +29,7 @@ public class ArtworkController {
 
     @GetMapping
     public ModelAndView getAllArtworks() {
-        List<ArtworkForArtworksPageDTO> artworks = artworkDTOService.getAllArtworksForArtworksPage();
+        List<ArtworkForListViewDTO> artworks = artworkDTOService.getAllArtworksForArtworksPage();
         log.debug("Returning artworks page");
         return new ModelAndView("artworks/artworks", "artworks", artworks);
     }
@@ -38,7 +37,7 @@ public class ArtworkController {
     @GetMapping("/{generatedArtworkName}")
     public ModelAndView getArtworkPage(@PathVariable String generatedArtworkName) {
         try {
-            ArtworkForArtworkInformationPageDTO artwork = artworkDTOService.getArtworkForDetailedInformationPage(generatedArtworkName);
+            ArtworkForDetailedViewDTO artwork = artworkDTOService.getArtworkForDetailedInformationPage(generatedArtworkName);
             log.debug("Returning detailed artwork page for Artwork with generatedArtworkName: " + generatedArtworkName);
             return new ModelAndView("artworks/artworkInformation", "artwork", artwork);
         } catch (ArtworkNotFoundException artworkNotFoundException) {

@@ -1,5 +1,7 @@
 package de.hdbw.webshop.service.artwork;
 
+import de.hdbw.webshop.dto.ArtworkForDetailedViewDTO;
+import de.hdbw.webshop.dto.ArtworkForListViewDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.exception.exceptions.UserNotFoundException;
 import de.hdbw.webshop.model.artwork.ArtworkEntity;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @CommonsLog
@@ -22,11 +26,13 @@ public class ShoppingCartService {
     private final ShoppingCartRepository shoppingCartRepository;
     private final AllUsersService allUsersService;
     private final ArtworkService artworkService;
+    private final ArtworkDTOService artworkDTOService;
 
-    public ShoppingCartService(ShoppingCartRepository shoppingCartRepository, AllUsersService allUsersService, ArtworkService artworkService) {
+    public ShoppingCartService(ShoppingCartRepository shoppingCartRepository, AllUsersService allUsersService, ArtworkService artworkService, ArtworkDTOService artworkDTOService) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.allUsersService = allUsersService;
         this.artworkService = artworkService;
+        this.artworkDTOService = artworkDTOService;
     }
 
     public ShoppingCartEntity addArtworkToShoppingCart(HttpSession httpSession,
@@ -44,5 +50,14 @@ public class ShoppingCartService {
                     e
             );
         }
+    }
+
+    public List<ArtworkForListViewDTO> getAllArtworksInShoppingCartForUserId (HttpSession session, Authentication authentication) {
+        AllUsersEntity currentUserBySession = allUsersService.getCurrentUserBySession(session, authentication);
+        List<ShoppingCartEntity> shoppingCart = shoppingCartRepository.findAllByAllUsersEntity_Id(currentUserBySession.getId());
+        List<ArtworkForListViewDTO> artworksForListView = shoppingCart.stream().map(shoppingCartEntity ->
+                artworkDTOService.getArtworkForListViewByArtworkEntity(shoppingCartEntity.getArtworkEntity())
+        ).collect(Collectors.toList());
+        return artworksForListView;
     }
 }
