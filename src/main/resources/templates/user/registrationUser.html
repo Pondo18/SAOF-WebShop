@@ -19,7 +19,7 @@
             <img src="https://img.icons8.com/material-sharp/96/000000/art-book.png" id="icon" alt="Art Icon" />
         </div>
         <!---->
-        <form action="#" th:action="@{/registration/user}" th:object="${user}" method="post">
+        <form action="#" th:action="@{/registration/registeredUsers}" th:object="${registeredUsers}" method="post">
             <input type="text" th:field="*{firstName}" id="firstname" class="fadeIn second" name="firstname" placeholder="First Name" required/>
             <input type="text" th:field="*{secondName}" id="secondname" class="fadeIn second" name="secondname" placeholder="Second Name" required/>
             <input type="email" th:field="*{email}" id="email" class="fadeIn second" name="email" placeholder="your@email.com" required/>
@@ -60,7 +60,7 @@
         }
     }
 
-    // Adding an input event listener when a user types to the  password input
+    // Adding an input event listener when a registeredUsers types to the  password input
 
     password.addEventListener("input", () => {
 
@@ -73,7 +73,7 @@
 
         timeout = setTimeout(() => StrengthChecker(password.value), 500);
 
-        //Incase a user clears the text, the badge is hidden again
+        //Incase a registeredUsers clears the text, the badge is hidden again
 
         if(password.value.length !== 0){
             strengthBadge.style.display != 'block'

@@ -1,13 +1,14 @@
 package de.hdbw.webshop.model.artwork;
-
-import de.hdbw.webshop.model.artwork.ArtworkEntity;
-import de.hdbw.webshop.model.users.AllUsersEntity;
+import de.hdbw.webshop.model.users.entity.AllUsersEntity;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Table(name = "shopping_cart")
 @Data
+@NoArgsConstructor
 public class ShoppingCartEntity {
 
     @Id
@@ -22,6 +23,8 @@ public class ShoppingCartEntity {
     @JoinColumn(name = "artwork_id", referencedColumnName = "id")
     private ArtworkEntity artworkEntity;
 
-    private int amount;
-
+    public ShoppingCartEntity(AllUsersEntity allUsersEntity, ArtworkEntity artworkEntity) {
+        this.allUsersEntity = allUsersEntity;
+        this.artworkEntity = artworkEntity;
+    }
 }

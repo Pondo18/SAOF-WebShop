@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -7,9 +8,11 @@
 <body>
 <p th:text="${artwork.artworkName}"></p>
 <img th:each="imageUrl: ${artwork.imagesUrl}" th:src="${imageUrl}">
-<form action="#" th:action="@{/user/}" th:object="${user}" method="post">
-
+<form action="#" th:action="@{/shopping_cart/add_artwork}" method="post">
+    <input type="hidden" th:value="${artwork.generatedArtworkName}" name="artworkName"/>
+    <button type="submit">Add to Cart</button>
 </form>
-<button type="submit"
+<div sec:authorize="isAuthenticated()">
+    Authenticated as <span sec:authentication="name"></span></div>
 </body>
 </html>

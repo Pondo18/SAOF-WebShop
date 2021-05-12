@@ -1,4 +1,4 @@
-package de.hdbw.webshop.model.users;
+package de.hdbw.webshop.model.users.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ public class AllUsersEntity {
     private Long id;
 
     @OneToOne(mappedBy = "allUsers")
-    private RegisteredUserEntity registeredUser;
+    private RegisteredUsersEntity registeredUser;
 
     @OneToOne(mappedBy = "allUsers")
     private UnregisteredUserEntity unregisteredUser;

@@ -1,5 +1,7 @@
-package de.hdbw.webshop.model.users;
+package de.hdbw.webshop.model.users.entity;
 
+import de.hdbw.webshop.model.users.RegisteredUsers;
+import de.hdbw.webshop.model.users.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +12,7 @@ import java.io.Serializable;
 @Table(name = "registered_user")
 @Data
 @NoArgsConstructor
-public class RegisteredUserEntity implements User, Serializable {
+public class RegisteredUsersEntity implements RegisteredUsers, User, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
@@ -30,12 +32,17 @@ public class RegisteredUserEntity implements User, Serializable {
     @OneToOne(mappedBy = "registeredUserEntity")
     private ArtistEntity artistEntity;
 
-    public RegisteredUserEntity(String email, String firstName, String secondName,
-                                boolean enabled, AllUsersEntity allUsers) {
+    public RegisteredUsersEntity(String email, String firstName, String secondName,
+                                 boolean enabled, AllUsersEntity allUsers) {
         this.email = email;
         this.firstName = firstName;
         this.secondName = secondName;
         this.enabled = enabled;
         this.allUsers = allUsers;
+    }
+
+    @Override
+    public long getUserId() {
+        return allUsers.getId();
     }
 }

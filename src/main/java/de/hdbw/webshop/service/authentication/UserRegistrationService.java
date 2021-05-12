@@ -1,9 +1,9 @@
 package de.hdbw.webshop.service.authentication;
 
 import de.hdbw.webshop.dto.UserRegistrationFormDTO;
-import de.hdbw.webshop.model.users.AllUsersEntity;
-import de.hdbw.webshop.model.users.RegisteredUserEntity;
-import de.hdbw.webshop.model.users.UserPasswordEntity;
+import de.hdbw.webshop.model.users.entity.AllUsersEntity;
+import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
+import de.hdbw.webshop.model.users.entity.UserPasswordEntity;
 import de.hdbw.webshop.service.session.SessionService;
 import de.hdbw.webshop.service.user.AllUsersService;
 import de.hdbw.webshop.service.user.RegisteredUserService;
@@ -21,25 +21,27 @@ public class UserRegistrationService {
     private final UserPasswordService userPasswordService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final SessionService sessionService;
+    private final AuthenticationService authenticationService;
 
-    public UserRegistrationService(RegisteredUserService registeredUserService, AllUsersService allUsersService, UserPasswordService userPasswordService, BCryptPasswordEncoder bCryptPasswordEncoder, SessionService sessionService) {
+    public UserRegistrationService(RegisteredUserService registeredUserService, AllUsersService allUsersService, UserPasswordService userPasswordService, BCryptPasswordEncoder bCryptPasswordEncoder, SessionService sessionService, AuthenticationService authenticationService) {
         this.registeredUserService = registeredUserService;
         this.allUsersService = allUsersService;
         this.userPasswordService = userPasswordService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.sessionService = sessionService;
+        this.authenticationService = authenticationService;
     }
 
     public void doRegistration(UserRegistrationFormDTO userRegistrationFormDTO, HttpServletRequest request) {
         registerNewUser(userRegistrationFormDTO);
         String email = userRegistrationFormDTO.getEmail();
         String password = userRegistrationFormDTO.getPassword();
-        sessionService.doAutoLogin(email, password, request);
+        authenticationService.doAutoLogin(email, password, request);
     }
 
     public UserPasswordEntity registerNewUser (UserRegistrationFormDTO userRegistrationFormDTO) {
         AllUsersEntity allUsersEntity = allUsersService.createNewAllUsersEntity();
-        RegisteredUserEntity registeredUserEntity = registeredUserService.createNewRegisteredUser(
+        RegisteredUsersEntity registeredUserEntity = registeredUserService.createNewRegisteredUser(
                 userRegistrationFormDTO, allUsersEntity
         );
         UserPasswordEntity userPasswordEntity = createNewUserPassword(registeredUserEntity,
@@ -47,7 +49,7 @@ public class UserRegistrationService {
         return userPasswordService.saveToDatabase(userPasswordEntity);
     }
 
-    public UserPasswordEntity createNewUserPassword (RegisteredUserEntity registeredUserEntity,
+    public UserPasswordEntity createNewUserPassword (RegisteredUsersEntity registeredUserEntity,
                                                      UserRegistrationFormDTO userRegistrationFormDTO) {
         String userPassword = userRegistrationFormDTO.getPassword();
         return new UserPasswordEntity(registeredUserEntity, bCryptPasswordEncoder.encode(userPassword));
