@@ -58,6 +58,7 @@ public class ShoppingCartService {
         List<ArtworkForListViewDTO> artworksForListView = shoppingCart.stream().map(shoppingCartEntity ->
                 artworkDTOService.getArtworkForListViewByArtworkEntity(shoppingCartEntity.getArtworkEntity())
         ).collect(Collectors.toList());
+        log.debug("Returning all Artworks in ShoppingCart for user with the id: " + currentUserBySession.getId());
         return artworksForListView;
     }
 }
