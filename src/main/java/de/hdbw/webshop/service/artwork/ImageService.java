@@ -2,7 +2,7 @@ package de.hdbw.webshop.service.artwork;
 
 import de.hdbw.webshop.exception.exceptions.ImageNotFoundException;
 import de.hdbw.webshop.model.artwork.ImageEntity;
-import de.hdbw.webshop.repository.ImageRepository;
+import de.hdbw.webshop.repository.artwork.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;

@@ -1,8 +1,8 @@
 package de.hdbw.webshop.service.user;
 
-import de.hdbw.webshop.model.users.ArtistEntity;
-import de.hdbw.webshop.model.users.RegisteredUserEntity;
-import de.hdbw.webshop.repository.ArtistRepository;
+import de.hdbw.webshop.model.users.entity.ArtistEntity;
+import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
+import de.hdbw.webshop.repository.user.ArtistRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +14,7 @@ public class ArtistService {
         this.artistRepository = artistRepository;
     }
 
-    public ArtistEntity findArtistIfUserIsArtist(RegisteredUserEntity registeredUserEntity) {
+    public ArtistEntity findArtistIfUserIsArtist(RegisteredUsersEntity registeredUserEntity) {
         return artistRepository.findByRegisteredUserEntity(registeredUserEntity).orElse(null);
     }
 }

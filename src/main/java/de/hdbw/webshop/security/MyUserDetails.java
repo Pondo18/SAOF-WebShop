@@ -1,8 +1,8 @@
 package de.hdbw.webshop.security;
 
-import de.hdbw.webshop.model.users.ArtistEntity;
-import de.hdbw.webshop.model.users.User;
-import de.hdbw.webshop.model.users.UserPasswordEntity;
+import de.hdbw.webshop.model.users.entity.ArtistEntity;
+import de.hdbw.webshop.model.users.RegisteredUsers;
+import de.hdbw.webshop.model.users.entity.UserPasswordEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,11 +15,11 @@ import static de.hdbw.webshop.model.users.Roles.*;
 
 public class MyUserDetails implements UserDetails {
 
-    private User user;
+    private RegisteredUsers registeredUsers;
     private UserPasswordEntity userPasswordEntity;
 
-    public MyUserDetails(User user, UserPasswordEntity userPasswordEntity) {
-        this.user = user;
+    public MyUserDetails(RegisteredUsers registeredUsers, UserPasswordEntity userPasswordEntity) {
+        this.registeredUsers = registeredUsers;
         this.userPasswordEntity = userPasswordEntity;
     }
 
@@ -29,7 +29,7 @@ public class MyUserDetails implements UserDetails {
         authorities.add(new SimpleGrantedAuthority("ROLE_" + REGISTERED_USER.name()));
 
 
-        if (user.getClass().equals(ArtistEntity.class)) {
+        if (registeredUsers.getClass().equals(ArtistEntity.class)) {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + ARTIST.name()));
         }
         return authorities;
@@ -42,7 +42,7 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return registeredUsers.getEmail();
     }
 
     @Override
@@ -62,6 +62,6 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.isEnabled();
+        return registeredUsers.isEnabled();
     }
 }

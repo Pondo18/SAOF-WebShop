@@ -1,4 +1,4 @@
-package de.hdbw.webshop.model.users;
+package de.hdbw.webshop.model.users.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,10 +19,10 @@ public class UserPasswordEntity implements Serializable {
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private RegisteredUserEntity registeredUser;
+    private RegisteredUsersEntity registeredUser;
     private String passwordHash;
 
-    public UserPasswordEntity(RegisteredUserEntity registeredUser, String passwordHash) {
+    public UserPasswordEntity(RegisteredUsersEntity registeredUser, String passwordHash) {
         this.registeredUser = registeredUser;
         this.passwordHash = passwordHash;
     }

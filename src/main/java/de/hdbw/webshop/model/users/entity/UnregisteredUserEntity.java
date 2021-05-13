@@ -1,5 +1,7 @@
-package de.hdbw.webshop.model.users;
+package de.hdbw.webshop.model.users.entity;
 
+import de.hdbw.webshop.model.users.User;
+import de.hdbw.webshop.model.users.entity.AllUsersEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +12,7 @@ import java.time.LocalDate;
 @Table(name = "unregistered_user")
 @Data
 @NoArgsConstructor
-public class UnregisteredUserEntity {
+public class UnregisteredUserEntity implements User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +34,14 @@ public class UnregisteredUserEntity {
     public UnregisteredUserEntity(String jsessionid, AllUsersEntity allUsers) {
         this.jsessionid = jsessionid;
         this.allUsers = allUsers;
+    }
+
+    public UnregisteredUserEntity(String jsessionid) {
+        this.jsessionid = jsessionid;
+    }
+
+    @Override
+    public long getUserId() {
+        return allUsers.getId();
     }
 }

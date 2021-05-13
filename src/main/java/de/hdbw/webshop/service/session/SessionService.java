@@ -1,35 +1,40 @@
 package de.hdbw.webshop.service.session;
 
+import de.hdbw.webshop.model.users.User;
+import de.hdbw.webshop.service.user.RegisteredUserService;
+import de.hdbw.webshop.service.user.UnregisteredUserService;
 import lombok.extern.apachecommons.CommonsLog;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @CommonsLog
 @Service
 public class SessionService {
 
-    private final AuthenticationManager authenticationManager;
+    private final UnregisteredUserService unregisteredUserService;
+    private final RegisteredUserService registeredUserService;
 
-    public SessionService(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
+
+    public SessionService(UnregisteredUserService unregisteredUserService, RegisteredUserService registeredUserService) {
+        this.unregisteredUserService = unregisteredUserService;
+        this.registeredUserService = registeredUserService;
     }
 
-    public void doAutoLogin(String email, String password, HttpServletRequest request) {
-        try {
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
-            token.setDetails(new WebAuthenticationDetails(request));
-            Authentication authentication = authenticationManager.authenticate(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            log.debug("Login user with the email: " + email);
-        } catch (Exception e) {
-            log.warn("Couldn't Login user with the email: " + email + " After Registration");
-            SecurityContextHolder.getContext().setAuthentication(null);
+
+    public boolean currentSessionIsAnonymous (String jsessionid) {
+        return unregisteredUserService.unregisteredUserForSessionExists(jsessionid);
+    }
+
+    public User getCurrentUserBySession(HttpSession session, Authentication authentication) {
+        String jsessionid = session.getId();
+        if (currentSessionIsAnonymous(jsessionid)) {
+            return unregisteredUserService
+                    .findUnregisteredUserEntityBySessionId(jsessionid);
+        } else {
+            String email = authentication.getName();
+            return registeredUserService.findRegisteredUserEntity(email);
         }
     }
 }

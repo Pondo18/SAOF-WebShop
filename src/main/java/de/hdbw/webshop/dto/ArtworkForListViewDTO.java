@@ -8,18 +8,19 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArtworkForArtworksPageDTO {
+public class ArtworkForListViewDTO {
     private String generatedArtworkName;
     private String artworkName;
     private double price;
     private String primaryImageUrl;
 
-    public void build(ArtworkEntity artworkEntity) {
+    public ArtworkForListViewDTO build(ArtworkEntity artworkEntity) {
         generatedArtworkName = artworkEntity.getGeneratedArtworkName();
         artworkName = artworkEntity.getArtworkName();
         price = artworkEntity.getPrice();
         primaryImageUrl = "http://localhost:8080/artwork/" +
                 artworkEntity.getGeneratedArtworkName() +
                 "/images?position=1";
+        return this;
     }
 }

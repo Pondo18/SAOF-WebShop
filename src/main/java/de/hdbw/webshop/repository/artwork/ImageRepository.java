@@ -1,4 +1,4 @@
-package de.hdbw.webshop.repository;
+package de.hdbw.webshop.repository.artwork;
 
 import java.util.List;
 import java.util.Optional;

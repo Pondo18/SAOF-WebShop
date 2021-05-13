@@ -1,18 +1,19 @@
 package de.hdbw.webshop.service.artwork;
 
-import de.hdbw.webshop.dto.ArtworkForArtworkInformationPageDTO;
-import de.hdbw.webshop.dto.ArtworkForArtworksPageDTO;
+import de.hdbw.webshop.dto.ArtworkForDetailedViewDTO;
+import de.hdbw.webshop.dto.ArtworkForListViewDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.model.artwork.ArtworkEntity;
-import de.hdbw.webshop.repository.ArtworkRepository;
-import de.hdbw.webshop.repository.ImageRepository;
+import de.hdbw.webshop.repository.artwork.ArtworkRepository;
+import de.hdbw.webshop.repository.artwork.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static de.hdbw.webshop.dto.ArtworkForArtworkInformationPageDTO.buildImageUrls;
+import static de.hdbw.webshop.dto.ArtworkForDetailedViewDTO.buildImageUrls;
 
 @Service
 public class ArtworkDTOService {
@@ -26,11 +27,11 @@ public class ArtworkDTOService {
         this.imageRepository = imageRepository;
     }
 
-    public ArtworkForArtworkInformationPageDTO getArtworkForDetailedInformationPage(String generatedArtworkName) {
+    public ArtworkForDetailedViewDTO getArtworkForDetailedInformationPage(String generatedArtworkName) {
         ArtworkEntity artworkEntity = artworkRepository.findByGeneratedArtworkName(generatedArtworkName).orElseThrow(
                 () -> new ArtworkNotFoundException()
         );
-        ArtworkForArtworkInformationPageDTO artwork = new ArtworkForArtworkInformationPageDTO();
+        ArtworkForDetailedViewDTO artwork = new ArtworkForDetailedViewDTO();
         artwork.build(artworkEntity);
         List<String> artworkImageUuids = imageRepository.findAllImageUuidsByArtworkAndOrderByPosition(artworkEntity.getId());
         List<String> artworkImageUrls = buildImageUrls(artworkImageUuids);
@@ -38,14 +39,16 @@ public class ArtworkDTOService {
         return artwork;
     }
 
-    public List<ArtworkForArtworksPageDTO> getAllArtworksForArtworksPage() {
+    public List<ArtworkForListViewDTO> getAllArtworksForArtworksPage() {
         List<ArtworkEntity> allArtworkEntities = artworkRepository.findAll();
-        List<ArtworkForArtworksPageDTO> artworksForArtworksPageDTOS = new ArrayList<>();
-        for (ArtworkEntity artworkEntity : allArtworkEntities) {
-            ArtworkForArtworksPageDTO artworkForArtworksPageDTO = new ArtworkForArtworksPageDTO();
-            artworkForArtworksPageDTO.build(artworkEntity);
-            artworksForArtworksPageDTOS.add(artworkForArtworksPageDTO);
-        }
-        return artworksForArtworksPageDTOS;
+        List<ArtworkForListViewDTO> artworksForListView = allArtworkEntities.stream().map(artwork ->
+                getArtworkForListViewByArtworkEntity(artwork)
+        ).collect(Collectors.toList());
+        return artworksForListView;
+    }
+
+    public ArtworkForListViewDTO getArtworkForListViewByArtworkEntity(ArtworkEntity artworkEntity) {
+        ArtworkForListViewDTO artworkForDetailedViewDTO = new ArtworkForListViewDTO();
+        return artworkForDetailedViewDTO.build(artworkEntity);
     }
 }
