@@ -1,8 +1,8 @@
 package de.hdbw.webshop.controller;
 
 import de.hdbw.webshop.dto.ArtworkForListViewDTO;
-import de.hdbw.webshop.model.artwork.ShoppingCartEntity;
 import de.hdbw.webshop.service.artwork.ShoppingCartService;
+import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+@CommonsLog
 @Controller
 @RequestMapping("/shopping_cart")
 public class ShoppingCartController {
@@ -35,6 +36,7 @@ public class ShoppingCartController {
     public ModelAndView removeArtworkFromShoppingCart(HttpSession session,
                                                       Authentication authentication,
                                                       @ModelAttribute("artworkName") String generatedArtworkName) {
+        log.debug("Removing Artwork: "+ generatedArtworkName+ " from the shoppingCart of user with the session: " + session.getId());
         shoppingCartService.removeArtworkFromShoppingCart(session, authentication, generatedArtworkName);
         return new ModelAndView("index");
     }
