@@ -52,7 +52,15 @@ public class ShoppingCartService {
         }
     }
 
-    public List<ArtworkForListViewDTO> getAllArtworksInShoppingCartForUserId (HttpSession session, Authentication authentication) {
+    public long removeArtworkFromShoppingCart(HttpSession session,
+                                                            Authentication authentication,
+                                                            String artworkName) {
+        AllUsersEntity currentUserBySession = allUsersService.getCurrentUserBySession(session, authentication);
+        return shoppingCartRepository.deleteByArtworkEntity_GeneratedArtworkNameAndAllUsersEntity_Id(
+                artworkName, currentUserBySession.getId());
+    }
+
+    public List<ArtworkForListViewDTO> getAllArtworksInShoppingCartForUserId(HttpSession session, Authentication authentication) {
         AllUsersEntity currentUserBySession = allUsersService.getCurrentUserBySession(session, authentication);
         List<ShoppingCartEntity> shoppingCart = shoppingCartRepository.findAllByAllUsersEntity_Id(currentUserBySession.getId());
         List<ArtworkForListViewDTO> artworksForListView = shoppingCart.stream().map(shoppingCartEntity ->
@@ -60,5 +68,12 @@ public class ShoppingCartService {
         ).collect(Collectors.toList());
         log.debug("Returning all Artworks in ShoppingCart for user with the id: " + currentUserBySession.getId());
         return artworksForListView;
+    }
+
+
+    public boolean ArtworkIsInShoppingCart(HttpSession session, Authentication authentication, String generatedArtworkName) {
+        AllUsersEntity currentUserBySession = allUsersService.getCurrentUserBySession(session, authentication);
+        return shoppingCartRepository.existsByAllUsersEntity_IdAndArtworkEntity_GeneratedArtworkName(
+                currentUserBySession.getId(), generatedArtworkName);
     }
 }

@@ -16,11 +16,12 @@ public class ShoppingCartEntity {
     @Column(nullable = false, updatable = false)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private AllUsersEntity allUsersEntity;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne
     @JoinColumn(name = "artwork_id", referencedColumnName = "id")
     private ArtworkEntity artworkEntity;
 

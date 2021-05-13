@@ -1,10 +1,10 @@
 package de.hdbw.webshop.controller;
 
 import de.hdbw.webshop.dto.ArtworkForListViewDTO;
+import de.hdbw.webshop.model.artwork.ShoppingCartEntity;
 import de.hdbw.webshop.service.artwork.ShoppingCartService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,6 +28,14 @@ public class ShoppingCartController {
                                                  @ModelAttribute("artworkName") String generatedArtworkName) {
         HttpSession session = request.getSession();
         shoppingCartService.addArtworkToShoppingCart(session, authentication, generatedArtworkName);
+        return new ModelAndView("index");
+    }
+
+    @PostMapping("remove_artwork")
+    public ModelAndView removeArtworkFromShoppingCart(HttpSession session,
+                                                      Authentication authentication,
+                                                      @ModelAttribute("artworkName") String generatedArtworkName) {
+        shoppingCartService.removeArtworkFromShoppingCart(session, authentication, generatedArtworkName);
         return new ModelAndView("index");
     }
 

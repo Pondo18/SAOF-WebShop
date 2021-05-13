@@ -26,4 +26,7 @@ public class ArtworkEntity {
 
     @OneToMany(mappedBy = "artwork")
     private List<ImageEntity> images;
+
+    @OneToMany(mappedBy = "artworkEntity")
+    private List<ShoppingCartEntity> shoppingCartEntities;
 }
