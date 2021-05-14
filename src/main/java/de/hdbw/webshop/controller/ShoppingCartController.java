@@ -44,7 +44,7 @@ public class ShoppingCartController {
     @GetMapping
     public ModelAndView getShoppingCart(HttpServletRequest request, Authentication authentication) {
         HttpSession session = request.getSession();
-        List<ArtworkForListViewDTO> artworks = shoppingCartService.getAllArtworksInShoppingCartForUserId(session, authentication);
+        List<ArtworkForListViewDTO> artworks = shoppingCartService.getAllArtworksForListViewInShoppingCartBySession(session, authentication);
         return new ModelAndView("artworks/shoppingCart", "artworks", artworks);
     }
 }

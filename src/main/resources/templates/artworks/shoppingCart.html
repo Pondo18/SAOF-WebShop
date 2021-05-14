@@ -7,6 +7,9 @@
           integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 </head>
 <body>
+<form th:if="${not #lists.isEmpty(artworks)}" action="#" th:action="@{checkout}" method="post">
+    <button type="submit">Checkout</button>
+</form>
 <div class="row" th:each="artwork: ${artworks}" th:attr="onclick=|openArtwork('${artwork.generatedArtworkName}')|">
     <p th:text="${artwork.artworkName}"></p>
     <p th:text="${artwork.price}"></p>

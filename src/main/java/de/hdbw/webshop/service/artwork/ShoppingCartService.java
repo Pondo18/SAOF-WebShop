@@ -59,14 +59,31 @@ public class ShoppingCartService {
                 artworkName, currentUserBySession.getId());
     }
 
-    public List<ArtworkForListViewDTO> getAllArtworksInShoppingCartForUserId(HttpSession session, Authentication authentication) {
+    public List<ArtworkForListViewDTO> getAllArtworksForListViewInShoppingCartBySession(HttpSession session, Authentication authentication) {
         AllUsersEntity currentUserBySession = allUsersService.getCurrentUserBySession(session, authentication);
-        List<ShoppingCartEntity> shoppingCart = shoppingCartRepository.findAllByAllUsersEntity_Id(currentUserBySession.getId());
+        List<ShoppingCartEntity> shoppingCart = getAllShoppingCartEntitiesForUser(currentUserBySession);
         List<ArtworkForListViewDTO> artworksForListView = shoppingCart.stream().map(shoppingCartEntity ->
                 artworkDTOService.getArtworkForListViewByArtworkEntity(shoppingCartEntity.getArtworkEntity())
         ).collect(Collectors.toList());
         log.debug("Returning all Artworks in ShoppingCart for user with the id: " + currentUserBySession.getId());
         return artworksForListView;
+    }
+
+    public List<ShoppingCartEntity> getAllShoppingCartEntitiesForUser(AllUsersEntity currentUser) {
+       return shoppingCartRepository.findAllByAllUsersEntity_Id(currentUser.getId());
+    }
+
+    public List<ArtworkEntity> convertShoppingCartEntitiesToArtworkEntities(AllUsersEntity currentUser) {
+        List<ShoppingCartEntity> shoppingCart = getAllShoppingCartEntitiesForUser(currentUser);
+        return shoppingCart.stream().map(
+                ShoppingCartEntity::getArtworkEntity
+        ).collect(Collectors.toList());
+    }
+
+    public List<Long> removeArtworksFromShoppingCartForUser (List<ArtworkEntity> artworksToRemove, AllUsersEntity currentUser) {
+        return artworksToRemove.stream().map(
+                artworkEntity -> shoppingCartRepository.deleteByAllUsersEntityAndArtworkEntity(currentUser, artworkEntity)
+        ).collect(Collectors.toList());
     }
 
 

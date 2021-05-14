@@ -30,4 +30,7 @@ public class ArtworkEntity {
 
     @OneToMany(mappedBy = "artworkEntity")
     private List<ShoppingCartEntity> shoppingCartEntities;
+
+    @OneToMany(mappedBy = "artworkEntity")
+    private List<BoughtArtworkEntity> boughtArtworkEntities;
 }
