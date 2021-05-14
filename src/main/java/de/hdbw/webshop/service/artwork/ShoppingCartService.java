@@ -1,6 +1,5 @@
 package de.hdbw.webshop.service.artwork;
 
-import de.hdbw.webshop.dto.ArtworkForDetailedViewDTO;
 import de.hdbw.webshop.dto.ArtworkForListViewDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.exception.exceptions.UserNotFoundException;

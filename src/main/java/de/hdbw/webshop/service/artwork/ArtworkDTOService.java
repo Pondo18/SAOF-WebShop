@@ -40,7 +40,7 @@ public class ArtworkDTOService {
     }
 
     public List<ArtworkForListViewDTO> getAllArtworksForArtworksPage() {
-        List<ArtworkEntity> allArtworkEntities = artworkRepository.findAll();
+        List<ArtworkEntity> allArtworkEntities = artworkRepository.findAllByAvailableGreaterThan(0);
         List<ArtworkForListViewDTO> artworksForListView = allArtworkEntities.stream().map(artwork ->
                 getArtworkForListViewByArtworkEntity(artwork)
         ).collect(Collectors.toList());
