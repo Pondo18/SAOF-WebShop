@@ -6,6 +6,9 @@ import de.hdbw.webshop.repository.artwork.ArtworkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 public class ArtworkService {
@@ -19,13 +22,23 @@ public class ArtworkService {
 
     public long getArtworkIdByArtworkName(String artworkName) {
         return artworkRepository.findArtworkIdByGeneratedArtworkName(artworkName).orElseThrow(
-                () -> new ArtworkNotFoundException()
+                ArtworkNotFoundException::new
         );
     }
 
     public ArtworkEntity getArtworkEntityByGeneratedArtworkName (String generatedArtworkName) {
         return artworkRepository.findByGeneratedArtworkName(generatedArtworkName).orElseThrow(
-                () -> new ArtworkNotFoundException()
+                ArtworkNotFoundException::new
         );
+    }
+
+    public List<ArtworkEntity> changeAmountOfAvailableArtworks(List<ArtworkEntity> artworksToChange) {
+        return artworksToChange.stream().peek(artworkEntity -> {
+            artworkEntity.setAvailable(artworkEntity.getAvailable()-1);
+        }).collect(Collectors.toList());
+    }
+
+    public void saveAll(List<ArtworkEntity> artworksToSave) {
+        artworkRepository.saveAll(artworksToSave);
     }
 }

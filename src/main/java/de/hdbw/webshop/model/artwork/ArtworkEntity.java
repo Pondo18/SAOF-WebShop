@@ -23,10 +23,14 @@ public class ArtworkEntity {
     private String description;
     @Column(nullable = false)
     private double price;
+    private int available;
 
     @OneToMany(mappedBy = "artwork")
     private List<ImageEntity> images;
 
     @OneToMany(mappedBy = "artworkEntity")
     private List<ShoppingCartEntity> shoppingCartEntities;
+
+    @OneToMany(mappedBy = "artworkEntity")
+    private List<BoughtArtworkEntity> boughtArtworkEntities;
 }
