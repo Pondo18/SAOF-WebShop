@@ -8,7 +8,11 @@
 <body>
 <p th:text="${artwork.artworkName}"></p>
 <img th:each="imageUrl: ${artwork.imagesUrl}" th:src="${imageUrl}">
-<form action="#" th:action="@{/shopping_cart/add_artwork}" method="post">
+<form th:if="${isInShoppingCart}" action="#" th:action="@{/shopping_cart/remove_artwork}" method="post">
+    <input type="hidden" th:value="${artwork.generatedArtworkName}" name="artworkName"/>
+    <button type="submit">Remove from Cart</button>
+</form>
+<form th:unless="${isInShoppingCart}" action="#" th:action="@{/shopping_cart/add_artwork}" method="post">
     <input type="hidden" th:value="${artwork.generatedArtworkName}" name="artworkName"/>
     <button type="submit">Add to Cart</button>
 </form>

@@ -1,9 +1,11 @@
 package de.hdbw.webshop.model.users.entity;
 
+import de.hdbw.webshop.model.artwork.ShoppingCartEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "all_users")
@@ -20,4 +22,7 @@ public class AllUsersEntity {
 
     @OneToOne(mappedBy = "allUsers")
     private UnregisteredUserEntity unregisteredUser;
+
+    @OneToMany(mappedBy = "allUsersEntity")
+    private List<ShoppingCartEntity> shoppingCartEntity;
 }
