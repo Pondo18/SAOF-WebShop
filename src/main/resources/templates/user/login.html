@@ -27,6 +27,7 @@
     <form th:action="@{/login}" method="post">
       <input type="email" id="username" name="username" autofocus="autofocus" class="fadeIn second" placeholder="your@email.com">
       <input type="password" id="password" name="password" class="fadeIn third" placeholder="Password">
+      <input type="hidden" th:if="${jsessionid!=null}" th:value="${jsessionid}" name="jsessionid"/>
       <input type="submit" value="Log in" class="fadeIn fourth">
     </form>
 
@@ -34,6 +35,12 @@
     <div id="formFooter">
       <a class="underlineHover" href="#">Forgot Password?</a>
     </div>
+      <form action="#" th:action="@{/registration/user}" method="get">
+        <input type="hidden" th:value="${returnUrl}" name="returnUrl"/>
+        <input type="hidden" th:value="${jsessionid}" name="jsessionid"/>
+        <button class="underlineHover" type="submit">Signup first first</button>
+      </form>
+
 
   </div>
 </div>

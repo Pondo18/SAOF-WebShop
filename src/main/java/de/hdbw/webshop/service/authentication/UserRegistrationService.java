@@ -32,11 +32,12 @@ public class UserRegistrationService {
         this.authenticationService = authenticationService;
     }
 
-    public void doRegistration(UserRegistrationFormDTO userRegistrationFormDTO, HttpServletRequest request) {
-        registerNewUser(userRegistrationFormDTO);
+    public AllUsersEntity doRegistration(UserRegistrationFormDTO userRegistrationFormDTO, HttpServletRequest request) {
+        UserPasswordEntity userPasswordEntity = registerNewUser(userRegistrationFormDTO);
         String email = userRegistrationFormDTO.getEmail();
         String password = userRegistrationFormDTO.getPassword();
         authenticationService.doAutoLogin(email, password, request);
+        return userPasswordEntity.getRegisteredUser().getAllUsers();
     }
 
     public UserPasswordEntity registerNewUser (UserRegistrationFormDTO userRegistrationFormDTO) {

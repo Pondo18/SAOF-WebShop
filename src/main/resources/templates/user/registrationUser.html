@@ -19,13 +19,15 @@
             <img src="https://img.icons8.com/material-sharp/96/000000/art-book.png" id="icon" alt="Art Icon" />
         </div>
         <!---->
-        <form action="#" th:action="@{/registration/registeredUsers}" th:object="${registeredUsers}" method="post">
+        <form action="#" th:action="@{/registration/user}" th:object="${user}" method="post">
             <input type="text" th:field="*{firstName}" id="firstname" class="fadeIn second" name="firstname" placeholder="First Name" required/>
             <input type="text" th:field="*{secondName}" id="secondname" class="fadeIn second" name="secondname" placeholder="Second Name" required/>
             <input type="email" th:field="*{email}" id="email" class="fadeIn second" name="email" placeholder="your@email.com" required/>
             <input type="password" th:field="*{password}" id="password" class="fadeIn second" name="password" placeholder="Password" minlength="8" required/>
             <input type="password" th:field="*{repeatPassword}" id="repeatPassword" class="fadeIn second" name="repeatPassword" placeholder="Repeat the Password" required/>
             <div id = "displayStrength"></div>
+            <input type="hidden" th:value="${param.returnUrl}" name="returnUrl"/>
+            <input type="hidden" th:value="${param.jsessionid}" name="jsessionid"/>
             <input type="submit" class="fadeIn fourth" value="Register">
         </form>
     </div>

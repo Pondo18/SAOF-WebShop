@@ -22,6 +22,7 @@ public class AuthenticationService {
 
     public void doAutoLogin(String email, String password, HttpServletRequest request) {
         try {
+            invalidateSessionIfSessionExists(request);
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
             token.setDetails(new WebAuthenticationDetails(request));
             Authentication authentication = authenticationManager.authenticate(token);
@@ -31,5 +32,10 @@ public class AuthenticationService {
             log.warn("Couldn't Login user with the email: " + email + " After Registration");
             SecurityContextHolder.getContext().setAuthentication(null);
         }
+    }
+
+    public void invalidateSessionIfSessionExists(HttpServletRequest request) {
+        request.getSession(false).invalidate();
+        SecurityContextHolder.clearContext();
     }
 }
