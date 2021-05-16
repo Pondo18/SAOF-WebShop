@@ -1,0 +1,72 @@
+.social-part .fa{
+    padding-right:20px;
+}
+ul li a{
+    margin-right: 20px;
+}
+
+.social{
+    width: 2rem;
+}
+
+.img {
+    transition: transform .2s;
+}
+
+.img:hover {
+    transform: scale(1.05);
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+/*footer*/
+
+footer.footer {
+    height: 100%;
+    background: black;
+    position: relative;
+}
+
+footer.footer .container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding-left: 2rem;
+}
+
+footer.footer .container>div {
+    flex-grow: 1;
+    flex-basis: 0;
+    padding: 3rem 0.9rem;
+}
+
+footer.footer .container .about-us h2 {
+    color: var(--white);
+}
+
+
+footer.footer .rights h4 a {
+    color: white;
+}
+
+footer.footer .rights .text-gray {
+    color: gray;
+}
+
+footer.footer .move-up {
+    position: absolute;
+    right: 6%;
+    top: 15%;
+}
+
+
+
+/*footer*/
