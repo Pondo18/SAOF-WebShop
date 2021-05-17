@@ -41,7 +41,7 @@ public class ImageService {
 
     @Transient
     public ImageEntity getDefaultImage() throws Exception {
-        InputStream is = getResourceFileAsInputStream("src/main/resources/static/images/image_missing.png");
+        InputStream is = getResourceFileAsInputStream("static/images/image_missing.png");
         String fileType = "image/png";
         byte[] bdata = FileCopyUtils.copyToByteArray(is);
         ImageEntity image = new ImageEntity(fileType, 0, null, bdata);

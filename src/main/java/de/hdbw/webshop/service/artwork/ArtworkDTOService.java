@@ -7,6 +7,7 @@ import de.hdbw.webshop.model.artwork.ArtworkEntity;
 import de.hdbw.webshop.repository.artwork.ArtworkRepository;
 import de.hdbw.webshop.repository.artwork.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public class ArtworkDTOService {
 
     private final ArtworkRepository artworkRepository;
     private final ImageRepository imageRepository;
+    @Value("${host.url}")
+    private String host;
 
     @Autowired
     public ArtworkDTOService(ArtworkRepository artworkRepository, ImageRepository imageRepository) {
@@ -34,7 +37,7 @@ public class ArtworkDTOService {
         ArtworkForDetailedViewDTO artwork = new ArtworkForDetailedViewDTO();
         artwork.build(artworkEntity);
         List<String> artworkImageUuids = imageRepository.findAllImageUuidsByArtworkAndOrderByPosition(artworkEntity.getId());
-        List<String> artworkImageUrls = buildImageUrls(artworkImageUuids);
+        List<String> artworkImageUrls = buildImageUrls(artworkImageUuids, host);
         artwork.setImagesUrl(artworkImageUrls);
         return artwork;
     }
@@ -49,6 +52,6 @@ public class ArtworkDTOService {
 
     public ArtworkForListViewDTO getArtworkForListViewByArtworkEntity(ArtworkEntity artworkEntity) {
         ArtworkForListViewDTO artworkForDetailedViewDTO = new ArtworkForListViewDTO();
-        return artworkForDetailedViewDTO.build(artworkEntity);
+        return artworkForDetailedViewDTO.build(artworkEntity, host);
     }
 }

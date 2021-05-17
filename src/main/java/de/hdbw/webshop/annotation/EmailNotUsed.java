@@ -15,7 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 public @interface EmailNotUsed {
 
-    String message() default "{EmailNotUsed.message}";
+    String message() default "The email address is already in use";
 
     Class<?>[] groups() default {};
 

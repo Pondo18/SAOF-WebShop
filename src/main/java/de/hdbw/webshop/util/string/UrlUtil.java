@@ -1,11 +1,13 @@
 package de.hdbw.webshop.util.string;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UrlUtil {
 
-    private final String host = "http://localhost:8080/";
+    @Value("${host.url}")
+    private static String host;
 
     public String getPathByUrl(String entireUrl) {
         return entireUrl.replace(host, "");

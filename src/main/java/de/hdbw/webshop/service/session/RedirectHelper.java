@@ -2,16 +2,15 @@ package de.hdbw.webshop.service.session;
 
 import de.hdbw.webshop.util.string.UrlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-
-@Service
-public class RedirectService {
+@Component
+public class RedirectHelper {
 
     private final UrlUtil urlUtil;
 
     @Autowired
-    public RedirectService(UrlUtil urlUtil) {
+    public RedirectHelper(UrlUtil urlUtil) {
         this.urlUtil = urlUtil;
     }
 
