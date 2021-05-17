@@ -1,17 +1,152 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Products</title>
+    <title>Home - ART</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.navbar-light .dmenu').hover(function () {
+                $(this).find('.sm-menu').first().stop(true, true).slideDown(150);
+            }, function () {
+                $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
+            });
+        });
+    </script>
+
+    <link href="../static/css/mainpage.css" th:href="@{/css/mainpage.css}" rel="stylesheet">
+
+    <!-- uncomment for production, comment the next other, copy css from artworks to static
+    <link href="mainpage.css" rel="stylesheet">-->
 </head>
 <body>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-sm   navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item dropdown dmenu">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    Our Service
+                </a>
+                <div class="dropdown-menu sm-menu">
+                    <a class="dropdown-item" href="#">service2</a>
+                    <a class="dropdown-item" href="#">service 2</a>
+                    <a class="dropdown-item" href="#">service 3</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Call</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  style="color: black">Be Smart - Buy Art! Der fröhlich freundliche Kunst Dealer</a>
+            </li>
+
+            <li class="nav-item">
+
+                <div sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}"  class="nav-link"  style="color: teal">Log out</a>
+                </div>
+                <div sec:authorize="isAnonymous()">
+                    <a th:href="@{/login}" class="nav-link"  style="color: teal">Log in</a>
+                    <a th:href="@{/user/registrationUser}" class="nav-link"  style="color: teal">Register</a>
+                </div>
+
+
+            </li>
+
+            <li class="nav-item">
+                <a th:href="@{/shopping_cart}" class="nav-link"  style="color: teal">Shopping Cart</a>
+            </li>
+
+
+        </ul>
+        <div class="social-part">
+            <img src="https://img.icons8.com/doodle/48/000000/instagram-new.png" class="social"/>
+            <img src="https://img.icons8.com/carbon-copy/100/000000/tiktok.png" class="social"/>
+            <img src="https://img.icons8.com/doodle/48/000000/paypal.png" class="social"/>
+        </div>
+    </div>
+</nav>
+<!-- NAVBAR -->
+<!-- Main Content -->
+<!--
 <div class="row" th:each="artwork: ${artworks}" th:attr="onclick=|openArtwork('${artwork.generatedArtworkName}')|">
-    <p th:text="${artwork.artworkName}"></p>
-    <p th:text="${artwork.price}"></p>
-    <img th:src="${artwork.primaryImageUrl}">
+    <p th:text="${artwork.artworkName}">artworkname</p>
+    <p th:text="${artwork.price}">price</p>
+    <div class="img" style="border:1px solid black;">
+        <img th:src="${artwork.primaryImageUrl}" alt="this is art img">
+    </div>
+
 </div>
+
+<hr>
+<hr>
+-->
+
+<div class="container-fluid">
+    <div class="category1 flex-row" style="
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: hidden;
+    padding-top: 8rem;
+">
+        <div class="arts" style="max-width: 20rem; padding-right: 2rem;"
+             th:each="artwork: ${artworks}" th:attr="onclick=|openArtwork('${artwork.generatedArtworkName}')|" title="Click to View more">
+
+
+            <h2><span th:text="${artwork.artworkName}">Artworkname</span></h2>
+            <div class="img" style="border:1px solid black;">
+                <img th:src="${artwork.primaryImageUrl}" alt="this is art img">
+            </div>
+            <h4><span th:text="${artwork.price}"></span> €</h4>
+        </div>
+    </div>
+</div>
+
+
+<!-- footer-->
+<footer class="footer">
+    <div class="container">
+        <div class="about-us">
+            <h2>About Our Mission</h2>
+            <p>
+                Lorem Ipsum Postem git
+            </p>
+        </div>
+    </div>
+
+    <div class="rights flex-row">
+        <h4 class="text-gray">A Project by Students</h4>
+    </div>
+</footer>
+
+
+
+
+
+
+
+
 <script>
     function openArtwork(generatedArtworkName) {
         console.log(generatedArtworkName);

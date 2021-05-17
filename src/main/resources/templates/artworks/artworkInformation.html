@@ -1,22 +1,107 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home - ART</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.navbar-light .dmenu').hover(function () {
+                $(this).find('.sm-menu').first().stop(true, true).slideDown(150);
+            }, function () {
+                $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
+            });
+        });
+    </script>
+
+    <link href="../static/css/mainpage.css" th:href="@{/css/mainpage.css}" rel="stylesheet">
+
+    <!-- uncomment for production, comment the next other, copy css from artworks to static
+    <link href="mainpage.css" rel="stylesheet">-->
 </head>
 <body>
-<p th:text="${artwork.artworkName}"></p>
-<img th:each="imageUrl: ${artwork.imagesUrl}" th:src="${imageUrl}">
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-sm   navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item dropdown dmenu">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    Our Service
+                </a>
+                <div class="dropdown-menu sm-menu">
+                    <a class="dropdown-item" href="#">service2</a>
+                    <a class="dropdown-item" href="#">service 2</a>
+                    <a class="dropdown-item" href="#">service 3</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Call</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  style="color: black">Be Smart - Buy Art! Der fröhlich freundliche Kunst Dealer</a>
+            </li>
+
+            <li class="nav-item">
+
+                <div sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}"  class="nav-link"  style="color: teal">Log out</a>
+                </div>
+                <div sec:authorize="isAnonymous()">
+                    <a th:href="@{/login}" class="nav-link"  style="color: teal">Log in</a>
+                    <a th:href="@{/user/registrationUser}" class="nav-link"  style="color: teal">Register</a>
+                </div>
+
+
+            </li>
+
+            <li class="nav-item">
+                <a th:href="@{/shopping_cart}" class="nav-link"  style="color: teal">Shopping Cart</a>
+            </li>
+
+
+        </ul>
+        <div class="social-part">
+            <img src="https://img.icons8.com/doodle/48/000000/instagram-new.png" class="social"/>
+            <img src="https://img.icons8.com/carbon-copy/100/000000/tiktok.png" class="social"/>
+            <img src="https://img.icons8.com/doodle/48/000000/paypal.png" class="social"/>
+        </div>
+    </div>
+
+</nav>
+<!-- NAVBAR -->
+<h2><span th:text="${artwork.artworkName}">Name</span></h2>
+<div class="img">
+    <img th:each="imageUrl: ${artwork.imagesUrl}" th:src="${imageUrl}">
+</div>
 <form th:if="${isInShoppingCart}" action="#" th:action="@{/shopping_cart/remove_artwork}" method="post">
     <input type="hidden" th:value="${artwork.generatedArtworkName}" name="artworkName"/>
-    <button type="submit">Remove from Cart</button>
+    <button class="button" type="submit">Remove from Cart</button>
 </form>
 <form th:unless="${isInShoppingCart}" action="#" th:action="@{/shopping_cart/add_artwork}" method="post">
     <input type="hidden" th:value="${artwork.generatedArtworkName}" name="artworkName"/>
-    <button type="submit">Add to Cart</button>
+    <button class="button" type="submit">Add to Cart</button>
 </form>
 <div sec:authorize="isAuthenticated()">
     Authenticated as <span sec:authentication="name"></span></div>
+
 </body>
 </html>
