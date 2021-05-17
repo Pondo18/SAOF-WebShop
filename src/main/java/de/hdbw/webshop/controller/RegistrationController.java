@@ -69,7 +69,7 @@ public class RegistrationController {
             }
         }
         log.info("Registering new user with email: '" + userRegistrationForm.getEmail() + "'");
-        return new ModelAndView("index");
+        return new ModelAndView("redirect:/artworks");
     }
 
     // PROBLEME:

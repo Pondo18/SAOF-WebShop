@@ -1,35 +1,26 @@
 package de.hdbw.webshop.service.authentication;
 
-import de.hdbw.webshop.security.MySessionRegistry;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @CommonsLog
 public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
-    private final MySessionRegistry mySessionRegistry;
 
-    public AuthenticationService(AuthenticationManager authenticationManager, MySessionRegistry mySessionRegistry) {
+    public AuthenticationService(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
-        this.mySessionRegistry = mySessionRegistry;
     }
 
     public void doAutoLogin(String email, String password, HttpServletRequest request, HttpServletResponse response) {

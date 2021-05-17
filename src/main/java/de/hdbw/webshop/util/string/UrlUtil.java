@@ -16,11 +16,9 @@ public class UrlUtil {
     }
 
     public String convertSnakeCaseToCamelCase(String string) {
-        string = string.substring(0, 1).toUpperCase()
-                + string.substring(1);
+        string = string.substring(0, 1).toUpperCase() + string.substring(1);
         while (string.contains("_")) {
-            string = string
-                    .replaceFirst("_[a-z]",
+            string = string.replaceFirst("_[a-z]",
                             String.valueOf(Character.toUpperCase(string.charAt(string.indexOf("_") + 1))));
         }
         return string;

@@ -95,8 +95,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
 //                .defaultSuccessUrl("/artworks")
                 .defaultSuccessUrl("/artworks", true)
-                .successHandler(new MyAuthenticationSuccessHandler(redirectService, shoppingCartService))
-                .and()
-                .logout().deleteCookies("JSESSIONID").logoutSuccessHandler(new CustomLogoutHandler());
+                .successHandler(new MyAuthenticationSuccessHandler(redirectService, shoppingCartService));
+//                .and()
+//                .logout().deleteCookies("JSESSIONID").logoutSuccessHandler(new CustomLogoutHandler());
     }
 }

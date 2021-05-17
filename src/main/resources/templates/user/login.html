@@ -28,6 +28,7 @@
       <input type="email" id="username" name="username" autofocus="autofocus" class="fadeIn second" placeholder="your@email.com">
       <input type="password" id="password" name="password" class="fadeIn third" placeholder="Password">
       <input type="hidden" th:if="${jsessionid!=null}" th:value="${jsessionid}" name="jsessionid"/>
+      <input type="hidden" th:if="${returnUrl!=null}" th:value="${returnUrl}" name="returnUrl"/>
       <input type="submit" value="Log in" class="fadeIn fourth">
     </form>
 

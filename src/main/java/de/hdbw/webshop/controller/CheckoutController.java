@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/checkout")
@@ -28,7 +27,7 @@ public class CheckoutController {
     public ModelAndView doCheckout(Authentication authentication) {
         try {
             checkoutService.doCheckout(authentication);
-            return new ModelAndView("index");
+            return new ModelAndView("redirect:/artworks");
         } catch (UserNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR,
