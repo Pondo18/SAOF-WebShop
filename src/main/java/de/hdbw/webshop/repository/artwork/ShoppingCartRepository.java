@@ -18,4 +18,6 @@ public interface ShoppingCartRepository extends JpaRepository<ShoppingCartEntity
     long deleteByArtworkEntity_GeneratedArtworkNameAndAllUsersEntity_Id(String generatedArtworkName, long userId);
 
     long deleteByAllUsersEntityAndArtworkEntity(AllUsersEntity allUsersEntity, ArtworkEntity artworkEntity);
+
+    List<ShoppingCartEntity> findAllByAllUsersEntity_UnregisteredUser_Jsessionid(String jsessionid);
 }

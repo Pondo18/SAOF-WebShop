@@ -29,7 +29,7 @@ public class ShoppingCartController {
                                                  @ModelAttribute("artworkName") String generatedArtworkName) {
         HttpSession session = request.getSession();
         shoppingCartService.addArtworkToShoppingCart(session, authentication, generatedArtworkName);
-        return new ModelAndView("index");
+        return new ModelAndView("redirect:/artworks/"+generatedArtworkName);
     }
 
     @PostMapping("remove_artwork")
@@ -38,7 +38,7 @@ public class ShoppingCartController {
                                                       @ModelAttribute("artworkName") String generatedArtworkName) {
         log.debug("Removing Artwork: "+ generatedArtworkName+ " from the shoppingCart of user with the session: " + session.getId());
         shoppingCartService.removeArtworkFromShoppingCart(session, authentication, generatedArtworkName);
-        return new ModelAndView("index");
+        return new ModelAndView("redirect:/artworks/"+generatedArtworkName);
     }
 
     @GetMapping
