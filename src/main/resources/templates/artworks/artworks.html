@@ -10,16 +10,7 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.navbar-light .dmenu').hover(function () {
-                $(this).find('.sm-menu').first().stop(true, true).slideDown(150);
-            }, function () {
-                $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
-            });
-        });
-    </script>
-
+    <script th:src="@{/javascript/documentReady.js}"></script>
     <link href="../static/css/mainpage.css" th:href="@{/css/mainpage.css}" rel="stylesheet">
 
     <!-- uncomment for production, comment the next other, copy css from artworks to static
@@ -147,14 +138,8 @@
 
 
 
-<script>
-    function openArtwork(generatedArtworkName) {
-        console.log(generatedArtworkName);
-        const url = `http://localhost:8080/artworks/${generatedArtworkName}`;
-        console.log(url);
-        window.location.replace(url);
-    }
-</script>
+<script th:src="@{/javascript/openArtworkFunction.js}"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>
