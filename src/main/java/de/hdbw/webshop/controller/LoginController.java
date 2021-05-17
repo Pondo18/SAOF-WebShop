@@ -15,8 +15,11 @@ public class LoginController {
         HttpSession httpSession = request.getSession(false);
         ModelAndView modelAndView = new ModelAndView("user/login");
         if (httpSession!=null) {
-            request.setAttribute("jsessionid", httpSession.getId());
             modelAndView.addObject("jsessionid", httpSession.getId());
+        }
+        String refererUrl = request.getHeader("referer");
+        if (refererUrl!=null) {
+            modelAndView.addObject("returnUrl", refererUrl);
         }
         return modelAndView;
     }

@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class UserRegistrationService {
@@ -32,11 +33,13 @@ public class UserRegistrationService {
         this.authenticationService = authenticationService;
     }
 
-    public AllUsersEntity doRegistration(UserRegistrationFormDTO userRegistrationFormDTO, HttpServletRequest request) {
+    public AllUsersEntity doRegistration(UserRegistrationFormDTO userRegistrationFormDTO,
+                                         HttpServletRequest request,
+                                         HttpServletResponse response) {
         UserPasswordEntity userPasswordEntity = registerNewUser(userRegistrationFormDTO);
         String email = userRegistrationFormDTO.getEmail();
         String password = userRegistrationFormDTO.getPassword();
-        authenticationService.doAutoLogin(email, password, request);
+        authenticationService.doAutoLogin(email, password, request, response);
         return userPasswordEntity.getRegisteredUser().getAllUsers();
     }
 

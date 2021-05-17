@@ -39,12 +39,13 @@ public class MyAuthenticationSuccessHandler
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         SavedRequest savedRequest = this.requestCache.getRequest(request, response);
         if (savedRequest == null) {
-            super.onAuthenticationSuccess(request, response, authentication);
+            this.getRedirectStrategy().sendRedirect(request, response, "/artworks");
+            clearAuthenticationAttributes(request);
         } else {
             String targetUrlParameter = this.getTargetUrlParameter();
             if (!this.isAlwaysUseDefaultTargetUrl() && (targetUrlParameter == null || !StringUtils.hasText(request.getParameter(targetUrlParameter)))) {
                 this.clearAuthenticationAttributes(request);
-                String targetUrl = redirectService.getRedirectPath(savedRequest.getRedirectUrl());
+                String targetUrl = redirectService.getRedirectUrl(savedRequest.getRedirectUrl());
                 String jsessionid = request.getParameter("jsessionid");
                 if (jsessionid!=null) {
                     shoppingCartService.changeUserForShoppingCartAndSave(jsessionid, authentication);

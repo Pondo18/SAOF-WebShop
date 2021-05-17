@@ -105,8 +105,13 @@ public class ShoppingCartService {
 
     public List<ShoppingCartEntity> changeUserForShoppingCartAndSave(String jsessionidFromUnregisteredSession,
                                                                      Authentication authenticationFromRegisteredSession) {
-        AllUsersEntity oldUnregisteredUser = allUsersService.getCurrentUnregisteredUser(jsessionidFromUnregisteredSession);
         AllUsersEntity newRegisteredUser = allUsersService.getCurrentRegisteredUser(authenticationFromRegisteredSession);
+        return changeUserForShoppingCartAndSave(jsessionidFromUnregisteredSession, newRegisteredUser);
+    }
+
+    public List<ShoppingCartEntity> changeUserForShoppingCartAndSave(String jsessionidFromUnregisteredSession,
+                                                                     AllUsersEntity newRegisteredUser) {
+        AllUsersEntity oldUnregisteredUser = allUsersService.getCurrentUnregisteredUser(jsessionidFromUnregisteredSession);
         List<ShoppingCartEntity> oldShoppingCart = getAllShoppingCartEntitiesForUser(oldUnregisteredUser);
         oldShoppingCart.forEach(shoppingCartEntity -> shoppingCartEntity.setAllUsersEntity(newRegisteredUser));
         List<ShoppingCartEntity> newShoppingCart =  oldShoppingCart.stream()

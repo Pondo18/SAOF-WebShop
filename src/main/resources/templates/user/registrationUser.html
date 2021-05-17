@@ -26,8 +26,8 @@
             <input type="password" th:field="*{password}" id="password" class="fadeIn second" name="password" placeholder="Password" minlength="8" required/>
             <input type="password" th:field="*{repeatPassword}" id="repeatPassword" class="fadeIn second" name="repeatPassword" placeholder="Repeat the Password" required/>
             <div id = "displayStrength"></div>
-            <input type="hidden" th:value="${param.returnUrl}" name="returnUrl"/>
-            <input type="hidden" th:value="${param.jsessionid}" name="jsessionid"/>
+            <input type="hidden" th:if="${jsessionid!=null}" th:value="${jsessionid}" name="jsessionid"/>
+            <input type="hidden" th:if="${returnUrl!=null}" th:value="${returnUrl}" name="returnUrl"/>
             <input type="submit" class="fadeIn fourth" value="Register">
         </form>
     </div>

@@ -79,11 +79,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return listenerRegBean;
     }
 
-//    @Bean
-//    public AuthenticationSuccessHandler authenticationSuccessHandler () {
-//        return new MyAuthenticationSuccessHandler();
-//    }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -98,7 +93,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/artworks")
-                .successHandler(new MyAuthenticationSuccessHandler(redirectService, shoppingCartService));
+//                .defaultSuccessUrl("/artworks")
+                .defaultSuccessUrl("/artworks", true)
+                .successHandler(new MyAuthenticationSuccessHandler(redirectService, shoppingCartService))
+                .and()
+                .logout().deleteCookies("JSESSIONID").logoutSuccessHandler(new CustomLogoutHandler());
     }
 }
