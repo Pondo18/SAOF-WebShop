@@ -1,6 +1,8 @@
 package de.hdbw.webshop.security;
 
 import de.hdbw.webshop.listener.MySessionListener;
+import de.hdbw.webshop.service.artwork.ShoppingCartService;
+import de.hdbw.webshop.service.session.RedirectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -18,16 +20,23 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(
+        prePostEnabled = true,
+        securedEnabled = true,
+        jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
     private final MySessionListener mySessionListener;
+    private final RedirectService redirectService;
+    private final ShoppingCartService shoppingCartService;
 
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService, MySessionListener mySessionListener) {
+    public SecurityConfig(UserDetailsService userDetailsService, MySessionListener mySessionListener, RedirectService redirectService, ShoppingCartService shoppingCartService) {
         this.userDetailsService = userDetailsService;
         this.mySessionListener = mySessionListener;
+        this.redirectService = redirectService;
+        this.shoppingCartService = shoppingCartService;
     }
 
     @Bean
@@ -84,6 +93,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/artworks");
+//                .defaultSuccessUrl("/artworks")
+                .defaultSuccessUrl("/artworks", true)
+                .successHandler(new MyAuthenticationSuccessHandler(redirectService, shoppingCartService));
+//                .and()
+//                .logout().deleteCookies("JSESSIONID").logoutSuccessHandler(new CustomLogoutHandler());
     }
 }

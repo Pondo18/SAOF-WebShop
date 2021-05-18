@@ -1,13 +1,16 @@
 package de.hdbw.webshop.service.artwork;
 
+import de.hdbw.webshop.exception.exceptions.UserNotFoundException;
 import de.hdbw.webshop.model.artwork.ArtworkEntity;
 import de.hdbw.webshop.model.artwork.BoughtArtworkEntity;
 import de.hdbw.webshop.model.users.entity.AllUsersEntity;
 import de.hdbw.webshop.repository.artwork.CheckoutRepository;
 import de.hdbw.webshop.service.user.AllUsersService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -29,18 +32,19 @@ public class CheckoutService {
     }
 
     @Transactional
-    public void doCheckout(HttpSession session, Authentication authentication) {
-        AllUsersEntity currentUser = allUsersService.getCurrentUserBySession(session, authentication);
+    public void doCheckout(Authentication authentication) {
+        AllUsersEntity currentUser = allUsersService.getCurrentRegisteredUser(authentication);
         List<ArtworkEntity> artworksInShoppingCart = shoppingCartService.convertShoppingCartEntitiesToArtworkEntities(currentUser);
         List<ArtworkEntity> changedArtworks = artworkService.changeAmountOfAvailableArtworks(artworksInShoppingCart);
         artworkService.saveAll(changedArtworks);
         List<BoughtArtworkEntity> boughtArtworkEntities = createBoughtArtworkEntities(changedArtworks, currentUser);
         checkoutRepository.saveAll(boughtArtworkEntities);
         shoppingCartService.removeArtworksFromShoppingCartForUser(changedArtworks, currentUser);
+
     }
 
-    public List<BoughtArtworkEntity> createBoughtArtworkEntities (List<ArtworkEntity> artworksToBuy, AllUsersEntity currentUser) {
-       return artworksToBuy.stream().map(
+    public List<BoughtArtworkEntity> createBoughtArtworkEntities(List<ArtworkEntity> artworksToBuy, AllUsersEntity currentUser) {
+        return artworksToBuy.stream().map(
                 artworkEntity -> new BoughtArtworkEntity(artworkEntity, currentUser)
         ).collect(Collectors.toList());
     }

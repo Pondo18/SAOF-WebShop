@@ -1,5 +1,6 @@
 package de.hdbw.webshop.model.users.entity;
 
+import de.hdbw.webshop.model.artwork.BoughtArtworkEntity;
 import de.hdbw.webshop.model.artwork.ShoppingCartEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,9 @@ public class AllUsersEntity {
     @OneToOne(mappedBy = "allUsers")
     private UnregisteredUserEntity unregisteredUser;
 
-    @OneToMany(mappedBy = "allUsersEntity")
+    @OneToMany(mappedBy = "allUsersEntity", cascade = CascadeType.ALL)
     private List<ShoppingCartEntity> shoppingCartEntity;
+
+    @OneToMany(mappedBy = "allUsersEntity")
+    private List<BoughtArtworkEntity> boughtArtworks;
 }

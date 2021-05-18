@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
+import java.time.LocalDate;
 
 @Service
 @CommonsLog
@@ -28,11 +30,10 @@ public class UnregisteredUserService {
         this.allUsersService = allUsersService;
     }
 
-    public UnregisteredUserEntity createNewUnregisteredUser(HttpSessionEvent httpSessionEvent) {
+    public UnregisteredUserEntity createNewUnregisteredUser(String jsessionid) {
         AllUsersEntity allUsersEntity = allUsersService.createNewAllUsersEntity();
-        String jsessionid = httpSessionEvent.getSession().getId();
-        UnregisteredUserEntity unregisteredUserEntity = new UnregisteredUserEntity(jsessionid, allUsersEntity);
-        log.debug("Creating new Unregistered User for session: " + jsessionid);
+        LocalDate expiringDate = LocalDate.now().plusWeeks(2);
+        UnregisteredUserEntity unregisteredUserEntity = new UnregisteredUserEntity(jsessionid, expiringDate, allUsersEntity);
         return unregisteredUserRepository.save(unregisteredUserEntity);
     }
 
@@ -64,5 +65,9 @@ public class UnregisteredUserService {
             log.debug("There is no unregistered User for the Session: " + jsessionid);
             return false;
         }
+    }
+
+    public void deleteUnregisteredUserByJsessionid(String jsessionid) {
+        unregisteredUserRepository.deleteByJsessionid(jsessionid);
     }
 }
