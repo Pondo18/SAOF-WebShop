@@ -10,7 +10,7 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script th:src="@{/javascript/documentReady.js}"></script>
+    <script th:src="@{/javascript/document_ready.js}"></script>
     <link href="../static/css/mainpage.css" th:href="@{/css/mainpage.css}" rel="stylesheet">
 
     <!-- uncomment for production, comment the next other, copy css from artworks to static
@@ -91,8 +91,7 @@
     <input type="hidden" th:value="${artwork.generatedArtworkName}" name="artworkName"/>
     <button class="button" type="submit">Add to Cart</button>
 </form>
-<div sec:authorize="isAuthenticated()">
-    Authenticated as <span sec:authentication="name"></span></div>
-
+<div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span></div>
+<script th:src="@{/javascript/document_ready.js}"></script>
 </body>
 </html>
