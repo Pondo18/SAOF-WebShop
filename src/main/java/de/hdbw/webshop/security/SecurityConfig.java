@@ -84,7 +84,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
-                .csrf().disable()
                 .authorizeRequests().antMatchers("/artwork*").permitAll()
                 .antMatchers("/**").permitAll()
                 .antMatchers("/registration/user").permitAll()
