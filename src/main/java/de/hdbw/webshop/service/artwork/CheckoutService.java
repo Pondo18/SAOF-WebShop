@@ -1,18 +1,14 @@
 package de.hdbw.webshop.service.artwork;
 
-import de.hdbw.webshop.exception.exceptions.UserNotFoundException;
 import de.hdbw.webshop.model.artwork.ArtworkEntity;
 import de.hdbw.webshop.model.artwork.BoughtArtworkEntity;
 import de.hdbw.webshop.model.users.entity.AllUsersEntity;
 import de.hdbw.webshop.repository.artwork.CheckoutRepository;
 import de.hdbw.webshop.service.user.AllUsersService;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 

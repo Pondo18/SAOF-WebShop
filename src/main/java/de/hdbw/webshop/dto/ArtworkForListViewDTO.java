@@ -14,11 +14,12 @@ public class ArtworkForListViewDTO {
     private double price;
     private String primaryImageUrl;
 
-    public ArtworkForListViewDTO build(ArtworkEntity artworkEntity) {
+    public ArtworkForListViewDTO build(ArtworkEntity artworkEntity, String host) {
         generatedArtworkName = artworkEntity.getGeneratedArtworkName();
         artworkName = artworkEntity.getArtworkName();
         price = artworkEntity.getPrice();
-        primaryImageUrl = "http://localhost:8080/artwork/" +
+        primaryImageUrl = host +
+                "/artwork/" +
                 artworkEntity.getGeneratedArtworkName() +
                 "/images?position=1";
         return this;

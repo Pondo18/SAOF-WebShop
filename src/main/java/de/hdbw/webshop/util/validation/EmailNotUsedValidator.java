@@ -16,7 +16,6 @@ public class EmailNotUsedValidator implements ConstraintValidator<EmailNotUsed, 
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext constraintValidatorContext) {
-        boolean result = registeredUserRepository.findByEmail(email).isEmpty();
-        return result;
+        return registeredUserRepository.findByEmail(email).isEmpty();
     }
 }

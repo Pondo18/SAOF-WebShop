@@ -4,7 +4,7 @@ import de.hdbw.webshop.dto.UserRegistrationFormDTO;
 import de.hdbw.webshop.model.users.entity.AllUsersEntity;
 import de.hdbw.webshop.service.artwork.ShoppingCartService;
 import de.hdbw.webshop.service.authentication.UserRegistrationService;
-import de.hdbw.webshop.service.session.RedirectService;
+import de.hdbw.webshop.service.session.RedirectHelper;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,12 +23,12 @@ public class RegistrationController {
 
     final UserRegistrationService userRegistrationService;
     final ShoppingCartService shoppingCartService;
-    final RedirectService redirectService;
+    final RedirectHelper redirectHelper;
 
-    public RegistrationController(UserRegistrationService userRegistrationService, ShoppingCartService shoppingCartService, RedirectService redirectService) {
+    public RegistrationController(UserRegistrationService userRegistrationService, ShoppingCartService shoppingCartService, RedirectHelper redirectHelper) {
         this.userRegistrationService = userRegistrationService;
         this.shoppingCartService = shoppingCartService;
-        this.redirectService = redirectService;
+        this.redirectHelper = redirectHelper;
     }
 
     @GetMapping("/user")
@@ -64,7 +64,7 @@ public class RegistrationController {
             }
             String refererUrl = httpServletRequest.getParameter("returnUrl");
             if (refererUrl!=null) {
-                String returnPath = redirectService.getRedirectPath(refererUrl);
+                String returnPath = redirectHelper.getRedirectPath(refererUrl);
                 return new ModelAndView("redirect:/"+returnPath);
             }
         }

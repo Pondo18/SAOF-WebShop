@@ -1,7 +1,7 @@
 package de.hdbw.webshop.security;
 
 import de.hdbw.webshop.service.artwork.ShoppingCartService;
-import de.hdbw.webshop.service.session.RedirectService;
+import de.hdbw.webshop.service.session.RedirectHelper;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -22,7 +22,7 @@ public class MyAuthenticationSuccessHandler
         implements AuthenticationSuccessHandler {
 
     private RequestCache requestCache = new HttpSessionRequestCache();
-    private RedirectService redirectService;
+    private RedirectHelper redirectHelper;
     private ShoppingCartService shoppingCartService;
 
     public MyAuthenticationSuccessHandler() {
@@ -30,8 +30,8 @@ public class MyAuthenticationSuccessHandler
         setUseReferer(true);
     }
 
-    public MyAuthenticationSuccessHandler(RedirectService redirectService, ShoppingCartService shoppingCartService) {
-        this.redirectService = redirectService;
+    public MyAuthenticationSuccessHandler(RedirectHelper redirectHelper, ShoppingCartService shoppingCartService) {
+        this.redirectHelper = redirectHelper;
         this.shoppingCartService = shoppingCartService;
         setUseReferer(true);
     }
@@ -51,7 +51,7 @@ public class MyAuthenticationSuccessHandler
             String targetUrlParameter = this.getTargetUrlParameter();
             if (!this.isAlwaysUseDefaultTargetUrl() && (targetUrlParameter == null || !StringUtils.hasText(request.getParameter(targetUrlParameter)))) {
                 this.clearAuthenticationAttributes(request);
-                this.getRedirectStrategy().sendRedirect(request, response, redirectService.getRedirectUrl(referer));
+                this.getRedirectStrategy().sendRedirect(request, response, redirectHelper.getRedirectUrl(referer));
             } else {
                 this.requestCache.removeRequest(request, response);
                 super.onAuthenticationSuccess(request, response, authentication);

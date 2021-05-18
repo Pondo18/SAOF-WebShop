@@ -2,7 +2,7 @@ package de.hdbw.webshop.security;
 
 import de.hdbw.webshop.listener.MySessionListener;
 import de.hdbw.webshop.service.artwork.ShoppingCartService;
-import de.hdbw.webshop.service.session.RedirectService;
+import de.hdbw.webshop.service.session.RedirectHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -28,14 +28,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
     private final MySessionListener mySessionListener;
-    private final RedirectService redirectService;
+    private final RedirectHelper redirectHelper;
     private final ShoppingCartService shoppingCartService;
 
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService, MySessionListener mySessionListener, RedirectService redirectService, ShoppingCartService shoppingCartService) {
+    public SecurityConfig(UserDetailsService userDetailsService, MySessionListener mySessionListener, RedirectHelper redirectHelper, ShoppingCartService shoppingCartService) {
         this.userDetailsService = userDetailsService;
         this.mySessionListener = mySessionListener;
-        this.redirectService = redirectService;
+        this.redirectHelper = redirectHelper;
         this.shoppingCartService = shoppingCartService;
     }
 
@@ -57,7 +57,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authProvider.setPasswordEncoder(getPasswordEncoder());
         return authProvider;
     }
-
 
     @Bean("authenticationManager")
     @Override
@@ -95,7 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
 //                .defaultSuccessUrl("/artworks")
                 .defaultSuccessUrl("/artworks", true)
-                .successHandler(new MyAuthenticationSuccessHandler(redirectService, shoppingCartService));
+                .successHandler(new MyAuthenticationSuccessHandler(redirectHelper, shoppingCartService));
 //                .and()
 //                .logout().deleteCookies("JSESSIONID").logoutSuccessHandler(new CustomLogoutHandler());
     }

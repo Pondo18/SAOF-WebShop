@@ -20,7 +20,7 @@ import javax.validation.Payload;
 @Retention(RUNTIME)
 public @interface ValidPassword {
 
-    String message() default "{NoValidPassword.message}";
+    String message() default "That's not a valid password";
 
     Class<?>[] groups() default {};
 

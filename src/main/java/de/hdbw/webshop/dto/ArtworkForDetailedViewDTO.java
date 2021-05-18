@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,9 +28,9 @@ public class ArtworkForDetailedViewDTO {
         description = entireArtwork.getDescription();
     }
 
-    public static List<String> buildImageUrls(List<String> artworkImageUuids) {
+    public static List<String> buildImageUrls(List<String> artworkImageUuids, String host) {
         List<String> artworkImageUrls = artworkImageUuids.stream().map(
-                uuid -> "http://localhost:8080/image/" + uuid
+                uuid -> host +"/image/" + uuid
         ).collect(Collectors.toList());
         return artworkImageUrls;
     }
