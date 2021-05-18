@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class UrlUtil {
 
     @Value("${host.url}")
-    private static String host;
+    private String host;
 
     public String getPathByUrl(String entireUrl) {
         return entireUrl.replace(host, "");
