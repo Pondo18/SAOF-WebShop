@@ -91,10 +91,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-//                .defaultSuccessUrl("/artworks")
-                .defaultSuccessUrl("/artworks", true)
-                .successHandler(new MyAuthenticationSuccessHandler(redirectHelper, shoppingCartService));
-//                .and()
-//                .logout().deleteCookies("JSESSIONID").logoutSuccessHandler(new CustomLogoutHandler());
+                .defaultSuccessUrl("/")
+//                .defaultSuccessUrl("/artworks", true)
+                .successHandler(new MyAuthenticationSuccessHandler(redirectHelper, shoppingCartService))
+                .and()
+                .logout().logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID");
     }
 }
