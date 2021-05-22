@@ -98,6 +98,40 @@
 <hr>
 -->
 
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addArtworkModal">
+    Add new Artwork
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="addArtworkModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="#" th:action="@{/create_artwork}" th:object="${artworkDTO}" enctype="multipart/form-data" method="post">
+                <div class="modal-header">
+<!--                    <h5 class="modal-title" id="addArtworkModalLabel">Modal title</h5>-->
+                    <input id="addArtworkModalLabel" type="text" th:field="*{artworkName}" class="fadeIn second" name="artworkName" placeholder="Artwork name" required/>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" th:field="*{artworkPrice}" class="fadeIn second" name="artworkPrice" placeholder="Price" required/>
+                    <input type="text" th:field="*{artworkDescription}" class="fadeIn second" name="artworkDescription" placeholder="Description"/>
+                    <input type="file" th:field="*{primaryImage}" class="fadeIn second" name="artworkImages" accept=".jpg, .png, .jpeg">
+                    <input type="file" th:field="*{secondImage}" class="fadeIn second" name="secondImage" accept=".jpg, .png, .jpeg">
+                    <input type="file" th:field="*{thirdImage}" class="fadeIn second" name="thirdImage" accept=".jpg, .png, .jpeg">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid">
     <div class="category1 flex-row" style="
     display: flex;

@@ -121,5 +121,11 @@
             <artifactId>springdoc-openapi-webmvc-core</artifactId>
             <version>1.5.8</version>
         </dependency>
+
+        <dependency>
+            <groupId>one.util</groupId>
+            <artifactId>streamex</artifactId>
+            <version>0.6.5</version>
+        </dependency>
     </dependencies>
 </project>

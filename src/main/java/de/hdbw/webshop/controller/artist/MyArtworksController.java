@@ -1,6 +1,7 @@
 package de.hdbw.webshop.controller.artist;
 
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
+import de.hdbw.webshop.dto.artwork.CreateNewArtworkDTO;
 import de.hdbw.webshop.service.artist.ArtistService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,8 @@ public class MyArtworksController {
     @GetMapping("/my_artworks")
     public ModelAndView getMyArtworksPage(Authentication authentication) {
         List<ArtworkForListViewDTO> artworksByArtist = artistService.getAllArtworksByArtist(authentication);
-        return new ModelAndView("artist/myArtworks", "artworks", artworksByArtist);
+        ModelAndView modelAndView = new ModelAndView("artist/myArtworks", "artworkDTO", new CreateNewArtworkDTO());
+        modelAndView.addObject("artworks", artworksByArtist);
+        return modelAndView;
     }
 }

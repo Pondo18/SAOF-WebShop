@@ -21,5 +21,7 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Long> {
 
     List<ArtworkEntity> findAllByAvailableGreaterThan(int available);
 
-    List<ArtworkEntity> findAllByArtist(ArtistEntity artistEntity);
+    List<ArtworkEntity> findAllByArtistAndAvailable(ArtistEntity artistEntity, int available);
+
+    boolean existsByGeneratedArtworkName(String generatedArtworkName);
 }

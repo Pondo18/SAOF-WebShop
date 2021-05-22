@@ -1,11 +1,13 @@
 package de.hdbw.webshop.service.artist;
 
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
+import de.hdbw.webshop.dto.artwork.CreateNewArtworkDTO;
 import de.hdbw.webshop.dto.registration.ArtistRegistrationFormDTO;
+import de.hdbw.webshop.model.artwork.ArtworkEntity;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import de.hdbw.webshop.repository.user.ArtistRepository;
-import de.hdbw.webshop.service.artwork.ArtworkDTOService;
+import de.hdbw.webshop.service.artwork.ArtworkService;
 import de.hdbw.webshop.service.user.RegisteredUserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -17,12 +19,12 @@ public class ArtistService {
 
     private final ArtistRepository artistRepository;
     private final RegisteredUserService registeredUserService;
-    private final ArtworkDTOService artworkDTOService;
+    private final ArtworkService artworkService;
 
-    public ArtistService(ArtistRepository artistRepository, RegisteredUserService registeredUserService, ArtworkDTOService artworkDTOService) {
+    public ArtistService(ArtistRepository artistRepository, RegisteredUserService registeredUserService, ArtworkService artworkService) {
         this.artistRepository = artistRepository;
         this.registeredUserService = registeredUserService;
-        this.artworkDTOService = artworkDTOService;
+        this.artworkService = artworkService;
     }
 
     public ArtistEntity findArtistIfUserIsArtist(RegisteredUsersEntity registeredUserEntity) {
@@ -35,6 +37,10 @@ public class ArtistService {
 
     public List<ArtworkForListViewDTO> getAllArtworksByArtist(Authentication authentication) {
         RegisteredUsersEntity currentUser = registeredUserService.findRegisteredUserEntityByAuthentication(authentication);
-        return artworkDTOService.getAllArtworksByArtist(currentUser);
+        return artworkService.findAllArtworksByArtist(currentUser.getArtistEntity());
+    }
+
+    public ArtworkEntity addNewArtwork(CreateNewArtworkDTO createNewArtworkDTO, Authentication authentication) {
+        return artworkService.createNewArtwork(createNewArtworkDTO, authentication);
     }
 }
