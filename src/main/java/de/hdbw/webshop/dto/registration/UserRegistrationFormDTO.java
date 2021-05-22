@@ -1,4 +1,4 @@
-package de.hdbw.webshop.dto;
+package de.hdbw.webshop.dto.registration;
 
 import de.hdbw.webshop.annotation.EmailNotUsed;
 import de.hdbw.webshop.annotation.PasswordMatches;

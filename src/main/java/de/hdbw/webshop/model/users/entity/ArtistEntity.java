@@ -13,10 +13,21 @@ import javax.persistence.*;
 public class ArtistEntity implements RegisteredUsers {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
-    @OneToOne(cascade = {CascadeType.ALL})
+    private String country;
+    private String domicile;
+
+    @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private RegisteredUsersEntity registeredUserEntity;
+
+    public ArtistEntity(String country, String domicile, RegisteredUsersEntity registeredUserEntity) {
+        this.country = country;
+        this.domicile = domicile;
+        this.registeredUserEntity = registeredUserEntity;
+    }
 
     @Override
     public String getEmail() {
@@ -27,6 +38,7 @@ public class ArtistEntity implements RegisteredUsers {
     public boolean isEnabled() {
         return registeredUserEntity.isEnabled();
     }
+
 
 
 }

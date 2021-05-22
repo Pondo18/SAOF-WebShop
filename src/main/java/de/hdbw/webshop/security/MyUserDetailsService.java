@@ -3,7 +3,6 @@ package de.hdbw.webshop.security;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import de.hdbw.webshop.model.users.entity.UserPasswordEntity;
-import de.hdbw.webshop.security.MyUserDetails;
 import de.hdbw.webshop.service.user.ArtistService;
 import de.hdbw.webshop.service.user.RegisteredUserService;
 import de.hdbw.webshop.service.user.UserPasswordService;
@@ -33,7 +32,7 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         try {
-            RegisteredUsersEntity registeredUserEntity = registeredUserService.findRegisteredUserEntity(email);
+            RegisteredUsersEntity registeredUserEntity = registeredUserService.findRegisteredUserEntityByEmail(email);
             ArtistEntity artistEntity = artistService.findArtistIfUserIsArtist(registeredUserEntity);
             UserPasswordEntity userPasswordEntity = userPasswordService.findUserPasswordEntity(registeredUserEntity);
             if (artistEntity!=null) {

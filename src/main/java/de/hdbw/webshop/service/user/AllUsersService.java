@@ -46,7 +46,7 @@ public class AllUsersService {
     public AllUsersEntity getCurrentRegisteredUser(Authentication authentication) {
         try {
             String email = authentication.getName();
-            User registeredUser = registeredUserService.findRegisteredUserEntity(email);
+            User registeredUser = registeredUserService.findRegisteredUserEntityByEmail(email);
             return getCurrentUser(registeredUser);
         } catch (Exception e) {
             throw new UserNotFoundException();

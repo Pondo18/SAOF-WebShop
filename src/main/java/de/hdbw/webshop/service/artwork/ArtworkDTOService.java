@@ -1,7 +1,7 @@
 package de.hdbw.webshop.service.artwork;
 
-import de.hdbw.webshop.dto.ArtworkForDetailedViewDTO;
-import de.hdbw.webshop.dto.ArtworkForListViewDTO;
+import de.hdbw.webshop.dto.artwork.ArtworkForDetailedViewDTO;
+import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.model.artwork.ArtworkEntity;
 import de.hdbw.webshop.repository.artwork.ArtworkRepository;
@@ -10,11 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static de.hdbw.webshop.dto.ArtworkForDetailedViewDTO.buildImageUrls;
+import static de.hdbw.webshop.dto.artwork.ArtworkForDetailedViewDTO.buildImageUrls;
 
 @Service
 public class ArtworkDTOService {

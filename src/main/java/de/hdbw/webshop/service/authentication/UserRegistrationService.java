@@ -1,6 +1,6 @@
 package de.hdbw.webshop.service.authentication;
 
-import de.hdbw.webshop.dto.UserRegistrationFormDTO;
+import de.hdbw.webshop.dto.registration.UserRegistrationFormDTO;
 import de.hdbw.webshop.model.users.entity.AllUsersEntity;
 import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import de.hdbw.webshop.model.users.entity.UserPasswordEntity;
