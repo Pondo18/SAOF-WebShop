@@ -4,7 +4,7 @@ import de.hdbw.webshop.dto.registration.ArtistRegistrationFormDTO;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import de.hdbw.webshop.repository.user.ArtistRepository;
-import de.hdbw.webshop.service.user.ArtistService;
+import de.hdbw.webshop.service.artist.ArtistService;
 import de.hdbw.webshop.service.user.RegisteredUserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;

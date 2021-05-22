@@ -1,10 +1,10 @@
-package de.hdbw.webshop.controller;
+package de.hdbw.webshop.controller.artwork;
 
 import de.hdbw.webshop.dto.artwork.ArtworkForDetailedViewDTO;
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.service.artwork.ArtworkDTOService;
-import de.hdbw.webshop.service.artwork.ShoppingCartService;
+import de.hdbw.webshop.service.user.ShoppingCartService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

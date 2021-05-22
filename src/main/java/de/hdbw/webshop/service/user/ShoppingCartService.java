@@ -1,4 +1,4 @@
-package de.hdbw.webshop.service.artwork;
+package de.hdbw.webshop.service.user;
 
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
@@ -7,6 +7,8 @@ import de.hdbw.webshop.model.artwork.ArtworkEntity;
 import de.hdbw.webshop.model.artwork.ShoppingCartEntity;
 import de.hdbw.webshop.model.users.entity.AllUsersEntity;
 import de.hdbw.webshop.repository.artwork.ShoppingCartRepository;
+import de.hdbw.webshop.service.artwork.ArtworkDTOService;
+import de.hdbw.webshop.service.artwork.ArtworkService;
 import de.hdbw.webshop.service.user.AllUsersService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.http.HttpStatus;

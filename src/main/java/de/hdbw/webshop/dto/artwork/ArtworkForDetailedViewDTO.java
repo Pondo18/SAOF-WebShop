@@ -23,7 +23,9 @@ public class ArtworkForDetailedViewDTO {
     public void build (ArtworkEntity entireArtwork) {
         generatedArtworkName = entireArtwork.getGeneratedArtworkName();
         artworkName = entireArtwork.getArtworkName();
-        artist = entireArtwork.getArtist();
+        artist = entireArtwork.getArtist().getRegisteredUserEntity().getFirstName()
+                + " "
+                + entireArtwork.getArtist().getRegisteredUserEntity().getSecondName();
         price = entireArtwork.getPrice();
         description = entireArtwork.getDescription();
     }

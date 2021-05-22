@@ -1,7 +1,7 @@
-package de.hdbw.webshop.controller;
+package de.hdbw.webshop.controller.user;
 
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
-import de.hdbw.webshop.service.artwork.ShoppingCartService;
+import de.hdbw.webshop.service.user.ShoppingCartService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

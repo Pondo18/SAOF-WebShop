@@ -1,7 +1,7 @@
 package de.hdbw.webshop.security;
 
 import de.hdbw.webshop.listener.MySessionListener;
-import de.hdbw.webshop.service.artwork.ShoppingCartService;
+import de.hdbw.webshop.service.user.ShoppingCartService;
 import de.hdbw.webshop.service.session.RedirectHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;

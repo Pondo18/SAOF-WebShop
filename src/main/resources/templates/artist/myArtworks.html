@@ -2,8 +2,8 @@
 <html xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en">
 <head>
-    <link rel="icon" type="image/svg+xml"  th:href="@{/pictures/SAOFLogo.svg}" href="SAOFLogo.svg" sizes="any">
     <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml"  th:href="@{/pictures/SAOFLogo.svg}" href="SAOFLogo.svg" sizes="any">
     <title>Home - ART</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
@@ -26,7 +26,7 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" th:href="@{/artworks}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
@@ -63,7 +63,7 @@
                 </div>
                 <div sec:authorize="isAnonymous()">
                     <a th:href="@{/login}" class="nav-link"  style="color: teal">Log in</a>
-                    <a th:href="@{/user/registrationUser}" class="nav-link"  style="color: teal">Register</a>
+                    <a th:href="@{/registration/user}" class="nav-link"  style="color: teal">Register</a>
                 </div>
 
 
@@ -81,22 +81,67 @@
             <img src="https://img.icons8.com/doodle/48/000000/paypal.png" class="social"/>
         </div>
     </div>
-
 </nav>
 <!-- NAVBAR -->
-<h2><span th:text="${artwork.artworkName}">Name</span></h2>
-<div class="img">
-    <img th:each="imageUrl: ${artwork.imagesUrl}" th:src="${imageUrl}">
+<!-- Main Content -->
+<!--
+<div class="row" th:each="artwork: ${artworks}" th:attr="onclick=|openArtwork('${artwork.generatedArtworkName}')|">
+    <p th:text="${artwork.artworkName}">artworkname</p>
+    <p th:text="${artwork.price}">price</p>
+    <div class="img" style="border:1px solid black;">
+        <img th:src="${artwork.primaryImageUrl}" alt="this is art img">
+    </div>
+
 </div>
-<form th:if="${isInShoppingCart}" action="#" th:action="@{/shopping_cart/remove_artwork}" method="post">
-    <input type="hidden" th:value="${artwork.generatedArtworkName}" name="artworkName"/>
-    <button class="button" type="submit">Remove from Cart</button>
-</form>
-<form th:unless="${isInShoppingCart}" action="#" th:action="@{/shopping_cart/add_artwork}" method="post">
-    <input type="hidden" th:value="${artwork.generatedArtworkName}" name="artworkName"/>
-    <button class="button" type="submit">Add to Cart</button>
-</form>
-<div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span></div>
+
+<hr>
+<hr>
+-->
+
+<div class="container-fluid">
+    <div class="category1 flex-row" style="
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: hidden;
+    padding-top: 8rem;
+">
+        <div class="arts" style="max-width: 20rem; padding-right: 2rem;"
+             th:each="artwork: ${artworks}" th:attr="onclick=|openArtwork('${artwork.generatedArtworkName}')|" title="Click to View more">
+
+
+            <h2><span th:text="${artwork.artworkName}">Artworkname</span></h2>
+            <div class="img" style="border:1px solid black;">
+                <img th:src="${artwork.primaryImageUrl}" alt="this is art img">
+            </div>
+            <h4><span th:text="${artwork.price}"></span> €</h4>
+        </div>
+    </div>
+</div>
+
+
+<!-- footer-->
+<footer class="footer">
+    <div class="container">
+        <div class="about-us">
+            <h2>About Our Mission</h2>
+            <p>
+                Lorem Ipsum Postem git
+            </p>
+        </div>
+    </div>
+
+    <div class="rights flex-row">
+        <h4 class="text-gray">A Project by Students</h4>
+    </div>
+</footer>
+
+
+<script th:src="@{/javascript/open_artwork_func.js}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
 <script th:src="@{/javascript/document_ready.js}"></script>
 </body>
 </html>

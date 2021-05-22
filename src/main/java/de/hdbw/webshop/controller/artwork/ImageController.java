@@ -1,4 +1,4 @@
-package de.hdbw.webshop.controller;
+package de.hdbw.webshop.controller.artwork;
 
 
 import java.util.Arrays;

@@ -2,6 +2,7 @@ package de.hdbw.webshop.service.artwork;
 
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.model.artwork.ArtworkEntity;
+import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.repository.artwork.ArtworkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,9 @@ public class ArtworkService {
 
     public void saveAll(List<ArtworkEntity> artworksToSave) {
         artworkRepository.saveAll(artworksToSave);
+    }
+
+    public List<ArtworkEntity> findAllArtworksByArtist(ArtistEntity artistEntity) {
+        return artworkRepository.findAllByArtist(artistEntity);
     }
 }

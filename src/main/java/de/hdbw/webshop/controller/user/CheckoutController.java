@@ -1,7 +1,7 @@
-package de.hdbw.webshop.controller;
+package de.hdbw.webshop.controller.user;
 
 import de.hdbw.webshop.exception.exceptions.UserNotFoundException;
-import de.hdbw.webshop.service.artwork.CheckoutService;
+import de.hdbw.webshop.service.user.CheckoutService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;

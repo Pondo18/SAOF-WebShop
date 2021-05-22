@@ -1,5 +1,6 @@
 package de.hdbw.webshop.model.artwork;
 
+import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,7 +20,10 @@ public class ArtworkEntity {
     private String artworkName;
     @Column(nullable = false, unique = true)
     private String generatedArtworkName;
-    private String artist;
+
+    @ManyToOne
+    @JoinColumn(name = "artist_id", referencedColumnName = "id")
+    private ArtistEntity artist;
     private String description;
     @Column(nullable = false)
     private double price;

@@ -1,6 +1,7 @@
 package de.hdbw.webshop.repository.artwork;
 
 import de.hdbw.webshop.model.artwork.ArtworkEntity;
+import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import org.checkerframework.checker.nullness.Opt;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,6 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Long> {
     Optional<ArtworkEntity> findById(long id);
 
     List<ArtworkEntity> findAllByAvailableGreaterThan(int available);
+
+    List<ArtworkEntity> findAllByArtist(ArtistEntity artistEntity);
 }
