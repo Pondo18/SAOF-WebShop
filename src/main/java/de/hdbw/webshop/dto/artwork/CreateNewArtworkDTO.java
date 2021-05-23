@@ -14,8 +14,9 @@ public class CreateNewArtworkDTO {
     private String artworkDescription;
     @NotNull
     private double artworkPrice;
-//    private List<MultipartFile> images;
-    MultipartFile primaryImage;
-    MultipartFile secondImage;
-    MultipartFile thirdImage;
+    private List<MultipartFile> images;
+//    MultipartFile primaryImage;
+//    MultipartFile secondImage;
+//    MultipartFile thirdImage;
+
 }

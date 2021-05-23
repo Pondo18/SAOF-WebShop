@@ -33,11 +33,11 @@ public class ImageService {
         return imageRepository.save(image);
     }
 
-//    public List<ImageEntity> getImagesByMultipartfiles(List<MultipartFile> imagesAsMultipart){
-//        return EntryStream.of(imagesAsMultipart).mapKeyValue(
-//                (index, multipartFile) -> ImageEntity.buildImage(multipartFile, index+1)).collect(Collectors.toList()
-//        );
-//    }
+    public List<ImageEntity> getImagesByMultipartfiles(List<MultipartFile> imagesAsMultipart, ArtworkEntity artworkEntity){
+        return EntryStream.of(imagesAsMultipart).mapKeyValue(
+                (index, multipartFile) -> ImageEntity.buildImage(multipartFile, index+1, artworkEntity)).collect(Collectors.toList()
+        );
+    }
 
     public ImageEntity getImageByMultipartfile(MultipartFile imageAsMultipart, ArtworkEntity artworkEntity, int position) {
         return ImageEntity.buildImage(imageAsMultipart, position, artworkEntity);
