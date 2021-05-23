@@ -1,4 +1,4 @@
-package de.hdbw.webshop.dto;
+package de.hdbw.webshop.dto.artwork;
 
 import de.hdbw.webshop.model.artwork.ImageEntity;
 import lombok.AllArgsConstructor;

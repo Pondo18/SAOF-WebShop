@@ -1,5 +1,6 @@
 package de.hdbw.webshop.service.user;
 
+import de.hdbw.webshop.dto.registration.ArtistRegistrationFormDTO;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import de.hdbw.webshop.repository.user.ArtistRepository;
@@ -16,5 +17,9 @@ public class ArtistService {
 
     public ArtistEntity findArtistIfUserIsArtist(RegisteredUsersEntity registeredUserEntity) {
         return artistRepository.findByRegisteredUserEntity(registeredUserEntity).orElse(null);
+    }
+
+    public ArtistEntity createNewArtist(ArtistRegistrationFormDTO artistDTO, RegisteredUsersEntity currentUser) {
+        return new ArtistEntity(artistDTO.getCountry(), artistDTO.getDomicile(), currentUser);
     }
 }

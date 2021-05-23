@@ -1,11 +1,15 @@
 package de.hdbw.webshop.controller;
 
-import de.hdbw.webshop.dto.UserRegistrationFormDTO;
+import de.hdbw.webshop.dto.registration.ArtistRegistrationFormDTO;
+import de.hdbw.webshop.dto.registration.UserRegistrationFormDTO;
 import de.hdbw.webshop.model.users.entity.AllUsersEntity;
+import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.service.artwork.ShoppingCartService;
+import de.hdbw.webshop.service.authentication.ArtistRegistrationService;
 import de.hdbw.webshop.service.authentication.UserRegistrationService;
 import de.hdbw.webshop.service.session.RedirectHelper;
 import lombok.extern.apachecommons.CommonsLog;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -24,11 +28,13 @@ public class RegistrationController {
     final UserRegistrationService userRegistrationService;
     final ShoppingCartService shoppingCartService;
     final RedirectHelper redirectHelper;
+    final ArtistRegistrationService artistRegistrationService;
 
-    public RegistrationController(UserRegistrationService userRegistrationService, ShoppingCartService shoppingCartService, RedirectHelper redirectHelper) {
+    public RegistrationController(UserRegistrationService userRegistrationService, ShoppingCartService shoppingCartService, RedirectHelper redirectHelper, ArtistRegistrationService artistRegistrationService) {
         this.userRegistrationService = userRegistrationService;
         this.shoppingCartService = shoppingCartService;
         this.redirectHelper = redirectHelper;
+        this.artistRegistrationService = artistRegistrationService;
     }
 
     @GetMapping("/user")
@@ -52,8 +58,8 @@ public class RegistrationController {
                                         HttpServletRequest httpServletRequest,
                                         HttpServletResponse response) {
         if (bindingResult.hasErrors()) {
-            log.info("Errors in registration for email: '" + userRegistrationForm.getEmail()
-                    + "' ERRORS: '" + bindingResult.getAllErrors() + "'");
+            log.info("Errors in user registration for email: '" + userRegistrationForm.getEmail()
+                    + "' ERRORS: " + bindingResult.getAllErrors() + "'");
             return new ModelAndView("user/registrationUser", "user", userRegistrationForm);
         } else {
             String jsessionid = httpServletRequest.getParameter("jsessionid");
@@ -72,7 +78,25 @@ public class RegistrationController {
         return new ModelAndView("redirect:/artworks");
     }
 
-    // PROBLEME:
-    //Session wird nicht zerstört und geladen
+    @GetMapping("/artist")
+    public ModelAndView getArtistRegistrationForm() {
+        ArtistRegistrationFormDTO artistRegistrationFormDTO = new ArtistRegistrationFormDTO();
+        return new ModelAndView("artist/registrationArtist", "artist", artistRegistrationFormDTO);
+    }
+
+    @PostMapping("/artist")
+    public ModelAndView registerNewArtist(@Valid ArtistRegistrationFormDTO artist,
+                                          Authentication authentication,
+                                          BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            log.info("Errors in artist registration registered user with the email: " + authentication.getName()
+            + "'ERRORS: " + bindingResult.getAllErrors() + "'");
+            return new ModelAndView("artist/registrationArtist", "artist", artist);
+        } else {
+            artistRegistrationService.registerNewArtist(authentication, artist);
+            log.info("Registering new Artist with the email: " + authentication.getName());
+            return new ModelAndView("redirect:/artworks");
+        }
+    }
 }
 

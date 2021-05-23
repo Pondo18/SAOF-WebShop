@@ -1,7 +1,7 @@
 package de.hdbw.webshop.util.validation;
 
 import de.hdbw.webshop.annotation.PasswordMatches;
-import de.hdbw.webshop.dto.UserRegistrationFormDTO;
+import de.hdbw.webshop.dto.registration.UserRegistrationFormDTO;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

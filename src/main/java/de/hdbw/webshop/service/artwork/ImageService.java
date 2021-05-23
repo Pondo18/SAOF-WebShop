@@ -48,7 +48,6 @@ public class ImageService {
         return image;
     }
 
-
     private static InputStream getResourceFileAsInputStream(String fileName) {
         ClassLoader classLoader = ImageEntity.class.getClassLoader();
         return classLoader.getResourceAsStream(fileName);

@@ -33,8 +33,7 @@ public class SessionService {
             return unregisteredUserService
                     .findUnregisteredUserEntityBySessionId(jsessionid);
         } else {
-            String email = authentication.getName();
-            return registeredUserService.findRegisteredUserEntity(email);
+            return registeredUserService.findRegisteredUserEntityByAuthentication(authentication);
         }
     }
 }
