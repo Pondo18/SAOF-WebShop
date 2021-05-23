@@ -39,10 +39,6 @@ public class ImageService {
         );
     }
 
-    public ImageEntity getImageByMultipartfile(MultipartFile imageAsMultipart, ArtworkEntity artworkEntity, int position) {
-        return ImageEntity.buildImage(imageAsMultipart, position, artworkEntity);
-    }
-
     public ImageEntity findImageByUuid(String uuid) {
         return imageRepository.findByUuid(uuid).orElseThrow(
                 () -> new ImageNotFoundException()

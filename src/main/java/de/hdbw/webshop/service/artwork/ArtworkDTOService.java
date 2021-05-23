@@ -63,28 +63,12 @@ public class ArtworkDTOService {
         ).collect(Collectors.toList());
     }
 
-//    public List<ImageEntity> getImageEntitiesByArtworkDTO(CreateNewArtworkDTO createNewArtworkDTO, ArtworkEntity artworkEntity) {
-//        List<ImageEntity> images = new ArrayList<>();
-//        if (createNewArtworkDTO.getPrimaryImage()!=null) {
-//            images.add(imageService.getImageByMultipartfile(createNewArtworkDTO.getPrimaryImage(), artworkEntity, 1));
-//        }
-//        if (createNewArtworkDTO.getSecondImage()!=null) {
-//            images.add(imageService.getImageByMultipartfile(createNewArtworkDTO.getSecondImage(), artworkEntity, 2));
-//        }
-//        if (createNewArtworkDTO.getThirdImage()!=null) {
-//            images.add(imageService.getImageByMultipartfile(createNewArtworkDTO.getThirdImage(), artworkEntity, 3));
-//        }
-//        return images;
-//    }
-
     public ArtworkEntity getArtworkEntityByCreateNewArtworkDTO(CreateNewArtworkDTO createNewArtworkDTO, ArtistEntity artist) {
         ArtworkEntity artworkEntity = new ArtworkEntity(
                 createNewArtworkDTO.getArtworkName(), artist,
                 createNewArtworkDTO.getArtworkDescription(),
                 createNewArtworkDTO.getArtworkPrice());
-//                imageService.getImagesByMultipartfiles(createNewArtworkDTO.getImages()));
         artworkEntity.setGeneratedArtworkName(nameHelper.generateArtworkName(artworkEntity.getArtworkName()));
-//        artworkEntity.setImages(getImageEntitiesByArtworkDTO(createNewArtworkDTO, artworkEntity));
         artworkEntity.setImages(imageService.getImagesByMultipartfiles(createNewArtworkDTO.getImages(), artworkEntity));
         return artworkEntity;
     }

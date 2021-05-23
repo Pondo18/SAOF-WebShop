@@ -3,6 +3,7 @@ package de.hdbw.webshop.dto.artwork;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -14,9 +15,7 @@ public class CreateNewArtworkDTO {
     private String artworkDescription;
     @NotNull
     private double artworkPrice;
-    private List<MultipartFile> images;
-//    MultipartFile primaryImage;
-//    MultipartFile secondImage;
-//    MultipartFile thirdImage;
 
+    @Lob
+    private List<MultipartFile> images;
 }
