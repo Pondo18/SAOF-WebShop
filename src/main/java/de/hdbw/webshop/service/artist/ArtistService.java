@@ -8,9 +8,12 @@ import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import de.hdbw.webshop.repository.user.ArtistRepository;
 import de.hdbw.webshop.service.artwork.ArtworkService;
+import de.hdbw.webshop.service.session.SessionService;
 import de.hdbw.webshop.service.user.RegisteredUserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -36,11 +39,27 @@ public class ArtistService {
     }
 
     public List<ArtworkForListViewDTO> getAllArtworksByArtist(Authentication authentication) {
-        RegisteredUsersEntity currentUser = registeredUserService.findRegisteredUserEntityByAuthentication(authentication);
-        return artworkService.findAllArtworksByArtist(currentUser.getArtistEntity());
+        if (authentication!=null) {
+            RegisteredUsersEntity currentUser = registeredUserService.findRegisteredUserEntityByAuthentication(authentication);
+            return artworkService.findAllArtworksByArtist(currentUser.getArtistEntity());
+        } else {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "You have to be registered as an Artist to view your artworks"
+            );
+        }
     }
 
     public ArtworkEntity addNewArtwork(CreateNewArtworkDTO createNewArtworkDTO, Authentication authentication) {
         return artworkService.createNewArtwork(createNewArtworkDTO, authentication);
+    }
+
+    public boolean artworkIsFromArtist(Authentication authentication, String generatedArtworkName) {
+        if (authentication!=null) {
+            RegisteredUsersEntity currentUser = registeredUserService.findRegisteredUserEntityByAuthentication(authentication);
+            return artworkService.existsByArtistAndGeneratedArtworkName(currentUser, generatedArtworkName);
+        } else {
+            return false;
+        }
     }
 }

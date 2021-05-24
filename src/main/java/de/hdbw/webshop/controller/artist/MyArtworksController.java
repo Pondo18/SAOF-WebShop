@@ -3,6 +3,7 @@ package de.hdbw.webshop.controller.artist;
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
 import de.hdbw.webshop.dto.artwork.CreateNewArtworkDTO;
 import de.hdbw.webshop.service.artist.ArtistService;
+import de.hdbw.webshop.service.artwork.ArtworkService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +15,11 @@ import java.util.List;
 public class MyArtworksController {
 
     final ArtistService artistService;
+    final ArtworkService artworkService;
 
-    public MyArtworksController(ArtistService artistService) {
+    public MyArtworksController(ArtistService artistService, ArtworkService artworkService) {
         this.artistService = artistService;
+        this.artworkService = artworkService;
     }
 
     @GetMapping("/my_artworks")
