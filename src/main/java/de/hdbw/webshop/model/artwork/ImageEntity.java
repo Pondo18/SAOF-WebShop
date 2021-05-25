@@ -31,7 +31,7 @@ public class ImageEntity {
     private long size;
     private int position;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "artwork_id", referencedColumnName = "id")
     private ArtworkEntity artwork;
 
@@ -93,11 +93,11 @@ public class ImageEntity {
     }
 
     @Transient
-    public static ImageEntity buildImage(MultipartFile file, int position) {
+    public static ImageEntity buildImage(MultipartFile file, int position, ArtworkEntity artworkEntity) {
         ImageEntity image = ImageEntity.build();
         image.setFiles(file);
         image.setPosition(position);
-
+        image.setArtwork(artworkEntity);
         try {
             image.setData(file.getBytes());
         } catch (IOException e) {

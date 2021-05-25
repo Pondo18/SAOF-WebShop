@@ -3,7 +3,7 @@ package de.hdbw.webshop.security;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import de.hdbw.webshop.model.users.entity.UserPasswordEntity;
-import de.hdbw.webshop.service.user.ArtistService;
+import de.hdbw.webshop.service.artist.ArtistService;
 import de.hdbw.webshop.service.user.RegisteredUserService;
 import de.hdbw.webshop.service.user.UserPasswordService;
 import lombok.extern.apachecommons.CommonsLog;

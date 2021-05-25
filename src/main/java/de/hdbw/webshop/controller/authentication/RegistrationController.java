@@ -1,10 +1,9 @@
-package de.hdbw.webshop.controller;
+package de.hdbw.webshop.controller.authentication;
 
 import de.hdbw.webshop.dto.registration.ArtistRegistrationFormDTO;
 import de.hdbw.webshop.dto.registration.UserRegistrationFormDTO;
 import de.hdbw.webshop.model.users.entity.AllUsersEntity;
-import de.hdbw.webshop.model.users.entity.ArtistEntity;
-import de.hdbw.webshop.service.artwork.ShoppingCartService;
+import de.hdbw.webshop.service.user.ShoppingCartService;
 import de.hdbw.webshop.service.authentication.ArtistRegistrationService;
 import de.hdbw.webshop.service.authentication.UserRegistrationService;
 import de.hdbw.webshop.service.session.RedirectHelper;

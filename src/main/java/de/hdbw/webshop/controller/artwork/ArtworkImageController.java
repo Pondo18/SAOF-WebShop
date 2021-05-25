@@ -1,4 +1,4 @@
-package de.hdbw.webshop.controller;
+package de.hdbw.webshop.controller.artwork;
 
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.exception.exceptions.ImageNotFoundException;

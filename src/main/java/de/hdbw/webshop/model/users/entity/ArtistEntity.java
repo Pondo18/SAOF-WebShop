@@ -1,10 +1,12 @@
 package de.hdbw.webshop.model.users.entity;
 
+import de.hdbw.webshop.model.artwork.ArtworkEntity;
 import de.hdbw.webshop.model.users.RegisteredUsers;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "artist")
@@ -22,6 +24,9 @@ public class ArtistEntity implements RegisteredUsers {
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private RegisteredUsersEntity registeredUserEntity;
+
+    @OneToMany(mappedBy = "artist")
+    private List<ArtworkEntity> artworks;
 
     public ArtistEntity(String country, String domicile, RegisteredUsersEntity registeredUserEntity) {
         this.country = country;

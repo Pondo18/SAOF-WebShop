@@ -2,14 +2,19 @@ package de.hdbw.webshop.service.artwork;
 
 import de.hdbw.webshop.dto.artwork.ArtworkForDetailedViewDTO;
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
+import de.hdbw.webshop.dto.artwork.CreateNewArtworkDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.model.artwork.ArtworkEntity;
+import de.hdbw.webshop.model.artwork.ImageEntity;
+import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.repository.artwork.ArtworkRepository;
-import de.hdbw.webshop.repository.artwork.ImageRepository;
+import de.hdbw.webshop.util.string.NameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,23 +24,25 @@ import static de.hdbw.webshop.dto.artwork.ArtworkForDetailedViewDTO.buildImageUr
 public class ArtworkDTOService {
 
     private final ArtworkRepository artworkRepository;
-    private final ImageRepository imageRepository;
+    private final ImageService imageService;
+    private final NameHelper nameHelper;
     @Value("${host.url}")
     private String host;
 
     @Autowired
-    public ArtworkDTOService(ArtworkRepository artworkRepository, ImageRepository imageRepository) {
+    public ArtworkDTOService(ArtworkRepository artworkRepository, ImageService imageService, NameHelper nameHelper) {
         this.artworkRepository = artworkRepository;
-        this.imageRepository = imageRepository;
+        this.imageService = imageService;
+        this.nameHelper = nameHelper;
     }
 
     public ArtworkForDetailedViewDTO getArtworkForDetailedInformationPage(String generatedArtworkName) {
         ArtworkEntity artworkEntity = artworkRepository.findByGeneratedArtworkName(generatedArtworkName).orElseThrow(
-                () -> new ArtworkNotFoundException()
+                ArtworkNotFoundException::new
         );
         ArtworkForDetailedViewDTO artwork = new ArtworkForDetailedViewDTO();
         artwork.build(artworkEntity);
-        List<String> artworkImageUuids = imageRepository.findAllImageUuidsByArtworkAndOrderByPosition(artworkEntity.getId());
+        List<String> artworkImageUuids = imageService.findAllImageUuidsByArtworkAndOrderByPosition(artworkEntity.getId());
         List<String> artworkImageUrls = buildImageUrls(artworkImageUuids, host);
         artwork.setImagesUrl(artworkImageUrls);
         return artwork;
@@ -43,14 +50,26 @@ public class ArtworkDTOService {
 
     public List<ArtworkForListViewDTO> getAllArtworksForArtworksPage() {
         List<ArtworkEntity> allArtworkEntities = artworkRepository.findAllByAvailableGreaterThan(0);
-        List<ArtworkForListViewDTO> artworksForListView = allArtworkEntities.stream().map(artwork ->
-                getArtworkForListViewByArtworkEntity(artwork)
-        ).collect(Collectors.toList());
-        return artworksForListView;
+        return getAllArtworksForListViewByArtworkEntity(allArtworkEntities);
     }
 
     public ArtworkForListViewDTO getArtworkForListViewByArtworkEntity(ArtworkEntity artworkEntity) {
         ArtworkForListViewDTO artworkForDetailedViewDTO = new ArtworkForListViewDTO();
         return artworkForDetailedViewDTO.build(artworkEntity, host);
+    }
+
+    public List<ArtworkForListViewDTO> getAllArtworksForListViewByArtworkEntity(List<ArtworkEntity> artworks) {
+        return artworks.stream().map(this::getArtworkForListViewByArtworkEntity
+        ).collect(Collectors.toList());
+    }
+
+    public ArtworkEntity getArtworkEntityByCreateNewArtworkDTO(CreateNewArtworkDTO createNewArtworkDTO, ArtistEntity artist) {
+        ArtworkEntity artworkEntity = new ArtworkEntity(
+                createNewArtworkDTO.getArtworkName(), artist,
+                createNewArtworkDTO.getArtworkDescription(),
+                createNewArtworkDTO.getArtworkPrice());
+        artworkEntity.setGeneratedArtworkName(nameHelper.generateArtworkName(artworkEntity.getArtworkName()));
+        artworkEntity.setImages(imageService.getImagesByMultipartfiles(createNewArtworkDTO.getImages(), artworkEntity));
+        return artworkEntity;
     }
 }

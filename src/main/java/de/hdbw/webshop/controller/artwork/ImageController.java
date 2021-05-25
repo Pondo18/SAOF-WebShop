@@ -1,4 +1,4 @@
-package de.hdbw.webshop.controller;
+package de.hdbw.webshop.controller.artwork;
 
 
 import java.util.Arrays;
@@ -31,17 +31,17 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @PostMapping("/upload")
-    public ImageResponseDTO uploadSingleFile(@RequestParam("file") MultipartFile file) {
-        ImageEntity image = ImageEntity.buildImage(file, 1);
-        imageService.save(image);
-        return new ImageResponseDTO(image);
-    }
+//    @PostMapping("/upload")
+//    public ImageResponseDTO uploadSingleFile(@RequestParam("file") MultipartFile file) {
+//        ImageEntity image = ImageEntity.buildImage(file, 1);
+//        imageService.save(image);
+//        return new ImageResponseDTO(image);
+//    }
 
-    @PostMapping("/uploads")
-    public List<ImageResponseDTO> uploadMultiFiles(@RequestParam("files") MultipartFile[] files) {
-        return Arrays.asList(files).stream().map(file -> uploadSingleFile(file)).collect(Collectors.toList());
-    }
+//    @PostMapping("/uploads")
+//    public List<ImageResponseDTO> uploadMultiFiles(@RequestParam("files") MultipartFile[] files) {
+//        return Arrays.stream(files).map(this::uploadSingleFile).collect(Collectors.toList());
+//    }
 
 
     @GetMapping("/{uuid}")
