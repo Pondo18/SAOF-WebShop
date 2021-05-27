@@ -96,7 +96,10 @@
     <input type="hidden" th:value="${artwork.generatedArtworkName}" name="artworkName"/>
     <button class="button" type="submit">Add to Cart</button>
 </form>
-<div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span></div>
+<form th:if="${isFromArtist}" action="#" th:action="@{/remove_artwork}" method="post">
+    <input type="hidden" th:value="${artwork.generatedArtworkName}" name="artworkName"/>
+    <button class="button" type="submit">Remove Artwork</button>
+</form>
 <script th:src="@{/javascript/document_ready.js}"></script>
 </body>
 </html>

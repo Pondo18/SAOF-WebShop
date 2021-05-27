@@ -11,7 +11,6 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Transient;
-import java.awt.*;
 import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,20 +33,21 @@ public class ImageService {
     }
 
     public List<ImageEntity> getImagesByMultipartfiles(List<MultipartFile> imagesAsMultipart, ArtworkEntity artworkEntity){
-        return EntryStream.of(imagesAsMultipart).mapKeyValue(
+        List<MultipartFile> images = imagesAsMultipart.stream().filter(image -> image.getSize()!=0).collect(Collectors.toList());
+        return EntryStream.of(images).mapKeyValue(
                 (index, multipartFile) -> ImageEntity.buildImage(multipartFile, index+1, artworkEntity)).collect(Collectors.toList()
         );
     }
 
     public ImageEntity findImageByUuid(String uuid) {
         return imageRepository.findByUuid(uuid).orElseThrow(
-                () -> new ImageNotFoundException()
+                ImageNotFoundException::new
         );
     }
 
     public ImageEntity findImageByArtworkAndPosition(long artworkId, int position) {
         return imageRepository.findByArtworkIdAfterAndPosition(artworkId, position).orElseThrow(
-                () -> new ImageNotFoundException()
+                ImageNotFoundException::new
         );
     }
 

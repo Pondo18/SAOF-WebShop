@@ -5,8 +5,10 @@ import de.hdbw.webshop.dto.artwork.CreateNewArtworkDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.model.artwork.ArtworkEntity;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
+import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import de.hdbw.webshop.repository.artwork.ArtworkRepository;
 import de.hdbw.webshop.service.user.RegisteredUserService;
+import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 
 
 @Service
+@CommonsLog
 public class ArtworkService {
 
     private final ArtworkRepository artworkRepository;
@@ -60,5 +63,22 @@ public class ArtworkService {
         ArtistEntity artist = registeredUserService.findRegisteredUserEntityByAuthentication(authentication).getArtistEntity();
         ArtworkEntity artworkEntity = artworkDTOService.getArtworkEntityByCreateNewArtworkDTO(createNewArtworkDTO, artist);
         return artworkRepository.save(artworkEntity);
+    }
+
+    public boolean existsByArtistAndGeneratedArtworkName(RegisteredUsersEntity currentUser, String generatedArtworkName) {
+        return artworkRepository.existsByGeneratedArtworkNameAndArtist_RegisteredUserEntity(generatedArtworkName, currentUser);
+    }
+
+    public long removeArtworkWithGeneratedArtworkName(String generatedArtworkName, Authentication authentication) {
+        RegisteredUsersEntity currentUser = registeredUserService.findRegisteredUserEntityByAuthentication(authentication);
+        if (artworkRepository.existsByGeneratedArtworkNameAndArtist_RegisteredUserEntity(generatedArtworkName, currentUser)) {
+            log.info("Removing Artwork with the generatedArtworkName: " + generatedArtworkName
+                    + " by the artist with the email: " + currentUser.getEmail());
+            return artworkRepository.deleteByGeneratedArtworkName(generatedArtworkName);
+        } else {
+            log.info("Couldn't delete Artwork: " + generatedArtworkName
+            + " because its not from the deleter: " + currentUser.getEmail());
+            throw new ArtworkNotFoundException();
+        }
     }
 }

@@ -3,6 +3,7 @@ package de.hdbw.webshop.controller.artwork;
 import de.hdbw.webshop.dto.artwork.ArtworkForDetailedViewDTO;
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
+import de.hdbw.webshop.service.artist.ArtistService;
 import de.hdbw.webshop.service.artwork.ArtworkDTOService;
 import de.hdbw.webshop.service.user.ShoppingCartService;
 import lombok.extern.apachecommons.CommonsLog;
@@ -25,11 +26,13 @@ public class ArtworkController {
 
     private final ArtworkDTOService artworkDTOService;
     private final ShoppingCartService shoppingCartService;
+    private final ArtistService artistService;
 
     @Autowired
-    public ArtworkController(ArtworkDTOService artworkDTOService, ShoppingCartService shoppingCartService) {
+    public ArtworkController(ArtworkDTOService artworkDTOService, ShoppingCartService shoppingCartService, ArtistService artistService) {
         this.artworkDTOService = artworkDTOService;
         this.shoppingCartService = shoppingCartService;
+        this.artistService = artistService;
     }
 
 
@@ -47,13 +50,15 @@ public class ArtworkController {
         try {
             HttpSession session = request.getSession();
             boolean isInShoppingCart = shoppingCartService.ArtworkIsInShoppingCart(session, authentication, generatedArtworkName);
+            boolean artworkIsFromCurrentArtist = artistService.artworkIsFromArtist(authentication, generatedArtworkName);
             ArtworkForDetailedViewDTO artwork = artworkDTOService.getArtworkForDetailedInformationPage(generatedArtworkName);
             log.debug("Returning detailed artwork page for Artwork with generatedArtworkName: " + generatedArtworkName);
             ModelAndView mav = new ModelAndView("artworks/artworkInformation", "artwork", artwork);
             mav.addObject("isInShoppingCart", isInShoppingCart);
+            mav.addObject("isFromArtist", artworkIsFromCurrentArtist);
             return mav;
         } catch (ArtworkNotFoundException artworkNotFoundException) {
-            log.warn("Artwork with the generatedArtworkName: " + generatedArtworkName + " was not found!");
+            log.warn("Artwork with the generatedArtw orkName: " + generatedArtworkName + " was not found!");
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
                     "Artwork Not Found",
