@@ -8,4 +8,5 @@ function reload_image(image_id, input) {
                 .height(200);
         };
         reader.readAsDataURL(input.files[0]);
+        document.getElementById(image_id).style.visibility="visible";
 }

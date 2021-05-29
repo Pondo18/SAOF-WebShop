@@ -10,14 +10,13 @@ import de.hdbw.webshop.model.artwork.entity.ImageEntity;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.repository.artwork.ArtworkRepository;
 import de.hdbw.webshop.util.string.NameHelper;
-import one.util.streamex.EntryStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static de.hdbw.webshop.dto.artwork.ArtworkForDetailedViewDTO.buildImageUrls;
@@ -71,32 +70,51 @@ public class ArtworkDTOService {
                 editMyArtworkDTO.getArtworkDescription(),
                 editMyArtworkDTO.getArtworkPrice());
         artworkEntity.setGeneratedArtworkName(nameHelper.generateArtworkName(artworkEntity.getArtworkName()));
-        artworkEntity.setImages(imageService.getImagesByMultipartfiles(editMyArtworkDTO.getImages(), artworkEntity));
-        return artworkEntity;
+//        artworkEntity.setImages(imageService.getImagesByMultipartfiles(editMyArtworkDTO.getImages(), artworkEntity));
+//        return artworkEntity;
+        return setImagesForArtworkFromArtworkDTO(editMyArtworkDTO, artworkEntity);
     }
 
     public EditMyArtworkDTO getEditMyArtworkDTOByArtworkEntity(ArtworkEntity artworkEntity) {
         EditMyArtworkDTO editMyArtworkDTO = new EditMyArtworkDTO(
                 artworkEntity.getGeneratedArtworkName(), artworkEntity.getArtworkName(),
                 artworkEntity.getDescription(), artworkEntity.getPrice());
-        return setImagesForEditMyArtworkDTO(imageService.getMultipartfilesByImageEntities(artworkEntity.getImages()), editMyArtworkDTO);
+        return setImagesForEditMyArtworkDTOFromList(imageService.getMultipartfilesByImageEntities(artworkEntity.getImages()), editMyArtworkDTO);
     }
 
-    public EditMyArtworkDTO setImagesForEditMyArtworkDTO(List<MultipartFile> images, EditMyArtworkDTO artworkDTO) {
+    public ArtworkEntity setImagesForArtworkFromArtworkDTO(EditMyArtworkDTO editMyArtworkDTO, ArtworkEntity artworkEntity) {
+        List<ImageEntity> images = new ArrayList<>();
+        if(editMyArtworkDTO.getFirstImage()!=null) {
+            images.add(ImageEntity.buildImage(editMyArtworkDTO.getFirstImage(), 1, artworkEntity));
+        }
+        if(editMyArtworkDTO.getSecondImage()!=null) {
+            images.add(ImageEntity.buildImage(editMyArtworkDTO.getSecondImage(), 2, artworkEntity));
+        }
+        if(editMyArtworkDTO.getThirdImage()!=null) {
+            images.add(ImageEntity.buildImage(editMyArtworkDTO.getThirdImage(), 3, artworkEntity));
+        }
+        if(editMyArtworkDTO.getForthImage()!=null) {
+            images.add(ImageEntity.buildImage(editMyArtworkDTO.getForthImage(), 4, artworkEntity));
+        }
+        artworkEntity.setImages(images);
+        return artworkEntity;
+    }
+
+    public EditMyArtworkDTO setImagesForEditMyArtworkDTOFromList(List<MultipartFile> images, EditMyArtworkDTO artworkDTO) {
         try {
-            artworkDTO.setFirstImage((CustomMultipartFile) images.get(0));
+            artworkDTO.setFirstImage(images.get(0));
         } catch (IndexOutOfBoundsException e) {
         }
         try {
-            artworkDTO.setSecondImage((CustomMultipartFile) images.get(1));
+            artworkDTO.setSecondImage(images.get(1));
         } catch (IndexOutOfBoundsException e) {
         }
         try {
-            artworkDTO.setThirdImage((CustomMultipartFile) images.get(2));
+            artworkDTO.setThirdImage(images.get(2));
         } catch (IndexOutOfBoundsException e) {
         }
         try {
-            artworkDTO.setForthImage((CustomMultipartFile) images.get(3));
+            artworkDTO.setForthImage(images.get(3));
         } catch (IndexOutOfBoundsException e) {
         }
         return artworkDTO;

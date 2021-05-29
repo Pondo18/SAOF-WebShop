@@ -1,6 +1,5 @@
 package de.hdbw.webshop.dto.artwork;
 
-import de.hdbw.webshop.model.artwork.CustomMultipartFile;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,10 +23,14 @@ public class EditMyArtworkDTO {
     private List<MultipartFile> images;
 //    private List<String> oldImageUrls;
 
-    private CustomMultipartFile firstImage;
-    private CustomMultipartFile secondImage;
-    private CustomMultipartFile thirdImage;
-    private CustomMultipartFile forthImage;
+    @Lob
+    private MultipartFile firstImage;
+    @Lob
+    private MultipartFile secondImage;
+    @Lob
+    private MultipartFile thirdImage;
+    @Lob
+    private MultipartFile forthImage;
 
     public EditMyArtworkDTO(String generatedArtworkName, @NotNull String artworkName, String artworkDescription, @NotNull double artworkPrice) {
         this.generatedArtworkName = generatedArtworkName;

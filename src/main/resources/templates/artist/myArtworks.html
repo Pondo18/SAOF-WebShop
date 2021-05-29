@@ -121,9 +121,31 @@
 <!--                    <input type="file" th:field="*{primaryImage}" class="fadeIn second" name="artworkImages" accept=".jpg, .png, .jpeg">-->
 <!--                    <input type="file" th:field="*{secondImage}" class="fadeIn second" name="secondImage" accept=".jpg, .png, .jpeg">-->
 <!--                    <input type="file" th:field="*{thirdImage}" class="fadeIn second" name="thirdImage" accept=".jpg, .png, .jpeg">-->
-                    <input type="file" th:field="*{images}" class="fadeIn second" enctype="multipart/form-data" name="images" accept=".jpg, .png, .jpeg" multiple>
+<!--                    <input type="file" th:field="*{images}" class="fadeIn second" enctype="multipart/form-data" name="images" accept=".jpg, .png, .jpeg" multiple>-->
 <!--                    <input type="file" class="form-control" id="files"-->
 <!--                           placeholder="Upload Multiple Files" name="files" multiple/>-->
+                    <input type="file" id="firstImageInput" th:field="*{firstImage}"
+                           onchange="reload_image('firstImage', this)" class="fadeIn second"
+                           enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
+                    <!--                    first image-->
+                    <!--                    <img th:if="*{oldImageUrls.size()>0}" th:src="*{oldImageUrls[0]}">-->
+                    <!--                    <img th:if="*{oldImageUrls.size()==0}">-->
+                    <!--                    <img th:if="*{oldImageUrls.size()>0 || firstImage ne null}" th:src="*{oldImageUrls[0]}"-->
+                    <img src ="/static/images/upload_image.jpg" id="firstImage">
+                    <input type="file" id="secondImageInput" th:field="*{secondImage}"
+                           onchange="reload_image('secondImage', this)" class="fadeIn second"
+                           enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
+                    <img src ="/static/images/upload_image.jpg" id="secondImage">
+                    <!--                    <img th:if="*{oldImageUrls.size()>1 || secondImage ne null}" src="" th:src="*{oldImageUrls.size()>1? oldImageUrls[1]}"-->
+                    <input type="file" id="thirdImageInput" th:field="*{thirdImage}"
+                           onchange="reload_image('thirdImage', this)" class="fadeIn second"
+                           enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
+                    <img src ="/static/images/upload_image.jpg" id="thirdImage">
+                    <!--                    <img th:if="*{oldImageUrls.size()>2 || thirdImage ne null}" th:src="*{oldImageUrls[2]}"-->
+                    <input type="file" id="forthImageInput" th:field="*{forthImage}"
+                           onchange="reload_image('forthImage', this)"
+                           class="fadeIn second" enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
+                    <img src ="/static/images/upload_image.jpg" id="forthImage">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -189,5 +211,6 @@
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>
 <script th:src="@{/javascript/document_ready.js}"></script>
+<script th:src="@{/javascript/reload_image.js}"></script>
 </body>
 </html>
