@@ -1,9 +1,9 @@
 package de.hdbw.webshop.service.artwork;
 
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
-import de.hdbw.webshop.dto.artwork.CreateNewArtworkDTO;
+import de.hdbw.webshop.dto.artwork.EditMyArtworkDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
-import de.hdbw.webshop.model.artwork.ArtworkEntity;
+import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import de.hdbw.webshop.repository.artwork.ArtworkRepository;
@@ -59,9 +59,9 @@ public class ArtworkService {
         return artworkDTOService.getAllArtworksForListViewByArtworkEntity(artworks);
     }
 
-    public ArtworkEntity createNewArtwork (CreateNewArtworkDTO createNewArtworkDTO, Authentication authentication) {
+    public ArtworkEntity createNewArtwork (EditMyArtworkDTO editMyArtworkDTO, Authentication authentication) {
         ArtistEntity artist = registeredUserService.findRegisteredUserEntityByAuthentication(authentication).getArtistEntity();
-        ArtworkEntity artworkEntity = artworkDTOService.getArtworkEntityByCreateNewArtworkDTO(createNewArtworkDTO, artist);
+        ArtworkEntity artworkEntity = artworkDTOService.getArtworkEntityByCreateNewArtworkDTO(editMyArtworkDTO, artist);
         return artworkRepository.save(artworkEntity);
     }
 
@@ -79,6 +79,29 @@ public class ArtworkService {
             log.info("Couldn't delete Artwork: " + generatedArtworkName
             + " because its not from the deleter: " + currentUser.getEmail());
             throw new ArtworkNotFoundException();
+        }
+    }
+
+//    public ArtworkEntity editArtwork(String generatedArtworkName, Authentication authentication) {
+//        RegisteredUsersEntity currentUser = registeredUserService.findRegisteredUserEntityByAuthentication(authentication);
+//        if (artworkRepository.existsByGeneratedArtworkNameAndArtist_RegisteredUserEntity(generatedArtworkName, currentUser)) {
+//            log.info("Editing Artwork with the generatedArtworkName: " + generatedArtworkName
+//                    + " by the artist with the email: " + currentUser.getEmail());
+//
+//        } else {
+//            log.info("Couldn't delete Artwork: " + generatedArtworkName
+//                    + " because its not from the deleter: " + currentUser.getEmail());
+//            throw new ArtworkNotFoundException();
+//        }
+//    }
+
+    public EditMyArtworkDTO getEditMyArtworkDTOIfExisting(String generatedArtworkName, RegisteredUsersEntity currentUser) {
+        ArtworkEntity artworkEntity = artworkRepository.findByGeneratedArtworkNameAndArtist_RegisteredUserEntity(generatedArtworkName, currentUser)
+                .orElse(null);
+        if (artworkEntity!=null) {
+            return artworkDTOService.getEditMyArtworkDTOByArtworkEntity(artworkEntity);
+        } else {
+            return null;
         }
     }
 }

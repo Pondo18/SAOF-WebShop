@@ -1,6 +1,6 @@
 package de.hdbw.webshop.model.users.entity;
 
-import de.hdbw.webshop.model.artwork.ArtworkEntity;
+import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
 import de.hdbw.webshop.model.users.RegisteredUsers;
 import lombok.Data;
 import lombok.NoArgsConstructor;

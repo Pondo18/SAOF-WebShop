@@ -1,14 +1,16 @@
 package de.hdbw.webshop.service.artwork;
 
 import de.hdbw.webshop.exception.exceptions.ImageNotFoundException;
-import de.hdbw.webshop.model.artwork.ArtworkEntity;
-import de.hdbw.webshop.model.artwork.ImageEntity;
+import de.hdbw.webshop.model.artwork.CustomMultipartFile;
+import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
+import de.hdbw.webshop.model.artwork.entity.ImageEntity;
 import de.hdbw.webshop.repository.artwork.ImageRepository;
 import one.util.streamex.EntryStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.persistence.Transient;
 import java.io.InputStream;
@@ -39,6 +41,10 @@ public class ImageService {
         );
     }
 
+    public MultipartFile getMultipartByImageEntity(ImageEntity image) {
+        return new CustomMultipartFile(image.getData(), image.getUuid(), image.getFileType());
+    }
+
     public ImageEntity findImageByUuid(String uuid) {
         return imageRepository.findByUuid(uuid).orElseThrow(
                 ImageNotFoundException::new
@@ -67,5 +73,9 @@ public class ImageService {
 
     public List<String> findAllImageUuidsByArtworkAndOrderByPosition(long id) {
         return imageRepository.findAllImageUuidsByArtworkAndOrderByPosition(id);
+    }
+
+    public List<MultipartFile> getMultipartfilesByImageEntities(List<ImageEntity> images) {
+        return images.stream().map(image -> getMultipartByImageEntity(image)).collect(Collectors.toList());
     }
 }

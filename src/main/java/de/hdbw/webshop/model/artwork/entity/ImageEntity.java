@@ -1,11 +1,10 @@
-package de.hdbw.webshop.model.artwork;
+package de.hdbw.webshop.model.artwork.entity;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -13,7 +12,6 @@ import javax.persistence.*;
 
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;

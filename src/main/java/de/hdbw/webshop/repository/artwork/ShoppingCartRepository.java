@@ -1,10 +1,9 @@
 package de.hdbw.webshop.repository.artwork;
 
-import de.hdbw.webshop.model.artwork.ArtworkEntity;
-import de.hdbw.webshop.model.artwork.ShoppingCartEntity;
+import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
+import de.hdbw.webshop.model.artwork.entity.ShoppingCartEntity;
 import de.hdbw.webshop.model.users.entity.AllUsersEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
 import java.util.List;

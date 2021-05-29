@@ -1,7 +1,6 @@
-package de.hdbw.webshop.model.artwork;
+package de.hdbw.webshop.model.artwork.entity;
 
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
-import de.hdbw.webshop.util.string.NameHelper;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

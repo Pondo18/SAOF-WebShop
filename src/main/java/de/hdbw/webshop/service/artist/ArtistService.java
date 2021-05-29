@@ -1,14 +1,13 @@
 package de.hdbw.webshop.service.artist;
 
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
-import de.hdbw.webshop.dto.artwork.CreateNewArtworkDTO;
+import de.hdbw.webshop.dto.artwork.EditMyArtworkDTO;
 import de.hdbw.webshop.dto.registration.ArtistRegistrationFormDTO;
-import de.hdbw.webshop.model.artwork.ArtworkEntity;
+import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import de.hdbw.webshop.repository.user.ArtistRepository;
 import de.hdbw.webshop.service.artwork.ArtworkService;
-import de.hdbw.webshop.service.session.SessionService;
 import de.hdbw.webshop.service.user.RegisteredUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -50,16 +49,17 @@ public class ArtistService {
         }
     }
 
-    public ArtworkEntity addNewArtwork(CreateNewArtworkDTO createNewArtworkDTO, Authentication authentication) {
-        return artworkService.createNewArtwork(createNewArtworkDTO, authentication);
+    public ArtworkEntity addNewArtwork(EditMyArtworkDTO editMyArtworkDTO, Authentication authentication) {
+        return artworkService.createNewArtwork(editMyArtworkDTO, authentication);
     }
 
-    public boolean artworkIsFromArtist(Authentication authentication, String generatedArtworkName) {
+    public EditMyArtworkDTO getEditMyArtworkDtoIfExisting(Authentication authentication, String generatedArtworkName, List<String> images) {
         if (authentication!=null) {
             RegisteredUsersEntity currentUser = registeredUserService.findRegisteredUserEntityByAuthentication(authentication);
-            return artworkService.existsByArtistAndGeneratedArtworkName(currentUser, generatedArtworkName);
+            return artworkService.getEditMyArtworkDTOIfExisting(generatedArtworkName, currentUser);
         } else {
-            return false;
+            return null;
         }
     }
+
 }

@@ -3,8 +3,7 @@ package de.hdbw.webshop.repository.artwork;
 import java.util.List;
 import java.util.Optional;
 
-import de.hdbw.webshop.model.artwork.ArtworkEntity;
-import de.hdbw.webshop.model.artwork.ImageEntity;
+import de.hdbw.webshop.model.artwork.entity.ImageEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
