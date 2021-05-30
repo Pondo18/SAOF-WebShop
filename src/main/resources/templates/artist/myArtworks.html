@@ -18,70 +18,7 @@
 </head>
 <body>
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-sm   navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/artworks}">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item dropdown dmenu">
-                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                    Our Service
-                </a>
-                <div class="dropdown-menu sm-menu">
-                    <a class="dropdown-item" href="#">service2</a>
-                    <a class="dropdown-item" href="#">service 2</a>
-                    <a class="dropdown-item" href="#">service 3</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Contact Us</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Call</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link"  style="color: black">Be Smart - Buy Art! Der fröhlich freundliche Kunst Dealer</a>
-            </li>
-
-            <li class="nav-item">
-
-                <div sec:authorize="isAuthenticated()">
-                    <form action="/logout" method="post">
-                        <!--                        <a th:href="@{/logout}"  class="nav-link"  style="color: teal">Log out</a>-->
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                        <button type="submit">Log out</button>
-                    </form>
-                    <a sec:authorize="!hasRole('ROLE_ARTIST')" th:href="@{/registration/artist}" class="nav-link"  style="color: teal">Register as Artist</a>
-                </div>
-                <div sec:authorize="isAnonymous()">
-                    <a th:href="@{/login}" class="nav-link"  style="color: teal">Log in</a>
-                    <a th:href="@{/registration/user}" class="nav-link"  style="color: teal">Register</a>
-                </div>
-
-
-            </li>
-
-            <li class="nav-item">
-                <a th:href="@{/shopping_cart}" class="nav-link"  style="color: teal">Shopping Cart</a>
-            </li>
-
-
-        </ul>
-        <div class="social-part">
-            <img src="https://img.icons8.com/doodle/48/000000/instagram-new.png" class="social"/>
-            <img src="https://img.icons8.com/carbon-copy/100/000000/tiktok.png" class="social"/>
-            <img src="https://img.icons8.com/doodle/48/000000/paypal.png" class="social"/>
-        </div>
-    </div>
-</nav>
+<div th:insert="~{nav :: copy}"></div>
 <!-- NAVBAR -->
 <!-- Main Content -->
 <!--
@@ -166,21 +103,7 @@
 </div>
 
 
-<!-- footer-->
-<footer class="footer">
-    <div class="container">
-        <div class="about-us">
-            <h2>About Our Mission</h2>
-            <p>
-                Lorem Ipsum Postem git
-            </p>
-        </div>
-    </div>
 
-    <div class="rights flex-row">
-        <h4 class="text-gray">A Project by Students</h4>
-    </div>
-</footer>
 
 
 <script th:src="@{/javascript/open_artwork_func.js}"></script>
@@ -189,5 +112,9 @@
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>
 <script th:src="@{/javascript/document_ready.js}"></script>
+
+<!-- footer-->
+<div th:insert="~{footer :: copy}"></div>
+<!-- footer-->
 </body>
 </html>
