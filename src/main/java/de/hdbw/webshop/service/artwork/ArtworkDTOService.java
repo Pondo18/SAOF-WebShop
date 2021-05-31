@@ -70,30 +70,28 @@ public class ArtworkDTOService {
                 editMyArtworkDTO.getArtworkDescription(),
                 editMyArtworkDTO.getArtworkPrice());
         artworkEntity.setGeneratedArtworkName(nameHelper.generateArtworkName(artworkEntity.getArtworkName()));
-//        artworkEntity.setImages(imageService.getImagesByMultipartfiles(editMyArtworkDTO.getImages(), artworkEntity));
-//        return artworkEntity;
         return setImagesForArtworkFromArtworkDTO(editMyArtworkDTO, artworkEntity);
     }
 
     public EditMyArtworkDTO getEditMyArtworkDTOByArtworkEntity(ArtworkEntity artworkEntity) {
         EditMyArtworkDTO editMyArtworkDTO = new EditMyArtworkDTO(
-                artworkEntity.getGeneratedArtworkName(), artworkEntity.getArtworkName(),
+                artworkEntity.getArtworkName(),
                 artworkEntity.getDescription(), artworkEntity.getPrice());
         return setImagesForEditMyArtworkDTOFromList(imageService.getMultipartfilesByImageEntities(artworkEntity.getImages()), editMyArtworkDTO);
     }
 
     public ArtworkEntity setImagesForArtworkFromArtworkDTO(EditMyArtworkDTO editMyArtworkDTO, ArtworkEntity artworkEntity) {
         List<ImageEntity> images = new ArrayList<>();
-        if(editMyArtworkDTO.getFirstImage()!=null) {
+        if(editMyArtworkDTO.getFirstImage()!=null && editMyArtworkDTO.getFirstImage().getSize()!=0) {
             images.add(ImageEntity.buildImage(editMyArtworkDTO.getFirstImage(), 1, artworkEntity));
         }
-        if(editMyArtworkDTO.getSecondImage()!=null) {
+        if(editMyArtworkDTO.getSecondImage()!=null && editMyArtworkDTO.getSecondImage().getSize()!=0) {
             images.add(ImageEntity.buildImage(editMyArtworkDTO.getSecondImage(), 2, artworkEntity));
         }
-        if(editMyArtworkDTO.getThirdImage()!=null) {
+        if(editMyArtworkDTO.getThirdImage()!=null && editMyArtworkDTO.getThirdImage().getSize()!=0) {
             images.add(ImageEntity.buildImage(editMyArtworkDTO.getThirdImage(), 3, artworkEntity));
         }
-        if(editMyArtworkDTO.getForthImage()!=null) {
+        if(editMyArtworkDTO.getForthImage()!=null && editMyArtworkDTO.getForthImage().getSize()!=0) {
             images.add(ImageEntity.buildImage(editMyArtworkDTO.getForthImage(), 4, artworkEntity));
         }
         artworkEntity.setImages(images);

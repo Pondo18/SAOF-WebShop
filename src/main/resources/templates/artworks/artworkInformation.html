@@ -104,7 +104,7 @@
 </button>
 
 <!-- Edit Artwork Modal -->
-<div class="modal fade" id="editArtworkModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div th:if="${editArtworkDTO!=null}" class="modal fade" id="editArtworkModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="#" th:action="@{/edit_artwork}" th:object="${editArtworkDTO}"
@@ -123,40 +123,30 @@
                     <input type="file" id="firstImageInput" th:field="*{firstImage}"
                            onchange="reload_image('firstImage', this)" class="fadeIn second"
                            enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
-                    <!--                    first image-->
-                    <!--                    <img th:if="*{oldImageUrls.size()>0}" th:src="*{oldImageUrls[0]}">-->
-                    <!--                    <img th:if="*{oldImageUrls.size()==0}">-->
-                    <!--                    <img th:if="*{oldImageUrls.size()>0 || firstImage ne null}" th:src="*{oldImageUrls[0]}"-->
-                    <img th:if="*{firstImage ne null}"
-                         th:src="*{'data:image/'+ firstImage.getContentType()+';base64, ' + firstImage.getImageBase64()}"
+                    <img th:src="*{'data:image/'+ firstImage.getContentType()+';base64, ' + getFirstImageBase64()}"
                          id="firstImage">
                     <input type="file" id="secondImageInput" th:field="*{secondImage}"
                            onchange="reload_image('secondImage', this)" class="fadeIn second"
                            enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
-                    <img th:if="*{firstImage ne null}"
-                         th:src="*{'data:image/'+ firstImage.getContentType()+';base64, ' + firstImage.getImageBase64()}"
+                    <img th:src="*{'data:image/'+ firstImage.getContentType()+';base64, ' + getSecondImageBase64()}"
                          id="secondImage">
-                    <!--                    <img th:if="*{oldImageUrls.size()>1 || secondImage ne null}" src="" th:src="*{oldImageUrls.size()>1? oldImageUrls[1]}"-->
                     <input type="file" id="thirdImageInput" th:field="*{thirdImage}"
                            onchange="reload_image('thirdImage', this)" class="fadeIn second"
                            enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
-                    <img th:if="*{firstImage ne null}"
-                         th:src="*{'data:image/'+ firstImage.getContentType()+';base64, ' + firstImage.getImageBase64()}"
+                    <img th:src="*{'data:image/'+ firstImage.getContentType()+';base64, ' + getThirdImageBase64()}"
                          id="thirdImage">
-                    <!--                    <img th:if="*{oldImageUrls.size()>2 || thirdImage ne null}" th:src="*{oldImageUrls[2]}"-->
 
                     <input type="file" id="forthImageInput" th:field="*{forthImage}"
-                           onchange="reload_image('forthImage')"
-                           class="fadeIn second" enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
-                    <img th:if="*{firstImage ne null}"
-                         th:src="*{'data:image/'+ firstImage.getContentType()+';base64, ' + firstImage.getImageBase64()}"
+                           onchange="reload_image('forthImage', this)" class="fadeIn second"
+                           enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
+                    <img th:src="*{'data:image/'+ firstImage.getContentType()+';base64, ' + getForthImageBase64()}"
                          id="forthImage">
-                    <!--                    <img th:if="*{oldImageUrls.size()>3 || forthImage ne null}" th:src="*{oldImageUrls[3]}"-->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary">Edit</button>
                 </div>
+                <input type="hidden" th:value="${artwork.generatedArtworkName}" name="oldGeneratedArtworkName"/>
             </form>
 
             <form action="#" th:action="@{/remove_artwork}" method="post">

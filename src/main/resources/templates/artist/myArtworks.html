@@ -131,21 +131,21 @@
                     <!--                    <img th:if="*{oldImageUrls.size()>0}" th:src="*{oldImageUrls[0]}">-->
                     <!--                    <img th:if="*{oldImageUrls.size()==0}">-->
                     <!--                    <img th:if="*{oldImageUrls.size()>0 || firstImage ne null}" th:src="*{oldImageUrls[0]}"-->
-                    <img src ="/static/images/upload_image.jpg" id="firstImage">
+                    <img src ="static/images/upload_image.jpg" id="firstImage">
                     <input type="file" id="secondImageInput" th:field="*{secondImage}"
                            onchange="reload_image('secondImage', this)" class="fadeIn second"
                            enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
-                    <img src ="/static/images/upload_image.jpg" id="secondImage">
+                    <img src ="static/images/upload_image.jpg" id="secondImage">
                     <!--                    <img th:if="*{oldImageUrls.size()>1 || secondImage ne null}" src="" th:src="*{oldImageUrls.size()>1? oldImageUrls[1]}"-->
                     <input type="file" id="thirdImageInput" th:field="*{thirdImage}"
                            onchange="reload_image('thirdImage', this)" class="fadeIn second"
                            enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
-                    <img src ="/static/images/upload_image.jpg" id="thirdImage">
+                    <img src ="static/images/upload_image.jpg" id="thirdImage">
                     <!--                    <img th:if="*{oldImageUrls.size()>2 || thirdImage ne null}" th:src="*{oldImageUrls[2]}"-->
                     <input type="file" id="forthImageInput" th:field="*{forthImage}"
                            onchange="reload_image('forthImage', this)"
                            class="fadeIn second" enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
-                    <img src ="/static/images/upload_image.jpg" id="forthImage">
+                    <img src ="static/images/upload_image.jpg" id="forthImage">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
