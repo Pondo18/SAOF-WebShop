@@ -93,7 +93,6 @@ public class ArtworkService {
             log.info("Editing Artwork with the generatedArtworkName: " + oldGeneratedArtworkName
                     + " by the artist with the email: " + currentUser.getEmail());
             ArtworkEntity oldArtwork = getArtworkEntityByGeneratedArtworkName(oldGeneratedArtworkName);
-//            return artworkRepository.save(editArtworkEntityByEditArtworkDTO(editMyArtworkDTO, oldArtwork));
             return artworkRepository.save(editArtworkEntityByEditArtworkDTO(editMyArtworkDTO, oldArtwork));
         } else {
             log.info("Couldn't delete Artwork: " + oldGeneratedArtworkName

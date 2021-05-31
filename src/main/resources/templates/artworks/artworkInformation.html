@@ -120,26 +120,29 @@
                            placeholder="Price" required/>
                     <input type="text" th:field="*{artworkDescription}" class="fadeIn second" name="artworkDescription"
                            placeholder="Description"/>
-                    <input type="file" id="firstImageInput" th:field="*{firstImage}"
+                    <input type="file" id="firstImageInput" th:field="*{firstImage.multipartFile}"
                            onchange="reload_image('firstImage', this)" class="fadeIn second"
                            enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
-                    <img th:src="*{'data:image/'+ firstImage.getContentType()+';base64, ' + getFirstImageBase64()}"
+                    <input type="text" th:field="*{firstImage.position}" th:value="1" hidden>
+                    <img th:src="*{'data:image/'+ firstImage.getImageContentType() +';base64, ' + firstImage.getImageBase64()}"
                          id="firstImage">
-                    <input type="file" id="secondImageInput" th:field="*{secondImage}"
+                    <input type="file" id="secondImageInput" th:field="*{secondImage.multipartFile}"
                            onchange="reload_image('secondImage', this)" class="fadeIn second"
                            enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
-                    <img th:src="*{'data:image/'+ firstImage.getContentType()+';base64, ' + getSecondImageBase64()}"
+                    <input type="text" th:field="*{secondImage.position}" th:value="2" hidden>
+                    <img th:src="*{'data:image/'+ secondImage.getImageContentType()+';base64, ' + secondImage.getImageBase64()}"
                          id="secondImage">
-                    <input type="file" id="thirdImageInput" th:field="*{thirdImage}"
+                    <input type="file" id="thirdImageInput" th:field="*{thirdImage.multipartFile}"
                            onchange="reload_image('thirdImage', this)" class="fadeIn second"
                            enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
-                    <img th:src="*{'data:image/'+ firstImage.getContentType()+';base64, ' + getThirdImageBase64()}"
+                    <input type="text" th:field="*{thirdImage.position}" th:value="3" hidden>
+                    <img th:src="*{'data:image/'+ thirdImage.getImageContentType()+';base64, ' + thirdImage.getImageBase64()}"
                          id="thirdImage">
-
-                    <input type="file" id="forthImageInput" th:field="*{forthImage}"
+                    <input type="file" id="forthImageInput" th:field="*{forthImage.multipartFile}"
                            onchange="reload_image('forthImage', this)" class="fadeIn second"
                            enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
-                    <img th:src="*{'data:image/'+ firstImage.getContentType()+';base64, ' + getForthImageBase64()}"
+                    <input type="text" th:field="*{forthImage.position}" th:value="4" hidden>
+                    <img th:src="*{'data:image/'+ forthImage.getImageContentType()+';base64, ' + forthImage.getImageBase64()}"
                          id="forthImage">
                 </div>
                 <div class="modal-footer">

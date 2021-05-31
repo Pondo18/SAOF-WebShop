@@ -5,6 +5,7 @@ import de.hdbw.webshop.exception.exceptions.ImageNotFoundException;
 import de.hdbw.webshop.model.artwork.CustomMultipartFile;
 import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
 import de.hdbw.webshop.model.artwork.entity.ImageEntity;
+import de.hdbw.webshop.model.artwork.entity.ImageMultipartWrapper;
 import de.hdbw.webshop.repository.artwork.ImageRepository;
 import lombok.extern.apachecommons.CommonsLog;
 import one.util.streamex.EntryStream;
@@ -39,13 +40,6 @@ public class ImageService {
         return imageRepository.save(image);
     }
 
-    public List<ImageEntity> getImagesByMultipartfiles(List<MultipartFile> imagesAsMultipart, ArtworkEntity artworkEntity) {
-        List<MultipartFile> images = imagesAsMultipart.stream().filter(image -> image.getSize() != 0).collect(Collectors.toList());
-        return EntryStream.of(images).mapKeyValue(
-                (index, multipartFile) -> ImageEntity.buildImage(multipartFile, index + 1, artworkEntity)).collect(Collectors.toList()
-        );
-    }
-
     public MultipartFile getMultipartByImageEntity(ImageEntity image) {
         return new CustomMultipartFile(image.getData(), image.getUuid(), image.getFileType());
     }
@@ -71,15 +65,13 @@ public class ImageService {
     }
 
     public ArtworkEntity changeImagesIfNecessary(EditMyArtworkDTO artworkChanges, ArtworkEntity existingArtwork) {
-        Map<Integer, MultipartFile> newImagesMapAsMultipart = Map.of(
-                0, artworkChanges.getFirstImage(),
-                1, artworkChanges.getSecondImage(),
-                2, artworkChanges.getThirdImage(),
-                3, artworkChanges.getForthImage());
-        List<Map.Entry<Integer, MultipartFile>> newImagesWithoutEmptyOnes = newImagesMapAsMultipart.entrySet().stream()
-                .filter(entry -> entry.getValue().getSize() != 0).collect(Collectors.toList());
-        newImagesWithoutEmptyOnes.stream().forEach(
-              entry -> addNewImageToArtwork(existingArtwork, entry.getValue(), entry.getKey())
+        List<ImageMultipartWrapper> newImageAsMultipartWrapper = List.of(
+                artworkChanges.getFirstImage(), artworkChanges.getSecondImage(),
+                artworkChanges.getThirdImage(), artworkChanges.getForthImage());
+        List<ImageMultipartWrapper> newImageAsMultipartWrapperWithoutEmpty = newImageAsMultipartWrapper.stream()
+                .filter(image -> image.getMultipartFile().getSize()!=0).collect(Collectors.toList());
+        newImageAsMultipartWrapperWithoutEmpty.stream().forEach(
+                image -> addNewImageToArtwork(existingArtwork, image.getMultipartFile(), image.getPosition()-1)
         );
         return existingArtwork;
     }
@@ -116,13 +108,13 @@ public class ImageService {
 
     public List<MultipartFile> getMultipartfilesByImageEntities(List<ImageEntity> images) {
         List<MultipartFile> multipartFiles = images.stream().map(this::getMultipartByImageEntity).collect(Collectors.toList());
-//        for(int i = 0; i<=4-multipartFiles.size(); i++) {
-//            try {
-//                multipartFiles.add(getMultipartByImageEntity(getLocalImage("static/images/upload_image.jpg", "image/jpg")));
-//            } catch (Exception e) {
-//                throw new ImageNotFoundException();
-//            }
-//        }
+        while(multipartFiles.size()!=4) {
+            try {
+                multipartFiles.add(getMultipartByImageEntity(getLocalImage("static/images/upload_image.jpg", "image/jpg")));
+            } catch (Exception e) {
+                throw new ImageNotFoundException();
+            }
+        }
         return multipartFiles;
     }
 }

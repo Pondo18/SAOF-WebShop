@@ -2,6 +2,9 @@ package de.hdbw.webshop.util.string;
 import de.hdbw.webshop.repository.artwork.ArtworkRepository;
 import org.springframework.stereotype.Component;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.random;
+
 @Component
 public class NameHelper {
 
@@ -23,6 +26,7 @@ public class NameHelper {
         return artworkRepository.existsByGeneratedArtworkName(generatedArtworkName);    }
 
     private String randomNumber() {
-        return String.valueOf((Math.random() * 10));
+        int randomNumberFrom1To10 = (int) (random() *10);
+        return String.valueOf(randomNumberFrom1To10);
     }
 }

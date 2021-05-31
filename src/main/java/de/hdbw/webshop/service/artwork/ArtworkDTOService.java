@@ -4,9 +4,9 @@ import de.hdbw.webshop.dto.artwork.ArtworkForDetailedViewDTO;
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
 import de.hdbw.webshop.dto.artwork.EditMyArtworkDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
-import de.hdbw.webshop.model.artwork.CustomMultipartFile;
 import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
 import de.hdbw.webshop.model.artwork.entity.ImageEntity;
+import de.hdbw.webshop.model.artwork.entity.ImageMultipartWrapper;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.repository.artwork.ArtworkRepository;
 import de.hdbw.webshop.util.string.NameHelper;
@@ -82,17 +82,17 @@ public class ArtworkDTOService {
 
     public ArtworkEntity setImagesForArtworkFromArtworkDTO(EditMyArtworkDTO editMyArtworkDTO, ArtworkEntity artworkEntity) {
         List<ImageEntity> images = new ArrayList<>();
-        if(editMyArtworkDTO.getFirstImage()!=null && editMyArtworkDTO.getFirstImage().getSize()!=0) {
-            images.add(ImageEntity.buildImage(editMyArtworkDTO.getFirstImage(), 1, artworkEntity));
+        if(editMyArtworkDTO.getFirstImage()!=null && editMyArtworkDTO.getFirstImage().getMultipartFile().getSize()!=0) {
+            images.add(ImageEntity.buildImage(editMyArtworkDTO.getFirstImage().getMultipartFile(), 1, artworkEntity));
         }
-        if(editMyArtworkDTO.getSecondImage()!=null && editMyArtworkDTO.getSecondImage().getSize()!=0) {
-            images.add(ImageEntity.buildImage(editMyArtworkDTO.getSecondImage(), 2, artworkEntity));
+        if(editMyArtworkDTO.getSecondImage()!=null && editMyArtworkDTO.getSecondImage().getMultipartFile().getSize()!=0) {
+            images.add(ImageEntity.buildImage(editMyArtworkDTO.getSecondImage().getMultipartFile(), 2, artworkEntity));
         }
-        if(editMyArtworkDTO.getThirdImage()!=null && editMyArtworkDTO.getThirdImage().getSize()!=0) {
-            images.add(ImageEntity.buildImage(editMyArtworkDTO.getThirdImage(), 3, artworkEntity));
+        if(editMyArtworkDTO.getThirdImage()!=null && editMyArtworkDTO.getThirdImage().getMultipartFile().getSize()!=0) {
+            images.add(ImageEntity.buildImage(editMyArtworkDTO.getThirdImage().getMultipartFile(), 3, artworkEntity));
         }
-        if(editMyArtworkDTO.getForthImage()!=null && editMyArtworkDTO.getForthImage().getSize()!=0) {
-            images.add(ImageEntity.buildImage(editMyArtworkDTO.getForthImage(), 4, artworkEntity));
+        if(editMyArtworkDTO.getForthImage()!=null && editMyArtworkDTO.getForthImage().getMultipartFile().getSize()!=0) {
+            images.add(ImageEntity.buildImage(editMyArtworkDTO.getForthImage().getMultipartFile(), 4, artworkEntity));
         }
         artworkEntity.setImages(images);
         return artworkEntity;
@@ -100,19 +100,20 @@ public class ArtworkDTOService {
 
     public EditMyArtworkDTO setImagesForEditMyArtworkDTOFromList(List<MultipartFile> images, EditMyArtworkDTO artworkDTO) {
         try {
-            artworkDTO.setFirstImage(images.get(0));
+            ImageMultipartWrapper imageMultipartWrapper = new ImageMultipartWrapper(images.get(0), 1);
+            artworkDTO.setFirstImage(imageMultipartWrapper);
         } catch (IndexOutOfBoundsException e) {
         }
         try {
-            artworkDTO.setSecondImage(images.get(1));
+            artworkDTO.setSecondImage(new ImageMultipartWrapper(images.get(1), 2));
         } catch (IndexOutOfBoundsException e) {
         }
         try {
-            artworkDTO.setThirdImage(images.get(2));
+            artworkDTO.setThirdImage(new ImageMultipartWrapper(images.get(2), 3));
         } catch (IndexOutOfBoundsException e) {
         }
         try {
-            artworkDTO.setForthImage(images.get(3));
+            artworkDTO.setForthImage(new ImageMultipartWrapper(images.get(3), 4));
         } catch (IndexOutOfBoundsException e) {
         }
         return artworkDTO;

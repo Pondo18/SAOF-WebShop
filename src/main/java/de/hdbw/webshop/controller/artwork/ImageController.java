@@ -25,18 +25,6 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-//    @PostMapping("/upload")
-//    public ImageResponseDTO uploadSingleFile(@RequestParam("file") MultipartFile file) {
-//        ImageEntity image = ImageEntity.buildImage(file, 1);
-//        imageService.save(image);
-//        return new ImageResponseDTO(image);
-//    }
-
-//    @PostMapping("/uploads")
-//    public List<ImageResponseDTO> uploadMultiFiles(@RequestParam("files") MultipartFile[] files) {
-//        return Arrays.stream(files).map(this::uploadSingleFile).collect(Collectors.toList());
-//    }
-
 
     @GetMapping("/{uuid}")
     public ResponseEntity<byte[]> getImage(@PathVariable String uuid) {

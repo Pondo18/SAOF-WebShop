@@ -58,13 +58,6 @@ public class ImageEntity {
         setSize(file.getSize());
     }
 
-    /**
-     * Scale image data with given width and height.
-     *
-     * @param width  scale width
-     * @param height scale height
-     * @return scaled image byte array and change to class data.
-     */
     @Transient
     public byte[] scale(int width, int height) throws Exception {
 
