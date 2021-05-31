@@ -63,29 +63,12 @@ public class ImageService {
     }
 
     @Transient
-    public ImageEntity getDefaultImage() throws Exception {
-        InputStream is = getResourceFileAsInputStream("static/images/image_missing.png");
-        String fileType = "image/png";
+    public ImageEntity getLocalImage(String path, String fileType) throws Exception {
+        InputStream is = getResourceFileAsInputStream(path);
         byte[] bdata = FileCopyUtils.copyToByteArray(is);
         ImageEntity image = new ImageEntity(fileType, 0, null, bdata);
         return image;
     }
-
-//    public String getBase64FromImage(String imagePath) {
-//        File originalFile = new File("signature.jpg");
-//        String encodedBase64 = null;
-//        try {
-//            FileInputStream fileInputStreamReader = new FileInputStream(originalFile);
-//            byte[] bytes = new byte[(int)originalFile.length()];
-//            fileInputStreamReader.read(bytes);
-//            encodedBase64 = new String(Base64.encodeBase64(bytes));
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        "static/images/upload_image.jpg"
-//    }
 
     public ArtworkEntity changeImagesIfNecessary(EditMyArtworkDTO artworkChanges, ArtworkEntity existingArtwork) {
         Map<Integer, MultipartFile> newImagesMapAsMultipart = Map.of(
@@ -99,23 +82,6 @@ public class ImageService {
               entry -> addNewImageToArtwork(existingArtwork, entry.getValue(), entry.getKey())
         );
         return existingArtwork;
-//        List<MultipartFile> newImagesAsMultipart = List.of(
-//                artworkChanges.getFirstImage(), artworkChanges.getSecondImage(),
-//                artworkChanges.getThirdImage(), artworkChanges.getForthImage());
-//        List<MultipartFile> newImagesAsMultipartWithoutEmptyOnes = newImagesAsMultipart.stream().filter(
-//                multipartFile -> multipartFile.getSize() != 0
-//        ).collect(Collectors.toList());
-////        List<ImageEntity> newImages = EntryStream.of(newImagesAsMultipartWithoutEmptyOnes).mapKeyValue(
-////                (index, multipartImage) ->
-////                        addNewImageToArtwork(existingArtwork, multipartImage, index)
-////        ).collect(Collectors.toList());
-////        List<ImageEntity> oldImages = existingArtwork.getImages();
-////        oldImages.clear();
-////        newImages.stream().forEach(imageEntity -> existingArtwork.addImage(imageEntity));
-//        EntryStream.of(newImagesAsMultipartWithoutEmptyOnes).forKeyValue(
-//                (index, multipartImage) -> addNewImageToArtwork(existingArtwork, multipartImage, index)
-//        );
-//        return existingArtwork;
     }
 
     ArtworkEntity addNewImageToArtwork(ArtworkEntity existingArtwork, MultipartFile newImage, int index) {
@@ -138,10 +104,6 @@ public class ImageService {
         return existingArtwork;
     }
 
-//    public long deleteImageByUuid(String uuid) {
-//        return imageRepository.deleteAllByArtwork(artworkEntity);
-//    }
-
 
     private static InputStream getResourceFileAsInputStream(String fileName) {
         ClassLoader classLoader = ImageEntity.class.getClassLoader();
@@ -153,6 +115,14 @@ public class ImageService {
     }
 
     public List<MultipartFile> getMultipartfilesByImageEntities(List<ImageEntity> images) {
-        return images.stream().map(image -> getMultipartByImageEntity(image)).collect(Collectors.toList());
+        List<MultipartFile> multipartFiles = images.stream().map(this::getMultipartByImageEntity).collect(Collectors.toList());
+//        for(int i = 0; i<=4-multipartFiles.size(); i++) {
+//            try {
+//                multipartFiles.add(getMultipartByImageEntity(getLocalImage("static/images/upload_image.jpg", "image/jpg")));
+//            } catch (Exception e) {
+//                throw new ImageNotFoundException();
+//            }
+//        }
+        return multipartFiles;
     }
 }

@@ -3,6 +3,7 @@ package de.hdbw.webshop.security;
 import de.hdbw.webshop.listener.MySessionListener;
 import de.hdbw.webshop.service.user.ShoppingCartService;
 import de.hdbw.webshop.service.session.RedirectHelper;
+import de.hdbw.webshop.util.string.UrlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -30,13 +31,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final MySessionListener mySessionListener;
     private final RedirectHelper redirectHelper;
     private final ShoppingCartService shoppingCartService;
+    private final UrlUtil urlUtil;
 
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService, MySessionListener mySessionListener, RedirectHelper redirectHelper, ShoppingCartService shoppingCartService) {
+    public SecurityConfig(UserDetailsService userDetailsService, MySessionListener mySessionListener, RedirectHelper redirectHelper, ShoppingCartService shoppingCartService, UrlUtil urlUtil) {
         this.userDetailsService = userDetailsService;
         this.mySessionListener = mySessionListener;
         this.redirectHelper = redirectHelper;
         this.shoppingCartService = shoppingCartService;
+        this.urlUtil = urlUtil;
     }
 
     @Bean
@@ -93,7 +96,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .defaultSuccessUrl("/")
 //                .defaultSuccessUrl("/artworks", true)
-                .successHandler(new MyAuthenticationSuccessHandler(redirectHelper, shoppingCartService))
+                .successHandler(new MyAuthenticationSuccessHandler(redirectHelper, shoppingCartService, urlUtil))
                 .and()
                 .logout().logoutUrl("/logout")
                 .logoutSuccessUrl("/")

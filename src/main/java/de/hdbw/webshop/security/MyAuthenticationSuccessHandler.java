@@ -2,6 +2,7 @@ package de.hdbw.webshop.security;
 
 import de.hdbw.webshop.service.user.ShoppingCartService;
 import de.hdbw.webshop.service.session.RedirectHelper;
+import de.hdbw.webshop.util.string.UrlUtil;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -24,15 +25,17 @@ public class MyAuthenticationSuccessHandler
     private RequestCache requestCache = new HttpSessionRequestCache();
     private RedirectHelper redirectHelper;
     private ShoppingCartService shoppingCartService;
+    private UrlUtil urlUtil;
 
     public MyAuthenticationSuccessHandler() {
         super();
         setUseReferer(true);
     }
 
-    public MyAuthenticationSuccessHandler(RedirectHelper redirectHelper, ShoppingCartService shoppingCartService) {
+    public MyAuthenticationSuccessHandler(RedirectHelper redirectHelper, ShoppingCartService shoppingCartService, UrlUtil urlUtil) {
         this.redirectHelper = redirectHelper;
         this.shoppingCartService = shoppingCartService;
+        this.urlUtil = urlUtil;
         setUseReferer(true);
     }
 
@@ -44,7 +47,7 @@ public class MyAuthenticationSuccessHandler
             shoppingCartService.changeUserForShoppingCartAndSave(jsessionid, authentication);
         }
         String referer = request.getParameter("returnUrl");
-        if (referer == null) {
+        if (referer == null || urlUtil.getPathByUrl(referer).equals("/login")) {
             clearAuthenticationAttributes(request);
             this.getRedirectStrategy().sendRedirect(request, response, "/artworks");
         } else {

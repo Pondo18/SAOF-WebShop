@@ -56,7 +56,7 @@ public class ArtworkImageController {
                     + "' and id | for generatedArtworkName: '" + artworkName
                     + "' could not be returned");
             try {
-                ImageEntity defaultImage = imageService.getDefaultImage();
+                ImageEntity defaultImage = imageService.getLocalImage("static/images/image_missing.png", "image/png");
                 log.info("Returning default image");
                 return ResponseEntity
                         .ok()

@@ -49,7 +49,7 @@ public class ImageController {
         } catch (ImageNotFoundException imageNotFoundException) {
             log.warn("Could not return Image by Image UUID: '" + uuid + "'");
             try {
-                ImageEntity defaultImage = imageService.getDefaultImage();
+                ImageEntity defaultImage = imageService.getLocalImage("static/images/image_missing.png", "image/png");
                 return ResponseEntity
                         .ok()
                         .contentType(MediaType.valueOf(defaultImage.getFileType()))
