@@ -8,7 +8,6 @@ import de.hdbw.webshop.model.artwork.entity.ImageEntity;
 import de.hdbw.webshop.model.artwork.entity.ImageMultipartWrapper;
 import de.hdbw.webshop.repository.artwork.ImageRepository;
 import lombok.extern.apachecommons.CommonsLog;
-import one.util.streamex.EntryStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.Transient;
 import java.io.*;
 import java.util.List;
-import java.util.Map;
+
 import java.util.stream.Collectors;
 
 

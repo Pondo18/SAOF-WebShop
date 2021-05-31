@@ -67,6 +67,7 @@ public class ArtworkService {
     public ArtworkEntity createNewArtwork (EditMyArtworkDTO editMyArtworkDTO, Authentication authentication) {
         ArtistEntity artist = registeredUserService.findRegisteredUserEntityByAuthentication(authentication).getArtistEntity();
         ArtworkEntity artworkEntity = artworkDTOService.getArtworkEntityByCreateNewArtworkDTO(editMyArtworkDTO, artist);
+        log.info("Artist: " + artist.getRegisteredUserEntity().getEmail() + " is adding a new Artwork: " + artworkEntity.getGeneratedArtworkName());
         return artworkRepository.save(artworkEntity);
     }
 
