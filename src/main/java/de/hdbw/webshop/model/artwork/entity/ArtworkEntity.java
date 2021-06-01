@@ -1,7 +1,6 @@
-package de.hdbw.webshop.model.artwork;
+package de.hdbw.webshop.model.artwork.entity;
 
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
-import de.hdbw.webshop.util.string.NameHelper;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -30,7 +29,7 @@ public class ArtworkEntity {
     private double price;
     private int available;
 
-    @OneToMany(mappedBy = "artwork", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "artwork", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ImageEntity> images;
 
     @OneToMany(mappedBy = "artworkEntity")
@@ -46,5 +45,13 @@ public class ArtworkEntity {
         this.description = description;
         this.price = price;
         this.available = 1;
+    }
+
+    public void addImage(ImageEntity imageEntity) {
+        images.add(imageEntity);
+    }
+
+    public void deleteImageByIndex(int index) {
+        images.remove(index);
     }
 }

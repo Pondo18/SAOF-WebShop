@@ -1,13 +1,8 @@
 package de.hdbw.webshop.controller.artwork;
 
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import de.hdbw.webshop.exception.exceptions.ImageNotFoundException;
-import de.hdbw.webshop.model.artwork.ImageEntity;
-import de.hdbw.webshop.dto.artwork.ImageResponseDTO;
+import de.hdbw.webshop.model.artwork.entity.ImageEntity;
 import de.hdbw.webshop.service.artwork.ImageService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 @CommonsLog
@@ -31,18 +25,6 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-//    @PostMapping("/upload")
-//    public ImageResponseDTO uploadSingleFile(@RequestParam("file") MultipartFile file) {
-//        ImageEntity image = ImageEntity.buildImage(file, 1);
-//        imageService.save(image);
-//        return new ImageResponseDTO(image);
-//    }
-
-//    @PostMapping("/uploads")
-//    public List<ImageResponseDTO> uploadMultiFiles(@RequestParam("files") MultipartFile[] files) {
-//        return Arrays.stream(files).map(this::uploadSingleFile).collect(Collectors.toList());
-//    }
-
 
     @GetMapping("/{uuid}")
     public ResponseEntity<byte[]> getImage(@PathVariable String uuid) {
@@ -55,7 +37,7 @@ public class ImageController {
         } catch (ImageNotFoundException imageNotFoundException) {
             log.warn("Could not return Image by Image UUID: '" + uuid + "'");
             try {
-                ImageEntity defaultImage = imageService.getDefaultImage();
+                ImageEntity defaultImage = imageService.getLocalImage("static/images/image_missing.png", "image/png");
                 return ResponseEntity
                         .ok()
                         .contentType(MediaType.valueOf(defaultImage.getFileType()))

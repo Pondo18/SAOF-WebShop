@@ -2,6 +2,7 @@ package de.hdbw.webshop.controller.artwork;
 
 import de.hdbw.webshop.dto.artwork.ArtworkForDetailedViewDTO;
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
+import de.hdbw.webshop.dto.artwork.EditMyArtworkDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.service.artist.ArtistService;
 import de.hdbw.webshop.service.artwork.ArtworkDTOService;
@@ -50,15 +51,15 @@ public class ArtworkController {
         try {
             HttpSession session = request.getSession();
             boolean isInShoppingCart = shoppingCartService.ArtworkIsInShoppingCart(session, authentication, generatedArtworkName);
-            boolean artworkIsFromCurrentArtist = artistService.artworkIsFromArtist(authentication, generatedArtworkName);
             ArtworkForDetailedViewDTO artwork = artworkDTOService.getArtworkForDetailedInformationPage(generatedArtworkName);
+            EditMyArtworkDTO editArtworkDTO = artistService.getEditMyArtworkDtoIfExisting(authentication, generatedArtworkName, artwork.getImagesUrl());
             log.debug("Returning detailed artwork page for Artwork with generatedArtworkName: " + generatedArtworkName);
             ModelAndView mav = new ModelAndView("artworks/artworkInformation", "artwork", artwork);
             mav.addObject("isInShoppingCart", isInShoppingCart);
-            mav.addObject("isFromArtist", artworkIsFromCurrentArtist);
+            mav.addObject("editArtworkDTO", editArtworkDTO);
             return mav;
         } catch (ArtworkNotFoundException artworkNotFoundException) {
-            log.warn("Artwork with the generatedArtw orkName: " + generatedArtworkName + " was not found!");
+            log.warn("Artwork with the generatedArtworkName: " + generatedArtworkName + " was not found!");
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
                     "Artwork Not Found",

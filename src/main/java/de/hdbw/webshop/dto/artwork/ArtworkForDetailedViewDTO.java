@@ -1,6 +1,6 @@
 package de.hdbw.webshop.dto.artwork;
 
-import de.hdbw.webshop.model.artwork.ArtworkEntity;
+import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

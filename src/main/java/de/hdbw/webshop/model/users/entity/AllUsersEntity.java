@@ -1,7 +1,7 @@
 package de.hdbw.webshop.model.users.entity;
 
-import de.hdbw.webshop.model.artwork.BoughtArtworkEntity;
-import de.hdbw.webshop.model.artwork.ShoppingCartEntity;
+import de.hdbw.webshop.model.artwork.entity.BoughtArtworkEntity;
+import de.hdbw.webshop.model.artwork.entity.ShoppingCartEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

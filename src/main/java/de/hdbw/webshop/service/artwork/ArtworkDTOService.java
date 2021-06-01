@@ -2,18 +2,19 @@ package de.hdbw.webshop.service.artwork;
 
 import de.hdbw.webshop.dto.artwork.ArtworkForDetailedViewDTO;
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
-import de.hdbw.webshop.dto.artwork.CreateNewArtworkDTO;
+import de.hdbw.webshop.dto.artwork.EditMyArtworkDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
-import de.hdbw.webshop.model.artwork.ArtworkEntity;
-import de.hdbw.webshop.model.artwork.ImageEntity;
+import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
+import de.hdbw.webshop.model.artwork.entity.ImageEntity;
+import de.hdbw.webshop.model.artwork.entity.ImageMultipartWrapper;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.repository.artwork.ArtworkRepository;
 import de.hdbw.webshop.util.string.NameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,13 +64,58 @@ public class ArtworkDTOService {
         ).collect(Collectors.toList());
     }
 
-    public ArtworkEntity getArtworkEntityByCreateNewArtworkDTO(CreateNewArtworkDTO createNewArtworkDTO, ArtistEntity artist) {
+    public ArtworkEntity getArtworkEntityByCreateNewArtworkDTO(EditMyArtworkDTO editMyArtworkDTO, ArtistEntity artist) {
         ArtworkEntity artworkEntity = new ArtworkEntity(
-                createNewArtworkDTO.getArtworkName(), artist,
-                createNewArtworkDTO.getArtworkDescription(),
-                createNewArtworkDTO.getArtworkPrice());
+                editMyArtworkDTO.getArtworkName(), artist,
+                editMyArtworkDTO.getArtworkDescription(),
+                editMyArtworkDTO.getArtworkPrice());
         artworkEntity.setGeneratedArtworkName(nameHelper.generateArtworkName(artworkEntity.getArtworkName()));
-        artworkEntity.setImages(imageService.getImagesByMultipartfiles(createNewArtworkDTO.getImages(), artworkEntity));
+        return setImagesForArtworkFromArtworkDTO(editMyArtworkDTO, artworkEntity);
+    }
+
+    public EditMyArtworkDTO getEditMyArtworkDTOByArtworkEntity(ArtworkEntity artworkEntity) {
+        EditMyArtworkDTO editMyArtworkDTO = new EditMyArtworkDTO(
+                artworkEntity.getArtworkName(),
+                artworkEntity.getDescription(), artworkEntity.getPrice());
+        return setImagesForEditMyArtworkDTOFromList(imageService.getMultipartfilesByImageEntities(artworkEntity.getImages()), editMyArtworkDTO);
+    }
+
+    public ArtworkEntity setImagesForArtworkFromArtworkDTO(EditMyArtworkDTO editMyArtworkDTO, ArtworkEntity artworkEntity) {
+        List<ImageEntity> images = new ArrayList<>();
+        if(editMyArtworkDTO.getFirstImage()!=null && editMyArtworkDTO.getFirstImage().getMultipartFile().getSize()!=0) {
+            images.add(ImageEntity.buildImage(editMyArtworkDTO.getFirstImage().getMultipartFile(), 1, artworkEntity));
+        }
+        if(editMyArtworkDTO.getSecondImage()!=null && editMyArtworkDTO.getSecondImage().getMultipartFile().getSize()!=0) {
+            images.add(ImageEntity.buildImage(editMyArtworkDTO.getSecondImage().getMultipartFile(), 2, artworkEntity));
+        }
+        if(editMyArtworkDTO.getThirdImage()!=null && editMyArtworkDTO.getThirdImage().getMultipartFile().getSize()!=0) {
+            images.add(ImageEntity.buildImage(editMyArtworkDTO.getThirdImage().getMultipartFile(), 3, artworkEntity));
+        }
+        if(editMyArtworkDTO.getForthImage()!=null && editMyArtworkDTO.getForthImage().getMultipartFile().getSize()!=0) {
+            images.add(ImageEntity.buildImage(editMyArtworkDTO.getForthImage().getMultipartFile(), 4, artworkEntity));
+        }
+        artworkEntity.setImages(images);
         return artworkEntity;
+    }
+
+    public EditMyArtworkDTO setImagesForEditMyArtworkDTOFromList(List<MultipartFile> images, EditMyArtworkDTO artworkDTO) {
+        try {
+            ImageMultipartWrapper imageMultipartWrapper = new ImageMultipartWrapper(images.get(0), 1);
+            artworkDTO.setFirstImage(imageMultipartWrapper);
+        } catch (IndexOutOfBoundsException e) {
+        }
+        try {
+            artworkDTO.setSecondImage(new ImageMultipartWrapper(images.get(1), 2));
+        } catch (IndexOutOfBoundsException e) {
+        }
+        try {
+            artworkDTO.setThirdImage(new ImageMultipartWrapper(images.get(2), 3));
+        } catch (IndexOutOfBoundsException e) {
+        }
+        try {
+            artworkDTO.setForthImage(new ImageMultipartWrapper(images.get(3), 4));
+        } catch (IndexOutOfBoundsException e) {
+        }
+        return artworkDTO;
     }
 }

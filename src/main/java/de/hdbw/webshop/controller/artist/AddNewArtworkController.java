@@ -1,6 +1,6 @@
 package de.hdbw.webshop.controller.artist;
 
-import de.hdbw.webshop.dto.artwork.CreateNewArtworkDTO;
+import de.hdbw.webshop.dto.artwork.EditMyArtworkDTO;
 import de.hdbw.webshop.service.artist.ArtistService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -19,8 +19,8 @@ public class AddNewArtworkController {
     }
 
     @PostMapping
-    public ModelAndView addNewArtwork(CreateNewArtworkDTO createNewArtworkDTO, Authentication authentication) {
-        artistService.addNewArtwork(createNewArtworkDTO, authentication);
+    public ModelAndView addNewArtwork(EditMyArtworkDTO editMyArtworkDTO, Authentication authentication) {
+        artistService.addNewArtwork(editMyArtworkDTO, authentication);
         return new ModelAndView("redirect:/my_artworks");
     }
 }

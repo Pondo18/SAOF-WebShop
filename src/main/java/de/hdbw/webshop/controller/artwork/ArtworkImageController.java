@@ -2,7 +2,7 @@ package de.hdbw.webshop.controller.artwork;
 
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.exception.exceptions.ImageNotFoundException;
-import de.hdbw.webshop.model.artwork.ImageEntity;
+import de.hdbw.webshop.model.artwork.entity.ImageEntity;
 import de.hdbw.webshop.service.artwork.ArtworkService;
 import de.hdbw.webshop.service.artwork.ImageService;
 import lombok.extern.apachecommons.CommonsLog;
@@ -56,7 +56,7 @@ public class ArtworkImageController {
                     + "' and id | for generatedArtworkName: '" + artworkName
                     + "' could not be returned");
             try {
-                ImageEntity defaultImage = imageService.getDefaultImage();
+                ImageEntity defaultImage = imageService.getLocalImage("static/images/image_missing.png", "image/png");
                 log.info("Returning default image");
                 return ResponseEntity
                         .ok()

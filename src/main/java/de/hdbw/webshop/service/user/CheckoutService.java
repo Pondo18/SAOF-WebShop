@@ -1,7 +1,7 @@
 package de.hdbw.webshop.service.user;
 
-import de.hdbw.webshop.model.artwork.ArtworkEntity;
-import de.hdbw.webshop.model.artwork.BoughtArtworkEntity;
+import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
+import de.hdbw.webshop.model.artwork.entity.BoughtArtworkEntity;
 import de.hdbw.webshop.model.users.entity.AllUsersEntity;
 import de.hdbw.webshop.repository.artwork.CheckoutRepository;
 import de.hdbw.webshop.service.artwork.ArtworkService;
