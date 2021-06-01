@@ -4,18 +4,15 @@ import de.hdbw.webshop.dto.artwork.ArtworkForDetailedViewDTO;
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
 import de.hdbw.webshop.dto.artwork.EditMyArtworkDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
+import de.hdbw.webshop.exception.exceptions.ImageNotFoundException;
 import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
-import de.hdbw.webshop.model.artwork.entity.ImageEntity;
-import de.hdbw.webshop.model.artwork.entity.ImageMultipartWrapper;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.repository.artwork.ArtworkRepository;
 import de.hdbw.webshop.util.string.NameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,7 +53,13 @@ public class ArtworkDTOService {
 
     public ArtworkForListViewDTO getArtworkForListViewByArtworkEntity(ArtworkEntity artworkEntity) {
         ArtworkForListViewDTO artworkForDetailedViewDTO = new ArtworkForListViewDTO();
-        return artworkForDetailedViewDTO.build(artworkEntity, host);
+        String primaryImagePositionAsString = "";
+        try {
+            primaryImagePositionAsString = getPrimaryImagePosition(artworkEntity);
+        } catch (Exception e) {
+            primaryImagePositionAsString = "1";
+        }
+        return artworkForDetailedViewDTO.build(artworkEntity, host, primaryImagePositionAsString);
     }
 
     public List<ArtworkForListViewDTO> getAllArtworksForListViewByArtworkEntity(List<ArtworkEntity> artworks) {
@@ -70,54 +73,21 @@ public class ArtworkDTOService {
                 editMyArtworkDTO.getArtworkDescription(),
                 editMyArtworkDTO.getArtworkPrice());
         artworkEntity.setGeneratedArtworkName(nameHelper.generateArtworkName(artworkEntity.getArtworkName()));
-//        return setImagesForArtworkFromArtworkDTO(editMyArtworkDTO, artworkEntity);
         artworkEntity.setImages(imageService.getImageEntitiesByEditMyArtworkDTO(editMyArtworkDTO, artworkEntity));
         return artworkEntity;
     }
 
     public EditMyArtworkDTO getEditMyArtworkDTOByArtworkEntity(ArtworkEntity artworkEntity) {
-        EditMyArtworkDTO editMyArtworkDTO = new EditMyArtworkDTO(
+        return new EditMyArtworkDTO(
                 artworkEntity.getArtworkName(),
-                artworkEntity.getDescription(), artworkEntity.getPrice());
-        return setImagesForEditMyArtworkDTOFromList(imageService.getMultipartfilesByImageEntities(artworkEntity.getImages()), editMyArtworkDTO);
+                artworkEntity.getDescription(), artworkEntity.getPrice(),
+                imageService.getMultipartWrapperFilesByImageEntities(artworkEntity.getImages()));
     }
 
-    public ArtworkEntity setImagesForArtworkFromArtworkDTO(EditMyArtworkDTO editMyArtworkDTO, ArtworkEntity artworkEntity) {
-        List<ImageEntity> images = new ArrayList<>();
-        if(editMyArtworkDTO.getFirstImage()!=null && editMyArtworkDTO.getFirstImage().getMultipartFile().getSize()!=0) {
-            images.add(ImageEntity.buildImage(editMyArtworkDTO.getFirstImage().getMultipartFile(), 1, artworkEntity));
-        }
-        if(editMyArtworkDTO.getSecondImage()!=null && editMyArtworkDTO.getSecondImage().getMultipartFile().getSize()!=0) {
-            images.add(ImageEntity.buildImage(editMyArtworkDTO.getSecondImage().getMultipartFile(), 2, artworkEntity));
-        }
-        if(editMyArtworkDTO.getThirdImage()!=null && editMyArtworkDTO.getThirdImage().getMultipartFile().getSize()!=0) {
-            images.add(ImageEntity.buildImage(editMyArtworkDTO.getThirdImage().getMultipartFile(), 3, artworkEntity));
-        }
-        if(editMyArtworkDTO.getForthImage()!=null && editMyArtworkDTO.getForthImage().getMultipartFile().getSize()!=0) {
-            images.add(ImageEntity.buildImage(editMyArtworkDTO.getForthImage().getMultipartFile(), 4, artworkEntity));
-        }
-        artworkEntity.setImages(images);
-        return artworkEntity;
-    }
+    public String getPrimaryImagePosition (ArtworkEntity artworkEntity) {
+        return String.valueOf(artworkEntity.getImages().stream().findFirst().orElseThrow(
+                ImageNotFoundException::new
+        ).getPosition());
 
-    public EditMyArtworkDTO setImagesForEditMyArtworkDTOFromList(List<MultipartFile> images, EditMyArtworkDTO artworkDTO) {
-        try {
-            ImageMultipartWrapper imageMultipartWrapper = new ImageMultipartWrapper(images.get(0), 1);
-            artworkDTO.setFirstImage(imageMultipartWrapper);
-        } catch (IndexOutOfBoundsException e) {
-        }
-        try {
-            artworkDTO.setSecondImage(new ImageMultipartWrapper(images.get(1), 2));
-        } catch (IndexOutOfBoundsException e) {
-        }
-        try {
-            artworkDTO.setThirdImage(new ImageMultipartWrapper(images.get(2), 3));
-        } catch (IndexOutOfBoundsException e) {
-        }
-        try {
-            artworkDTO.setForthImage(new ImageMultipartWrapper(images.get(3), 4));
-        } catch (IndexOutOfBoundsException e) {
-        }
-        return artworkDTO;
     }
 }

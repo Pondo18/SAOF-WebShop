@@ -19,21 +19,13 @@ public class EditMyArtworkDTO {
     private double artworkPrice;
 
     @Lob
-    private ImageMultipartWrapper firstImage;
-    @Lob
-    private ImageMultipartWrapper secondImage;
-    @Lob
-    private ImageMultipartWrapper thirdImage;
-    @Lob
-    private ImageMultipartWrapper forthImage;
-
-    @Lob
     private List<ImageMultipartWrapper> images;
 
-    public EditMyArtworkDTO(@NotNull String artworkName, String artworkDescription, @NotNull double artworkPrice) {
+    public EditMyArtworkDTO(@NotNull String artworkName, String artworkDescription, @NotNull double artworkPrice, List<ImageMultipartWrapper> images) {
         this.artworkName = artworkName;
         this.artworkDescription = artworkDescription;
         this.artworkPrice = artworkPrice;
+        this.images = images;
     }
 
 }

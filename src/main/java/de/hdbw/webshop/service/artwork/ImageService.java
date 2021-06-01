@@ -44,6 +44,10 @@ public class ImageService {
         return new CustomMultipartFile(image.getData(), image.getUuid(), image.getFileType());
     }
 
+    public ImageMultipartWrapper getImageMultipartWrapperByImageEntity(ImageEntity imageEntity) {
+        return new ImageMultipartWrapper(getMultipartByImageEntity(imageEntity), imageEntity.getPosition());
+    }
+
     public ImageEntity findImageByUuid(String uuid) {
         return imageRepository.findByUuid(uuid).orElseThrow(
                 ImageNotFoundException::new
@@ -65,12 +69,13 @@ public class ImageService {
     }
 
     public ArtworkEntity changeImagesIfNecessary(EditMyArtworkDTO artworkChanges, ArtworkEntity existingArtwork) {
-        List<ImageMultipartWrapper> newImageAsMultipartWrapper = List.of(
-                artworkChanges.getFirstImage(), artworkChanges.getSecondImage(),
-                artworkChanges.getThirdImage(), artworkChanges.getForthImage());
-        List<ImageMultipartWrapper> newImageAsMultipartWrapperWithoutEmpty = newImageAsMultipartWrapper.stream()
-                .filter(image -> image.getMultipartFile().getSize()!=0).collect(Collectors.toList());
-        newImageAsMultipartWrapperWithoutEmpty.stream().forEach(
+        EntryStream.of(artworkChanges.getImages()).forKeyValue(
+                (index, image) -> image.setPosition(index+1)
+        );
+        List<ImageMultipartWrapper> newImageAsMultipartWrapperWithoutEmpty = artworkChanges.getImages().stream()
+                .filter(image -> image.getMultipartFile().getSize()!=0)
+                .collect(Collectors.toList());
+        newImageAsMultipartWrapperWithoutEmpty.forEach(
                 image -> addNewImageToArtwork(existingArtwork, image.getMultipartFile(), image.getPosition()-1)
         );
         return existingArtwork;
@@ -106,16 +111,18 @@ public class ImageService {
         return imageRepository.findAllImageUuidsByArtworkAndOrderByPosition(id);
     }
 
-    public List<MultipartFile> getMultipartfilesByImageEntities(List<ImageEntity> images) {
-        List<MultipartFile> multipartFiles = images.stream().map(this::getMultipartByImageEntity).collect(Collectors.toList());
-        while(multipartFiles.size()!=4) {
+    public List<ImageMultipartWrapper> getMultipartWrapperFilesByImageEntities(List<ImageEntity> images) {
+        List<ImageMultipartWrapper> imageMultipartWrappers = images.stream().map(
+                this::getImageMultipartWrapperByImageEntity
+        ).collect(Collectors.toList());
+        while(imageMultipartWrappers.size()!=4) {
             try {
-                multipartFiles.add(getMultipartByImageEntity(getLocalImage("static/images/upload_image.jpg", "image/jpg")));
+                imageMultipartWrappers.add(getImageMultipartWrapperByImageEntity(getLocalImage("static/images/upload_image.jpg", "image/jpg")));
             } catch (Exception e) {
                 throw new ImageNotFoundException();
             }
         }
-        return multipartFiles;
+        return imageMultipartWrappers;
     }
 
     public List<ImageEntity> getImageEntitiesByEditMyArtworkDTO(EditMyArtworkDTO editMyArtworkDTO, ArtworkEntity artworkEntity) {
