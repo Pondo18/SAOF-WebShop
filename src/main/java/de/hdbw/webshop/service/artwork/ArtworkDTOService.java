@@ -70,7 +70,9 @@ public class ArtworkDTOService {
                 editMyArtworkDTO.getArtworkDescription(),
                 editMyArtworkDTO.getArtworkPrice());
         artworkEntity.setGeneratedArtworkName(nameHelper.generateArtworkName(artworkEntity.getArtworkName()));
-        return setImagesForArtworkFromArtworkDTO(editMyArtworkDTO, artworkEntity);
+//        return setImagesForArtworkFromArtworkDTO(editMyArtworkDTO, artworkEntity);
+        artworkEntity.setImages(imageService.getImageEntitiesByEditMyArtworkDTO(editMyArtworkDTO, artworkEntity));
+        return artworkEntity;
     }
 
     public EditMyArtworkDTO getEditMyArtworkDTOByArtworkEntity(ArtworkEntity artworkEntity) {

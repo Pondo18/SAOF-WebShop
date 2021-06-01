@@ -8,6 +8,7 @@ import de.hdbw.webshop.model.artwork.entity.ImageEntity;
 import de.hdbw.webshop.model.artwork.entity.ImageMultipartWrapper;
 import de.hdbw.webshop.repository.artwork.ImageRepository;
 import lombok.extern.apachecommons.CommonsLog;
+import one.util.streamex.EntryStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -115,5 +116,19 @@ public class ImageService {
             }
         }
         return multipartFiles;
+    }
+
+    public List<ImageEntity> getImageEntitiesByEditMyArtworkDTO(EditMyArtworkDTO editMyArtworkDTO, ArtworkEntity artworkEntity) {
+        EntryStream.of(editMyArtworkDTO.getImages()).forKeyValue(
+                (index, image) -> image.setPosition(index+1)
+        );
+        return editMyArtworkDTO.getImages()
+                .stream().filter(
+                imageMultipartWrapper -> imageMultipartWrapper.getMultipartFile().getSize()!=0
+        ).collect(Collectors.toList())
+                .stream().map(
+                        imageMultipartWrapper -> ImageEntity.buildImage(
+                                imageMultipartWrapper.getMultipartFile(), imageMultipartWrapper.getPosition(), artworkEntity)
+                ).collect(Collectors.toList());
     }
 }
