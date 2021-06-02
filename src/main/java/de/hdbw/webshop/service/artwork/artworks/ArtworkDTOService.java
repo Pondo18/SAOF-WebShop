@@ -1,13 +1,14 @@
-package de.hdbw.webshop.service.artwork;
+package de.hdbw.webshop.service.artwork.artworks;
 
 import de.hdbw.webshop.dto.artwork.ArtworkForDetailedViewDTO;
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
 import de.hdbw.webshop.dto.artwork.EditMyArtworkDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.exception.exceptions.ImageNotFoundException;
-import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
+import de.hdbw.webshop.model.artwork.artworks.entity.ArtworkEntity;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.repository.artwork.ArtworkRepository;
+import de.hdbw.webshop.service.artwork.image.ImageService;
 import de.hdbw.webshop.util.string.NameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,8 +41,8 @@ public class ArtworkDTOService {
         );
         ArtworkForDetailedViewDTO artwork = new ArtworkForDetailedViewDTO();
         artwork.build(artworkEntity);
-        List<String> artworkImageUuids = imageService.findAllImageUuidsByArtworkAndOrderByPosition(artworkEntity.getId());
-        List<String> artworkImageUrls = buildImageUrls(artworkImageUuids, host);
+        List<String> bigArtworkImageUuids = imageService.getAllBigImageUuidsByArtworkAndOrderByPosition(artworkEntity.getId());
+        List<String> artworkImageUrls = buildImageUrls(bigArtworkImageUuids, host);
         artwork.setImagesUrl(artworkImageUrls);
         return artwork;
     }
@@ -53,13 +54,12 @@ public class ArtworkDTOService {
 
     public ArtworkForListViewDTO getArtworkForListViewByArtworkEntity(ArtworkEntity artworkEntity) {
         ArtworkForListViewDTO artworkForDetailedViewDTO = new ArtworkForListViewDTO();
-        String primaryImagePositionAsString = "";
+        String primaryImageUuid = null;
         try {
-            primaryImagePositionAsString = getPrimaryImagePosition(artworkEntity);
+            primaryImageUuid = getSmallPrimaryImageUuid(artworkEntity);
         } catch (Exception e) {
-            primaryImagePositionAsString = "1";
         }
-        return artworkForDetailedViewDTO.build(artworkEntity, host, primaryImagePositionAsString);
+        return artworkForDetailedViewDTO.build(artworkEntity, host, primaryImageUuid);
     }
 
     public List<ArtworkForListViewDTO> getAllArtworksForListViewByArtworkEntity(List<ArtworkEntity> artworks) {
@@ -81,13 +81,13 @@ public class ArtworkDTOService {
         return new EditMyArtworkDTO(
                 artworkEntity.getArtworkName(),
                 artworkEntity.getDescription(), artworkEntity.getPrice(),
-                imageService.getMultipartWrapperFilesByImageEntities(artworkEntity.getImages()));
+                imageService.getMultipartWrapperFilesByImageEntities(imageService.getMediumSizedImageEntityByDefaultImages(artworkEntity.getImages())));
     }
 
-    public String getPrimaryImagePosition (ArtworkEntity artworkEntity) {
+    public String getSmallPrimaryImageUuid(ArtworkEntity artworkEntity) {
         return String.valueOf(artworkEntity.getImages().stream().findFirst().orElseThrow(
                 ImageNotFoundException::new
-        ).getPosition());
+        ).getSmallSizedImageEntity().getUuid());
 
     }
 }

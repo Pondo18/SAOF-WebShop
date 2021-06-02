@@ -2,9 +2,9 @@ package de.hdbw.webshop.controller.artwork;
 
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.exception.exceptions.ImageNotFoundException;
-import de.hdbw.webshop.model.artwork.entity.ImageEntity;
-import de.hdbw.webshop.service.artwork.ArtworkService;
-import de.hdbw.webshop.service.artwork.ImageService;
+import de.hdbw.webshop.model.artwork.images.entity.DefaultImageEntity;
+import de.hdbw.webshop.service.artwork.artworks.ArtworkService;
+import de.hdbw.webshop.service.artwork.image.ImageService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,47 +29,47 @@ public class ArtworkImageController {
         this.artworkService = artworkService;
     }
 
-    @GetMapping
-    public ResponseEntity<byte[]> getImageByArtworkAndPosition(@PathVariable String artworkName,
-                                                               @RequestParam int position) {
-        try {
-            long artworkId = artworkService.getArtworkIdByArtworkName(artworkName);
-            log.debug("Returning artworkId: '" + artworkId
-                    + "' by generatedArtworkName: '" + artworkName + "'");
-            ImageEntity imageByArtworkAndPosition = imageService.findImageByArtworkAndPosition(artworkId, position);
-            log.debug("Returning primaryImage by generatedArtworkName: '" + artworkName
-                    + "' and position: '" + position + "'");
-            return ResponseEntity
-                    .ok()
-                    .contentType(MediaType.valueOf(imageByArtworkAndPosition.getFileType()))
-                    .body(imageByArtworkAndPosition.getData()
-                    );
-        } catch (ArtworkNotFoundException artworkNotFoundException) {
-            log.warn("ArtworkId could not be returned for generatedArtworkName: '" + artworkName + "'");
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    "Artwork Not Found",
-                    artworkNotFoundException
-            );
-        } catch (ImageNotFoundException imageNotFoundException) {
-            log.info("Image by position: '" + position
-                    + "' and id | for generatedArtworkName: '" + artworkName
-                    + "' could not be returned");
-            try {
-                ImageEntity defaultImage = imageService.getLocalImage("static/images/image_missing.png", "image/png");
-                log.info("Returning default image");
-                return ResponseEntity
-                        .ok()
-                        .contentType(MediaType.valueOf(defaultImage.getFileType()))
-                        .body(defaultImage.getData());
-            } catch (Exception e) {
-                log.warn("Could not resolve default image");
-                throw new ResponseStatusException(
-                        HttpStatus.INTERNAL_SERVER_ERROR,
-                        "Image not found",
-                        e
-                );
-            }
-        }
-    }
+//    @GetMapping
+//    public ResponseEntity<byte[]> getImageByArtworkAndPosition(@PathVariable String artworkName,
+//                                                               @RequestParam int position) {
+//        try {
+//            long artworkId = artworkService.getArtworkIdByArtworkName(artworkName);
+//            log.debug("Returning artworkId: '" + artworkId
+//                    + "' by generatedArtworkName: '" + artworkName + "'");
+//            DefaultImageEntity imageByArtworkAndPosition = imageService.findImageByArtworkAndPosition(artworkId, position);
+//            log.debug("Returning primaryImage by generatedArtworkName: '" + artworkName
+//                    + "' and position: '" + position + "'");
+//            return ResponseEntity
+//                    .ok()
+//                    .contentType(MediaType.valueOf(imageByArtworkAndPosition.getFileType()))
+//                    .body(imageByArtworkAndPosition.getData()
+//                    );
+//        } catch (ArtworkNotFoundException artworkNotFoundException) {
+//            log.warn("ArtworkId could not be returned for generatedArtworkName: '" + artworkName + "'");
+//            throw new ResponseStatusException(
+//                    HttpStatus.NOT_FOUND,
+//                    "Artwork Not Found",
+//                    artworkNotFoundException
+//            );
+//        } catch (ImageNotFoundException imageNotFoundException) {
+//            log.info("Image by position: '" + position
+//                    + "' and id | for generatedArtworkName: '" + artworkName
+//                    + "' could not be returned");
+//            try {
+//                DefaultImageEntity defaultImage = imageService.getLocalImageInDefaultSize("static/images/image_missing.png", "image/png");
+//                log.info("Returning default image");
+//                return ResponseEntity
+//                        .ok()
+//                        .contentType(MediaType.valueOf(defaultImage.getFileType()))
+//                        .body(defaultImage.getData());
+//            } catch (Exception e) {
+//                log.warn("Could not resolve default image");
+//                throw new ResponseStatusException(
+//                        HttpStatus.INTERNAL_SERVER_ERROR,
+//                        "Image not found",
+//                        e
+//                );
+//            }
+//        }
+//    }
 }

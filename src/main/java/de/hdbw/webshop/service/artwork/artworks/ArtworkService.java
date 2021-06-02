@@ -1,13 +1,13 @@
-package de.hdbw.webshop.service.artwork;
+package de.hdbw.webshop.service.artwork.artworks;
 
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
 import de.hdbw.webshop.dto.artwork.EditMyArtworkDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
-import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
-import de.hdbw.webshop.model.artwork.entity.ImageEntity;
+import de.hdbw.webshop.model.artwork.artworks.entity.ArtworkEntity;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import de.hdbw.webshop.repository.artwork.ArtworkRepository;
+import de.hdbw.webshop.service.artwork.image.ImageService;
 import de.hdbw.webshop.service.user.RegisteredUserService;
 import de.hdbw.webshop.util.string.NameHelper;
 import lombok.extern.apachecommons.CommonsLog;
@@ -16,7 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 

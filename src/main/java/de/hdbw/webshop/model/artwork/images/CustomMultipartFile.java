@@ -1,4 +1,4 @@
-package de.hdbw.webshop.model.artwork;
+package de.hdbw.webshop.model.artwork.images;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +28,13 @@ public class CustomMultipartFile implements MultipartFile {
         this.fileContent = fileData;
         this.fileName = name;
         this.contentType = contentType;
+        file = new File(destPath + fileName);
+        imageBase64 = Base64.getEncoder().encodeToString(fileContent);
+    }
+
+    public CustomMultipartFile(byte[] fileContent, String fileName) {
+        this.fileContent = fileContent;
+        this.fileName = fileName;
         file = new File(destPath + fileName);
         imageBase64 = Base64.getEncoder().encodeToString(fileContent);
     }

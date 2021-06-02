@@ -1,10 +1,10 @@
 package de.hdbw.webshop.service.user;
 
-import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
-import de.hdbw.webshop.model.artwork.entity.BoughtArtworkEntity;
+import de.hdbw.webshop.model.artwork.artworks.entity.ArtworkEntity;
+import de.hdbw.webshop.model.artwork.artworks.entity.BoughtArtworkEntity;
 import de.hdbw.webshop.model.users.entity.AllUsersEntity;
 import de.hdbw.webshop.repository.artwork.CheckoutRepository;
-import de.hdbw.webshop.service.artwork.ArtworkService;
+import de.hdbw.webshop.service.artwork.artworks.ArtworkService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
