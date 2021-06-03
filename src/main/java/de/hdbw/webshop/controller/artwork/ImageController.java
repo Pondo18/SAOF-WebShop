@@ -1,20 +1,14 @@
 package de.hdbw.webshop.controller.artwork;
 
 
-import de.hdbw.webshop.exception.exceptions.ImageNotFoundException;
-import de.hdbw.webshop.model.artwork.images.Image;
-import de.hdbw.webshop.model.artwork.images.entity.DefaultImageEntity;
 import de.hdbw.webshop.service.artwork.image.BigImageService;
 import de.hdbw.webshop.service.artwork.image.ImageService;
 import de.hdbw.webshop.service.artwork.image.MediumImageService;
 import de.hdbw.webshop.service.artwork.image.SmallImageService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @CommonsLog
 @RestController

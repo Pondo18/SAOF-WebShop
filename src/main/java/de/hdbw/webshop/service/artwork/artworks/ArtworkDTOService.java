@@ -54,7 +54,7 @@ public class ArtworkDTOService {
 
     public ArtworkForListViewDTO getArtworkForListViewByArtworkEntity(ArtworkEntity artworkEntity) {
         ArtworkForListViewDTO artworkForDetailedViewDTO = new ArtworkForListViewDTO();
-        String primaryImageUuid = null;
+        String primaryImageUuid = "noImageExisting";
         try {
             primaryImageUuid = getSmallPrimaryImageUuid(artworkEntity);
         } catch (Exception e) {

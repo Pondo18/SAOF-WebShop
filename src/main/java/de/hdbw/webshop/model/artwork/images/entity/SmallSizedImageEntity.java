@@ -35,7 +35,8 @@ public class SmallSizedImageEntity implements Image {
 
     @Override
     public String getFileType() {
-        return defaultImage.getFileType();
+        return defaultImage != null ?
+                defaultImage.getFileType() : "image/png";
     }
 
     @Override

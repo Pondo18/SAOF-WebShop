@@ -31,7 +31,8 @@ public class BigSizedImageEntity implements Image {
 
     @Override
     public String getFileType() {
-        return defaultImage.getFileType();
+        return defaultImage!=null ?
+                defaultImage.getFileType():"image/jpg";
     }
 
 

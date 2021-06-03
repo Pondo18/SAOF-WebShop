@@ -64,11 +64,15 @@ public class ImageService {
         try {
             return imageService.getByUuid(uuid);
         } catch(ImageNotFoundException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Image not found",
-                    e
-            );
+            try {
+                return imageService.getDefaultImage();
+            } catch (Exception exception) {
+                throw new ResponseStatusException(
+                        HttpStatus.INTERNAL_SERVER_ERROR,
+                        "Image not found",
+                        e
+                );
+            }
         }
     }
 
@@ -205,12 +209,12 @@ public class ImageService {
 
     public ResponseEntity<byte[]> getImageResponseEntity(String uuid, Image imageByUuid) {
         try {
-            log.debug("Return small Image by uuid: '" + uuid + "'");
+            log.debug("Return Image by uuid: '" + uuid + "'");
             return ResponseEntity.ok()
                     .contentType(MediaType.valueOf(imageByUuid.getFileType()))
                     .body(imageByUuid.getData());
-        } catch (ImageNotFoundException imageNotFoundException) {
-            log.warn("Could not return Image by Image UUID: '" + uuid + "'");
+        } catch (Exception e) {
+            log.info("Could not return Image by Image UUID: '" + uuid + "'");
             return getResponseEntityForDefaultImage(smallImageService);
         }
     }
