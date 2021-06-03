@@ -15,13 +15,13 @@ function StrengthChecker(PasswordParameter){
 
     if(strongPassword.test(PasswordParameter)) {
         strengthBadge.style.backgroundColor = "green"
-        strengthBadge.textContent = 'Strong'
+        strengthBadge.textContent = 'Strong. Use that one!;)'
     } else if(mediumPassword.test(PasswordParameter)){
         strengthBadge.style.backgroundColor = 'blue'
-        strengthBadge.textContent = 'Medium'
+        strengthBadge.textContent = 'Medium Password! Use more special chars!'
     } else{
-        strengthBadge.style.backgroundColor = 'red'
-        strengthBadge.textContent = 'Weak'
+        strengthBadge.style.backgroundColor = '#DB3C3C'
+        strengthBadge.textContent = 'Weak Password!'
     }
 }
 
