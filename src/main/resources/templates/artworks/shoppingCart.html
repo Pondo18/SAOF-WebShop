@@ -23,7 +23,7 @@
 <div>
 <h2>Shopping Cart</h2>
 </div>
-<div class="container" th:each="artwork: ${artworks}" th:attr="onclick=|openArtwork('${artwork.generatedArtworkName}')|">
+<div class="container" th:each="artwork: ${shoppingCart.artworks}" th:attr="onclick=|openArtwork('${artwork.generatedArtworkName}')|">
     <div class="row">
         <div class="col-md-3">
             <img th:src="${artwork.primaryImageUrl}" alt="hier wäre das bild">
@@ -51,7 +51,7 @@
         </div>
         <div class="col-md-2">
             <p>
-                Zwischensumme
+                Sum before Taxes: <span th:text="${shoppingCart.sumBeforeTaxes}">Test Name</span>
             </p>
             <p>
                 MwSt (19%)
@@ -60,7 +60,7 @@
                 Versand
             </p>
             <p>
-                SUMME
+                Sum after Taxes: <span th:text="${shoppingCart.sumAfterTaxes}">Test Name</span>
             </p>
         </div>
         <div class="col-md-2">
@@ -69,7 +69,7 @@
     </div>
 </div>
 
-<form th:if="${not #lists.isEmpty(artworks)}" action="#" th:action="@{checkout}" method="post">
+<form th:if="${not #lists.isEmpty(shoppingCart.artworks)}" action="#" th:action="@{checkout}" method="post">
     <button type="submit">Checkout</button>
 </form>
 
