@@ -1,6 +1,6 @@
 package de.hdbw.webshop.dto.artwork;
 
-import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
+import de.hdbw.webshop.model.artwork.artworks.entity.ArtworkEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,7 +32,7 @@ public class ArtworkForDetailedViewDTO {
 
     public static List<String> buildImageUrls(List<String> artworkImageUuids, String host) {
         List<String> artworkImageUrls = artworkImageUuids.stream().map(
-                uuid -> host +"/image/" + uuid
+                uuid -> host +"/image/big/" + uuid
         ).collect(Collectors.toList());
         return artworkImageUrls;
     }

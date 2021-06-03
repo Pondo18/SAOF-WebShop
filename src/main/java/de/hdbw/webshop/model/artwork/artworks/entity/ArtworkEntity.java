@@ -1,5 +1,6 @@
-package de.hdbw.webshop.model.artwork.entity;
+package de.hdbw.webshop.model.artwork.artworks.entity;
 
+import de.hdbw.webshop.model.artwork.images.entity.DefaultImageEntity;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,7 @@ public class ArtworkEntity {
     private int available;
 
     @OneToMany(mappedBy = "artwork", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ImageEntity> images;
+    private List<DefaultImageEntity> images;
 
     @OneToMany(mappedBy = "artworkEntity")
     private List<ShoppingCartEntity> shoppingCartEntities;
@@ -47,8 +48,8 @@ public class ArtworkEntity {
         this.available = 1;
     }
 
-    public void addImage(ImageEntity imageEntity) {
-        images.add(imageEntity);
+    public void addImage(DefaultImageEntity defaultImageEntity) {
+        images.add(defaultImageEntity);
     }
 
     public void deleteImageByIndex(int index) {

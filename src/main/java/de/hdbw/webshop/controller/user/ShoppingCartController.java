@@ -1,6 +1,7 @@
 package de.hdbw.webshop.controller.user;
 
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
+import de.hdbw.webshop.dto.artwork.ShoppingCartDTO;
 import de.hdbw.webshop.service.user.ShoppingCartService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.security.core.Authentication;
@@ -45,6 +46,7 @@ public class ShoppingCartController {
     public ModelAndView getShoppingCart(HttpServletRequest request, Authentication authentication) {
         HttpSession session = request.getSession();
         List<ArtworkForListViewDTO> artworks = shoppingCartService.getAllArtworksForListViewInShoppingCartBySession(session, authentication);
-        return new ModelAndView("artworks/shoppingCart", "artworks", artworks);
+        ShoppingCartDTO shoppingCartDTO = new ShoppingCartDTO(artworks);
+        return new ModelAndView("artworks/shoppingCart", "shoppingCart", shoppingCartDTO);
     }
 }

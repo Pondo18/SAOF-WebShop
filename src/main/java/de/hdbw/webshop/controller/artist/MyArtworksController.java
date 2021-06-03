@@ -3,7 +3,7 @@ package de.hdbw.webshop.controller.artist;
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
 import de.hdbw.webshop.dto.artwork.EditMyArtworkDTO;
 import de.hdbw.webshop.service.artist.ArtistService;
-import de.hdbw.webshop.service.artwork.ArtworkService;
+import de.hdbw.webshop.service.artwork.artworks.ArtworkService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

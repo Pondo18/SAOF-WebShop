@@ -5,7 +5,7 @@ import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
 import de.hdbw.webshop.dto.artwork.EditMyArtworkDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.service.artist.ArtistService;
-import de.hdbw.webshop.service.artwork.ArtworkDTOService;
+import de.hdbw.webshop.service.artwork.artworks.ArtworkDTOService;
 import de.hdbw.webshop.service.user.ShoppingCartService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;

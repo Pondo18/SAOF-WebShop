@@ -1,16 +1,14 @@
 package de.hdbw.webshop.controller.artwork;
 
 
-import de.hdbw.webshop.exception.exceptions.ImageNotFoundException;
-import de.hdbw.webshop.model.artwork.entity.ImageEntity;
-import de.hdbw.webshop.service.artwork.ImageService;
+import de.hdbw.webshop.service.artwork.image.BigImageService;
+import de.hdbw.webshop.service.artwork.image.ImageService;
+import de.hdbw.webshop.service.artwork.image.MediumImageService;
+import de.hdbw.webshop.service.artwork.image.SmallImageService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @CommonsLog
 @RestController
@@ -18,38 +16,32 @@ import org.springframework.web.server.ResponseStatusException;
 public class ImageController {
 
     private final ImageService imageService;
+    private final BigImageService bigImageService;
+    private final MediumImageService mediumImageService;
+    private final SmallImageService smallImageService;
 
 
     @Autowired
-    public ImageController(ImageService imageService) {
+    public ImageController(ImageService imageService, BigImageService bigImageService, MediumImageService mediumImageService, SmallImageService smallImageService) {
         this.imageService = imageService;
+        this.bigImageService = bigImageService;
+        this.mediumImageService = mediumImageService;
+        this.smallImageService = smallImageService;
     }
 
 
-    @GetMapping("/{uuid}")
-    public ResponseEntity<byte[]> getImage(@PathVariable String uuid) {
-        try {
-            ImageEntity image = imageService.findImageByUuid(uuid);
-            log.debug("Return Image by uuid: '" + uuid + "'");
-            return ResponseEntity.ok()
-                    .contentType(MediaType.valueOf(image.getFileType()))
-                    .body(image.getData());
-        } catch (ImageNotFoundException imageNotFoundException) {
-            log.warn("Could not return Image by Image UUID: '" + uuid + "'");
-            try {
-                ImageEntity defaultImage = imageService.getLocalImage("static/images/image_missing.png", "image/png");
-                return ResponseEntity
-                        .ok()
-                        .contentType(MediaType.valueOf(defaultImage.getFileType()))
-                        .body(defaultImage.getData());
-            } catch (Exception e) {
-                log.warn("Could not resolve default image");
-                throw new ResponseStatusException(
-                        HttpStatus.INTERNAL_SERVER_ERROR,
-                        "Image not found",
-                        e
-                );
-            }
-        }
+    @GetMapping("/small/{uuid}")
+    public ResponseEntity<byte[]> getSmallImage(@PathVariable String uuid) {
+        return imageService.getImageResponseEntity(uuid, imageService.getImageByUuid(uuid, smallImageService));
+    }
+
+    @GetMapping("/medium/{uuid}")
+    public ResponseEntity<byte[]> getMediumImage(@PathVariable String uuid) {
+        return imageService.getImageResponseEntity(uuid, imageService.getImageByUuid(uuid, mediumImageService));
+    }
+
+    @GetMapping("/big/{uuid}")
+    public ResponseEntity<byte[]> getBigImage(@PathVariable String uuid) {
+        return imageService.getImageResponseEntity(uuid, imageService.getImageByUuid(uuid, bigImageService));
     }
 }

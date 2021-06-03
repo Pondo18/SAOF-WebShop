@@ -1,12 +1,13 @@
-package de.hdbw.webshop.service.artwork;
+package de.hdbw.webshop.service.artwork.artworks;
 
 import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
 import de.hdbw.webshop.dto.artwork.EditMyArtworkDTO;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
-import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
+import de.hdbw.webshop.model.artwork.artworks.entity.ArtworkEntity;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import de.hdbw.webshop.repository.artwork.ArtworkRepository;
+import de.hdbw.webshop.service.artwork.image.ImageService;
 import de.hdbw.webshop.service.user.RegisteredUserService;
 import de.hdbw.webshop.util.string.NameHelper;
 import lombok.extern.apachecommons.CommonsLog;
@@ -37,13 +38,7 @@ public class ArtworkService {
         this.nameHelper = nameHelper;
     }
 
-    public long getArtworkIdByArtworkName(String artworkName) {
-        return artworkRepository.findArtworkIdByGeneratedArtworkName(artworkName).orElseThrow(
-                ArtworkNotFoundException::new
-        );
-    }
-
-    public ArtworkEntity getArtworkEntityByGeneratedArtworkName (String generatedArtworkName) {
+    public ArtworkEntity getArtworkEntityByGeneratedArtworkName(String generatedArtworkName) {
         return artworkRepository.findByGeneratedArtworkName(generatedArtworkName).orElseThrow(
                 ArtworkNotFoundException::new
         );
@@ -51,7 +46,7 @@ public class ArtworkService {
 
     public List<ArtworkEntity> changeAmountOfAvailableArtworks(List<ArtworkEntity> artworksToChange) {
         return artworksToChange.stream().peek(artworkEntity -> {
-            artworkEntity.setAvailable(artworkEntity.getAvailable()-1);
+            artworkEntity.setAvailable(artworkEntity.getAvailable() - 1);
         }).collect(Collectors.toList());
     }
 
@@ -64,7 +59,7 @@ public class ArtworkService {
         return artworkDTOService.getAllArtworksForListViewByArtworkEntity(artworks);
     }
 
-    public ArtworkEntity createNewArtwork (EditMyArtworkDTO editMyArtworkDTO, Authentication authentication) {
+    public ArtworkEntity createNewArtwork(EditMyArtworkDTO editMyArtworkDTO, Authentication authentication) {
         ArtistEntity artist = registeredUserService.findRegisteredUserEntityByAuthentication(authentication).getArtistEntity();
         ArtworkEntity artworkEntity = artworkDTOService.getArtworkEntityByCreateNewArtworkDTO(editMyArtworkDTO, artist);
         log.info("Artist: " + artist.getRegisteredUserEntity().getEmail() + " is adding a new Artwork: " + artworkEntity.getGeneratedArtworkName());
@@ -83,7 +78,7 @@ public class ArtworkService {
             return artworkRepository.deleteByGeneratedArtworkName(generatedArtworkName);
         } else {
             log.info("Couldn't delete Artwork: " + generatedArtworkName
-            + " because its not from the deleter: " + currentUser.getEmail());
+                    + " because its not from the deleter: " + currentUser.getEmail());
             throw new ArtworkNotFoundException();
         }
     }
@@ -94,7 +89,7 @@ public class ArtworkService {
             log.info("Editing Artwork with the generatedArtworkName: " + oldGeneratedArtworkName
                     + " by the artist with the email: " + currentUser.getEmail());
             ArtworkEntity oldArtwork = getArtworkEntityByGeneratedArtworkName(oldGeneratedArtworkName);
-            return artworkRepository.save(editArtworkEntityByEditArtworkDTO(editMyArtworkDTO, oldArtwork));
+            return artworkRepository.save(getEditArtworkEntityByEditArtworkDTO(editMyArtworkDTO, oldArtwork));
         } else {
             log.info("Couldn't delete Artwork: " + oldGeneratedArtworkName
                     + " because its not from the deleter: " + currentUser.getEmail());
@@ -102,7 +97,7 @@ public class ArtworkService {
         }
     }
 
-    public ArtworkEntity editArtworkEntityByEditArtworkDTO(EditMyArtworkDTO artworkChanges, ArtworkEntity existingArtwork) {
+    public ArtworkEntity getEditArtworkEntityByEditArtworkDTO(EditMyArtworkDTO artworkChanges, ArtworkEntity existingArtwork) {
         if (!artworkChanges.getArtworkName().equals(existingArtwork.getArtworkName())) {
             existingArtwork.setArtworkName(artworkChanges.getArtworkName());
             existingArtwork.setGeneratedArtworkName(nameHelper.generateArtworkName(artworkChanges.getArtworkName()));
@@ -110,6 +105,7 @@ public class ArtworkService {
         if (!artworkChanges.getArtworkDescription().equals(existingArtwork.getDescription())) {
             existingArtwork.setDescription(artworkChanges.getArtworkDescription());
         }
+
         if (!(artworkChanges.getArtworkPrice() == existingArtwork.getPrice())) {
             existingArtwork.setPrice(artworkChanges.getArtworkPrice());
         }
@@ -117,12 +113,10 @@ public class ArtworkService {
     }
 
 
-
-
     public EditMyArtworkDTO getEditMyArtworkDTOIfExisting(String generatedArtworkName, RegisteredUsersEntity currentUser) {
         ArtworkEntity artworkEntity = artworkRepository.findByGeneratedArtworkNameAndArtist_RegisteredUserEntity(generatedArtworkName, currentUser)
                 .orElse(null);
-        if (artworkEntity!=null) {
+        if (artworkEntity != null) {
             return artworkDTOService.getEditMyArtworkDTOByArtworkEntity(artworkEntity);
         } else {
             return null;

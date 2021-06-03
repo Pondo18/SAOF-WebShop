@@ -1,4 +1,4 @@
-package de.hdbw.webshop.controller;
+package de.hdbw.webshop.controller.general;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

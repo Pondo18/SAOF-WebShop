@@ -1,6 +1,5 @@
-package de.hdbw.webshop.model.artwork.entity;
+package de.hdbw.webshop.model.artwork.images;
 
-import de.hdbw.webshop.model.artwork.CustomMultipartFile;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +12,10 @@ public class ImageMultipartWrapper {
 
     private MultipartFile multipartFile;
     private int position;
+
+    public ImageMultipartWrapper(MultipartFile multipartFile) {
+        this.multipartFile = multipartFile;
+    }
 
     public String getImageBase64() {
         CustomMultipartFile asCustom = (CustomMultipartFile) this.multipartFile;

@@ -1,6 +1,6 @@
 package de.hdbw.webshop.dto.artwork;
 
-import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
+import de.hdbw.webshop.model.artwork.artworks.entity.ArtworkEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,14 +14,11 @@ public class ArtworkForListViewDTO {
     private double price;
     private String primaryImageUrl;
 
-    public ArtworkForListViewDTO build(ArtworkEntity artworkEntity, String host) {
+    public ArtworkForListViewDTO build(ArtworkEntity artworkEntity, String host, String primaryImageUuid) {
         generatedArtworkName = artworkEntity.getGeneratedArtworkName();
         artworkName = artworkEntity.getArtworkName();
         price = artworkEntity.getPrice();
-        primaryImageUrl = host +
-                "/artwork/" +
-                artworkEntity.getGeneratedArtworkName() +
-                "/images?position=1";
+        primaryImageUrl = host + "/image/small/" + primaryImageUuid;
         return this;
     }
 }

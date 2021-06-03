@@ -1,6 +1,6 @@
 package de.hdbw.webshop.repository.artwork;
 
-import de.hdbw.webshop.model.artwork.entity.ArtworkEntity;
+import de.hdbw.webshop.model.artwork.artworks.entity.ArtworkEntity;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,7 +18,6 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Long> {
     @Query("SELECT id FROM ArtworkEntity WHERE generatedArtworkName = ?1")
     Optional<Long> findArtworkIdByGeneratedArtworkName(String generatedArtworkName);
 
-    Optional<ArtworkEntity> findById(long id);
 
     List<ArtworkEntity> findAllByAvailableGreaterThan(int available);
 
