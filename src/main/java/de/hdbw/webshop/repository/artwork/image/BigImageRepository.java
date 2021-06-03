@@ -10,8 +10,6 @@ import java.util.List;
 @Repository
 public interface BigImageRepository extends JpaRepository<BigSizedImageEntity, String> {
 
-//    @Query("SELECT uuid FROM BigSizedImageEntity WHERE ArtworkEntity.id = ?1 order by defaultImage.position")
     @Query("SELECT b.uuid FROM BigSizedImageEntity b WHERE b.defaultImage.artwork.id =?1 order by b.defaultImage.position")
     List<String> findAllBigImageUuidsByArtworkAndOrderByPosition(long artworkId);
-
 }

@@ -48,12 +48,6 @@ public class BigImageService implements SizedImageService {
     }
 
 
-    public List<BigSizedImageEntity> getBigSizedImagesByDefaultImages (List<DefaultImageEntity> defaultImages) {
-        return defaultImages.stream().map(
-                this::buildBigSizedImageEntity
-        ).collect(Collectors.toList());
-    }
-
     public boolean bigImageExists(String uuid) {
         return bigImageRepository.existsById(uuid);
     }

@@ -16,7 +16,4 @@ public interface DefaultImageRepository extends JpaRepository<DefaultImageEntity
 
     @Query("SELECT im from DefaultImageEntity im where im.artwork.id = ?1 and im.position=?2")
     Optional<DefaultImageEntity> findByArtworkIdAfterAndPosition(long artworkId, int position);
-
-//    @Query("SELECT uuid FROM DefaultImageEntity WHERE artwork.id = ?1 order by position")
-//    List<String> findAllImageUuidsByArtworkAndOrderByPosition(long artworkId);
 }

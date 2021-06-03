@@ -1,4 +1,4 @@
-package de.hdbw.webshop.controller.artist;
+package de.hdbw.webshop.controller.artwork;
 
 import de.hdbw.webshop.dto.artwork.EditMyArtworkDTO;
 import de.hdbw.webshop.service.artwork.artworks.ArtworkService;

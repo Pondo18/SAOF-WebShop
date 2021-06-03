@@ -61,25 +61,25 @@
                     <input type="file" id="firstImageInput" th:field="*{images[0].multipartFile}"
                            onchange="reload_image('firstImage', this)" class="fadeIn second"
                            enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
-                    <img src="/static/images/upload_image.jpg" id="firstImage"
+                    <img th:src="@{/images/image_missing.png}" id="firstImage"
                          th:height="${@environment.getProperty('image.medium.height')}"
                          th:width="${@environment.getProperty('image.medium.width')}">
                     <input type="file" id="secondImageInput" th:field="*{images[1].multipartFile}"
                            onchange="reload_image('secondImage', this)" class="fadeIn second"
                            enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
-                    <img src="/static/images/upload_image.jpg" id="secondImage"
+                    <img th:src="@{/images/image_missing.png}" id="secondImage"
                          th:height="${@environment.getProperty('image.medium.height')}"
                          th:width="${@environment.getProperty('image.medium.width')}">
                     <input type="file" id="thirdImageInput" th:field="*{images[2].multipartFile}"
                            onchange="reload_image('thirdImage', this)" class="fadeIn second"
                            enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
-                    <img src="/static/images/upload_image.jpg" id="thirdImage"
+                    <img th:src="@{/images/image_missing.png}" id="thirdImage"
                          th:height="${@environment.getProperty('image.medium.height')}"
                          th:width="${@environment.getProperty('image.medium.width')}">
                     <input type="file" id="forthImageInput" th:field="*{images[3].multipartFile}"
                            onchange="reload_image('forthImage', this)"
                            class="fadeIn second" enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
-                    <img src="/static/images/upload_image.jpg" id="forthImage"
+                    <img th:src="@{/images/image_missing.png}" id="forthImage"
                          th:height="${@environment.getProperty('image.medium.height')}"
                          th:width="${@environment.getProperty('image.medium.width')}">
                 </div>

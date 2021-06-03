@@ -76,20 +76,6 @@ public class ImageService {
         }
     }
 
-    public DefaultImageEntity findImageByArtworkAndPosition(long artworkId, int position) {
-        return defaultImageRepository.findByArtworkIdAfterAndPosition(artworkId, position).orElseThrow(
-                ImageNotFoundException::new
-        );
-    }
-
-    @Transient
-    public DefaultImageEntity getLocalImageInDefaultSize(String path, String fileType) throws Exception {
-        InputStream is = getResourceFileAsInputStream(path);
-        byte[] bdata = FileCopyUtils.copyToByteArray(is);
-        DefaultImageEntity image = new DefaultImageEntity(fileType, 0, bdata);
-        return image;
-    }
-
     public ArtworkEntity changeImagesIfNecessary(EditMyArtworkDTO artworkChanges, ArtworkEntity existingArtwork) {
         EntryStream.of(artworkChanges.getImages()).forKeyValue(
                 (index, image) -> image.setPosition(index + 1)
@@ -125,11 +111,6 @@ public class ImageService {
         return existingArtwork;
     }
 
-
-    private static InputStream getResourceFileAsInputStream(String fileName) {
-        ClassLoader classLoader = DefaultImageEntity.class.getClassLoader();
-        return classLoader.getResourceAsStream(fileName);
-    }
 
     public List<String> getAllBigImageUuidsByArtworkAndOrderByPosition(long artworkId) {
         return bigImageService.getAllBigImageUuidsByArtworkAndOrderByPosition(artworkId);
@@ -176,9 +157,6 @@ public class ImageService {
                 ).collect(Collectors.toList());
     }
 
-    public List<SmallSizedImageEntity> getSmallSizedImageEntityByDefaultImages(List<DefaultImageEntity> defaultImages) {
-        return smallImageService.getSmallSizedImageEntityByDefaultImages(defaultImages);
-    }
 
     public List<MediumSizedImageEntity> getMediumSizedImageEntityByDefaultImages(List<DefaultImageEntity> defaultImages) {
         return mediumImageService.getMediumSizedImagesByDefaultImages(defaultImages);

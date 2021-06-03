@@ -1,4 +1,4 @@
-package de.hdbw.webshop.controller;
+package de.hdbw.webshop.controller.general;
 
 import de.hdbw.webshop.exception.ErrorPayload;
 import lombok.extern.apachecommons.CommonsLog;

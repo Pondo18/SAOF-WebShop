@@ -38,12 +38,6 @@ public class ArtworkService {
         this.nameHelper = nameHelper;
     }
 
-    public long getArtworkIdByArtworkName(String artworkName) {
-        return artworkRepository.findArtworkIdByGeneratedArtworkName(artworkName).orElseThrow(
-                ArtworkNotFoundException::new
-        );
-    }
-
     public ArtworkEntity getArtworkEntityByGeneratedArtworkName(String generatedArtworkName) {
         return artworkRepository.findByGeneratedArtworkName(generatedArtworkName).orElseThrow(
                 ArtworkNotFoundException::new

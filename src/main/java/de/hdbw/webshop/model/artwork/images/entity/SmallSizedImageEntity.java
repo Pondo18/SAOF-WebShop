@@ -3,7 +3,6 @@ package de.hdbw.webshop.model.artwork.images.entity;
 import de.hdbw.webshop.model.artwork.images.Image;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 

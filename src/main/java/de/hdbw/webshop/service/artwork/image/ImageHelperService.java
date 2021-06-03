@@ -25,10 +25,9 @@ public class ImageHelperService {
             BufferedImage imgBuff = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             imgBuff.getGraphics().drawImage(scaledImage, 0, 0, new Color(0, 0, 0), null);
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-
-//            ImageIO.write(imgBuff, image.getFileType(), buffer);
             ImageIO.write(imgBuff, "jpg", buffer);
             image.setData(buffer.toByteArray());
+            image.setSize(buffer.size());
 
         } catch (Exception e) {
             throw new Exception("IOException in scale");

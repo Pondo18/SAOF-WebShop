@@ -49,12 +49,6 @@ public class SmallImageService implements SizedImageService {
         }
     }
 
-    public List<SmallSizedImageEntity> getSmallSizedImageEntityByDefaultImages (List<DefaultImageEntity> defaultImages) {
-        return defaultImages.stream().map(
-                this::buildSmallImageEntity
-        ).collect(Collectors.toList());
-    }
-
     public boolean smallImageExists(String uuid) {
         return smallImageRepository.existsById(uuid);
     }

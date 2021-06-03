@@ -10,4 +10,5 @@ public interface Image {
     int getPosition();
     void setData(byte[] data);
     DefaultImageEntity getDefaultImage();
+    void setSize(long size);
 }
