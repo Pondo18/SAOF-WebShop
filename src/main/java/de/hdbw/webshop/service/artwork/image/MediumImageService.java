@@ -6,6 +6,7 @@ import de.hdbw.webshop.model.artwork.images.entity.DefaultImageEntity;
 import de.hdbw.webshop.model.artwork.images.entity.MediumSizedImageEntity;
 import de.hdbw.webshop.repository.artwork.image.MediumImageRepository;
 import de.hdbw.webshop.util.string.NameHelper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -22,6 +23,10 @@ public class MediumImageService implements SizedImageService {
     private final ImageHelperService imageHelperService;
     private final MediumImageRepository mediumImageRepository;
     private final NameHelper nameHelper;
+    @Value("${image.medium.width}")
+    private int width;
+    @Value("${image.medium.height}")
+    private int height;
 
     public MediumImageService(ImageHelperService imageHelperService, MediumImageRepository mediumImageRepository, NameHelper nameHelper) {
         this.imageHelperService = imageHelperService;
@@ -33,7 +38,7 @@ public class MediumImageService implements SizedImageService {
     public MediumSizedImageEntity buildMediumImageEntity (DefaultImageEntity defaultImageEntity) {
         try {
             MediumSizedImageEntity mediumSizedImageEntity = new MediumSizedImageEntity(defaultImageEntity, nameHelper.getUnusedUuid());
-            imageHelperService.scaleImage(mediumSizedImageEntity, mediumSizedImageEntity.getWidth(), mediumSizedImageEntity.getHeight());
+            imageHelperService.scaleImage(mediumSizedImageEntity, width, height);
             return mediumSizedImageEntity;
         } catch (Exception e) {
             throw new ResponseStatusException(

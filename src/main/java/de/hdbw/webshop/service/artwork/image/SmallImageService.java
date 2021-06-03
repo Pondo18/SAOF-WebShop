@@ -6,6 +6,7 @@ import de.hdbw.webshop.model.artwork.images.entity.DefaultImageEntity;
 import de.hdbw.webshop.model.artwork.images.entity.SmallSizedImageEntity;
 import de.hdbw.webshop.repository.artwork.image.SmallImageRepository;
 import de.hdbw.webshop.util.string.NameHelper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -22,6 +23,10 @@ public class SmallImageService implements SizedImageService {
     private final ImageHelperService imageHelperService;
     private final SmallImageRepository smallImageRepository;
     private final NameHelper nameHelper;
+    @Value("${image.small.width}")
+    private int width;
+    @Value("${image.small.height}")
+    private int height;
 
     public SmallImageService(ImageHelperService imageHelperService, SmallImageRepository smallImageRepository, NameHelper nameHelper) {
         this.imageHelperService = imageHelperService;
@@ -33,7 +38,7 @@ public class SmallImageService implements SizedImageService {
     public SmallSizedImageEntity buildSmallImageEntity (DefaultImageEntity defaultImageEntity) {
         try {
             SmallSizedImageEntity smallSizedImageEntity = new SmallSizedImageEntity(defaultImageEntity, nameHelper.getUnusedUuid());
-            imageHelperService.scaleImage(smallSizedImageEntity, smallSizedImageEntity.getWidth(), smallSizedImageEntity.getHeight());
+            imageHelperService.scaleImage(smallSizedImageEntity, width, height);
             return smallSizedImageEntity;
         } catch (Exception e) {
             throw new ResponseStatusException(

@@ -18,8 +18,6 @@ public class BigSizedImageEntity implements Image {
     private String uuid;
     private long size;
     private byte[] data;
-    private final int width = 1000;
-    private final int height = 1000;
 
     @OneToOne
     @JoinColumn(name = "default_id", referencedColumnName = "id")

@@ -61,22 +61,30 @@
                            onchange="reload_image('firstImage', this)" class="fadeIn second"
                            enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
                     <img th:src="*{'data:image/'+ images[0].getImageContentType() +';base64, ' + images[0].getImageBase64()}"
-                         id="firstImage">
+                         id="firstImage"
+                         th:height="${@environment.getProperty('image.medium.height')}"
+                         th:width="${@environment.getProperty('image.medium.width')}">
                     <input type="file" id="secondImageInput" th:field="*{images[1].multipartFile}"
                            onchange="reload_image('secondImage', this)" class="fadeIn second"
                            enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
                     <img th:src="*{'data:image/'+ images[1].getImageContentType() +';base64, ' + images[1].getImageBase64()}"
-                         id="secondImage">
+                         id="secondImage"
+                         th:height="${@environment.getProperty('image.medium.height')}"
+                         th:width="${@environment.getProperty('image.medium.width')}">
                     <input type="file" id="thirdImageInput" th:field="*{images[2].multipartFile}"
                            onchange="reload_image('thirdImage', this)" class="fadeIn second"
                            enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
                     <img th:src="*{'data:image/'+ images[2].getImageContentType() +';base64, ' + images[2].getImageBase64()}"
-                         id="thirdImage">
+                         id="thirdImage"
+                         th:height="${@environment.getProperty('image.medium.height')}"
+                         th:width="${@environment.getProperty('image.medium.width')}">
                     <input type="file" id="forthImageInput" th:field="*{images[3].multipartFile}"
                            onchange="reload_image('forthImage', this)" class="fadeIn second"
                            enctype="multipart/form-data" accept=".jpg, .png, .jpeg">
                     <img th:src="*{'data:image/'+ images[3].getImageContentType() +';base64, ' + images[3].getImageBase64()}"
-                         id="forthImage">
+                         id="forthImage"
+                         th:height="${@environment.getProperty('image.medium.height')}"
+                         th:width="${@environment.getProperty('image.medium.width')}">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

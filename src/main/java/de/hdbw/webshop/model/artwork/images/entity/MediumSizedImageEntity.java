@@ -3,6 +3,7 @@ package de.hdbw.webshop.model.artwork.images.entity;
 import de.hdbw.webshop.model.artwork.images.Image;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 
@@ -17,8 +18,6 @@ public class MediumSizedImageEntity implements Image {
     private String uuid;
     private long size;
     private byte[] data;
-    private final int width = 300;
-    private final int height = 300;
 
     @OneToOne
     @JoinColumn(name = "default_id", referencedColumnName = "id")

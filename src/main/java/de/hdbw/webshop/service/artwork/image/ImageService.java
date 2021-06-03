@@ -19,7 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -27,8 +26,6 @@ import javax.persistence.Transient;
 import java.io.*;
 import java.util.List;
 
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -118,7 +115,9 @@ public class ImageService {
             }
             existingArtwork.deleteImageByIndex(index);
         }
-        existingArtwork.addImage(DefaultImageEntity.buildImage(newImage, index + 1, existingArtwork));
+        DefaultImageEntity defaultImageEntity = DefaultImageEntity.buildImage(newImage, index + 1, existingArtwork);
+        buildAndSetSizedImages(defaultImageEntity);
+        existingArtwork.addImage(defaultImageEntity);
         return existingArtwork;
     }
 
