@@ -31,6 +31,7 @@ ul li a{
 /*footer*/
 
 .footer{
+    padding: 5rem;
     position: fixed;
     bottom: 0;
     width: 100%;
