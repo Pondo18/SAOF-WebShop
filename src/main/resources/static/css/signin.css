@@ -64,8 +64,11 @@ h2 {
 }
 
 #displayStrength {
-    padding-top: 2rem;
-    max-width: 8rem;
+    height: 3rem;
+    -webkit-border-radius: 0 0 10px 10px;
+    border-radius: 0 0 10px 10px;
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
 }
 
 /* TABS */
