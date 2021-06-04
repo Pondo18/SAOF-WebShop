@@ -7,9 +7,9 @@ import java.util.List;
 
 @Getter
 public class ShoppingCartDTO {
-    private List<ArtworkForListViewDTO> artworks;
-    private double sumBeforeTaxes;
-    private double sumAfterTaxes;
+    private final List<ArtworkForListViewDTO> artworks;
+    private final double sumBeforeTaxes;
+    private final double sumAfterTaxes;
 
     public ShoppingCartDTO(List<ArtworkForListViewDTO> artworks) {
         this.artworks = artworks;
@@ -21,5 +21,3 @@ public class ShoppingCartDTO {
         return artworks.stream().mapToDouble(ArtworkForListViewDTO::getPrice).sum();
     }
 }
-
-

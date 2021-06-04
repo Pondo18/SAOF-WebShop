@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en">
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml"  th:href="@{/pictures/SAOFLogo.svg}" href="SAOFLogo.svg" sizes="any">
-    <title>ShoppingCart</title>
+    <title th:text="#{shopping_cart.title}"></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
@@ -17,28 +16,28 @@
     <link href="mainpage.css" rel="stylesheet">-->
 </head>
 <body>
-<!-- NAVBAR -->
+
 <div th:insert="~{nav :: copy}"></div>
-<!-- NAVBAR -->
+
 <div>
-<h2>Shopping Cart</h2>
+<h2 th:text="#{shopping_cart.header}"></h2>
 </div>
 <div class="container" th:each="artwork: ${shoppingCart.artworks}" th:attr="onclick=|openArtwork('${artwork.generatedArtworkName}')|">
     <div class="row">
         <div class="col-md-3">
-            <img th:src="${artwork.primaryImageUrl}" alt="hier wäre das bild">
+            <img th:src="${artwork.primaryImageUrl}">
         </div>
         <div class="col-md-4">
-            <span th:text="${artwork.artworkName}">Test Name</span>
+            <span th:text="${artwork.artworkName}"></span>
         </div>
         <div class="col-md-2">
             <form action="#" th:action="@{/shopping_cart/remove_artwork}" method="post">
                 <input type="hidden" th:value="${artwork.generatedArtworkName}" name="artworkName"/>
-                <button class="del_button" type="submit">DEL</button>
+                <button class="del_button" type="submit" th:text="#{shopping_cart.button.delete}"></button>
             </form>
         </div>
         <div class="col-md-2">
-            <span th:text="${artwork.price}">200€</span>
+            <span th:text="${artwork.price}"></span><span th:text="#{currency}"></span>
         </div>
     </div>
 </div>
@@ -51,40 +50,28 @@
         </div>
         <div class="col-md-2">
             <p>
-                Sum before Taxes: <span th:text="${shoppingCart.sumBeforeTaxes}">Test Name</span>
+                <span th:text="#{shopping_cart.sum.before_taxes}"></span> <span th:text="${shoppingCart.sumBeforeTaxes}"></span>
             </p>
             <p>
-                MwSt (19%)
+                <span th:text="#{shopping_cart.taxes}"></span>
             </p>
             <p>
-                Versand
-            </p>
-            <p>
-                Sum after Taxes: <span th:text="${shoppingCart.sumAfterTaxes}">Test Name</span>
+                <span th:text="#{shopping_cart.sum.after_taxes}"></span> <span th:text="${shoppingCart.sumAfterTaxes}">Test Name</span>
             </p>
         </div>
         <div class="col-md-2">
-            <!-- Javacode zu ergänzen -->
         </div>
     </div>
 </div>
 
 <form th:if="${not #lists.isEmpty(shoppingCart.artworks)}" action="#" th:action="@{checkout}" method="post">
-    <button type="submit">Checkout</button>
+    <button type="submit" th:text="#{shopping_cart.checkout}"></button>
 </form>
 
-
-
-
-
-
+<div th:insert="~{footer :: copy}"></div>
 
 <script th:src="@{/javascript/open_artwork_func.js}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>
-
-<!-- footer-->
-<div th:insert="~{footer :: copy}"></div>
-<!-- footer-->
 </body>

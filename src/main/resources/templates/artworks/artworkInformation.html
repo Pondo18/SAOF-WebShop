@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en">
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
     <link rel="icon" type="image/svg+xml" th:href="@{/pictures/SAOFLogo.svg}" href="SAOFLogo.svg" sizes="any">
     <meta charset="UTF-8">
-    <title>Home - ART</title>
+    <title th:text="#{standard.title}"></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -18,24 +17,23 @@
     <link href="mainpage.css" rel="stylesheet">-->
 </head>
 <body>
-<!-- NAVBAR -->
+
 <div th:insert="~{nav :: copy}"></div>
-<!-- NAVBAR -->
-<h2><span th:text="${artwork.artworkName}">Name</span></h2>
+
+<h2><span th:text="${artwork.artworkName}"></span></h2>
 <div class="img">
     <img th:each="imageUrl: ${artwork.imagesUrl}" th:src="${imageUrl}">
 </div>
 <form th:if="${isInShoppingCart}" action="#" th:action="@{/shopping_cart/remove_artwork}" method="post">
     <input type="hidden" th:value="${artwork.generatedArtworkName}" name="artworkName"/>
-    <button class="button" type="submit">Remove from Cart</button>
+    <button class="button" type="submit" th:text="#{artwork_information.cart.remove}"></button>
 </form>
 <form th:unless="${isInShoppingCart}" action="#" th:action="@{/shopping_cart/add_artwork}" method="post">
     <input type="hidden" th:value="${artwork.generatedArtworkName}" name="artworkName"/>
-    <button class="button" type="submit">Add to Cart</button>
+    <button class="button" type="submit" th:text="#{artwork_information.cart.add}"></button>
 </form>
 <button th:if="${editArtworkDTO!=null}" type="button" class="btn btn-primary" data-bs-toggle="modal"
-        data-bs-target="#editArtworkModal">
-    Edit Artwork
+        data-bs-target="#editArtworkModal" th:text="#{artwork_information.edit}">
 </button>
 
 <!-- Edit Artwork Modal -->
@@ -48,14 +46,14 @@
                   method="post">
                 <div class="modal-header">
                     <input id="addArtworkModalLabel" type="text" th:field="*{artworkName}" class="fadeIn second"
-                           name="artworkName" placeholder="Artwork name" required/>
+                           name="artworkName" th:placeholder="#{modal.placeholder.name}" required/>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <input type="text" th:field="*{artworkPrice}" class="fadeIn second" name="artworkPrice"
-                           placeholder="Price" required/>
+                           th:placeholder="#{modal.placeholder.price}" required/>
                     <input type="text" th:field="*{artworkDescription}" class="fadeIn second" name="artworkDescription"
-                           placeholder="Description"/>
+                           th:placeholder="#{modal.placeholder.description}"/>
 
                     <input type="file" id="firstImageInput" th:field="*{images[0].multipartFile}"
                            onchange="reload_image('firstImage', this)" class="fadeIn second"
@@ -87,23 +85,21 @@
                          th:width="${@environment.getProperty('image.medium.width')}">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Edit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{modal.close}"></button>
+                    <button type="submit" class="btn btn-primary" th:text="#{artwork_information.modal_edit.edit}"></button>
                 </div>
                 <input type="hidden" th:value="${artwork.generatedArtworkName}" name="oldGeneratedArtworkName"/>
             </form>
 
             <form action="#" th:action="@{/remove_artwork}" method="post">
                 <input type="hidden" th:value="${artwork.generatedArtworkName}" name="artworkName"/>
-                <button class="button" type="submit">Remove Artwork</button>
+                <button class="button" type="submit" th:text="#{artwork_information.delete}"></button>
             </form>
         </div>
     </div>
 </div>
-+<!-- footer-->
-+
+
 <div th:insert="~{footer :: copy}"></div>
-+<!-- footer-->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"

@@ -19,33 +19,33 @@
           <a class="nav-link" th:href="@{/artworks}"><img th:src="@{/pictures/SAOFLogo.svg}" alt="Logo" width="40" title="Go to Home"></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/contact}">About</a>
+          <a class="nav-link" th:href="@{/contact}" th:text="#{navbar.contact}"></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/contact_us}">Contact Us</a>
+          <a class="nav-link" th:href="@{/contact_us}" th:text="#{navbar.contact_us}"></a>
         </li>
         <li class="nav-item">
-          <a th:href="@{/shopping_cart}" class="nav-link">Shopping Cart</a>
+          <a th:href="@{/shopping_cart}" class="nav-link" th:text="#{navbar.shopping_cart}"></a>
 
         <li sec:authorize="isAnonymous()" class="nav-item">
-          <a th:href="@{/login}" class="nav-link">Log in</a>
+          <a th:href="@{/login}" class="nav-link" th:text="#{navbar.login}"></a>
         </li>
 
         <li sec:authorize="isAnonymous()" class="nav-item">
-          <a th:href="@{/registration/user}" class="nav-link">Register</a>
+          <a th:href="@{/registration/user}" class="nav-link" th:text="#{navbar.registration.user}"></a>
         </li>
 
         <li sec:authorize="isAuthenticated()" class="nav-item">
-          <a sec:authorize="!hasRole('ROLE_ARTIST')" th:href="@{/registration/artist}" class="nav-link">Register as Artist</a>
-          <a sec:authorize="hasRole('ROLE_ARTIST')" th:href="@{/my_artworks}" class="nav-link">My Artworks</a>
+          <a sec:authorize="!hasRole('ROLE_ARTIST')" th:href="@{/registration/artist}" class="nav-link" th:text="#{navbar.registration.artist}"></a>
+          <a sec:authorize="hasRole('ROLE_ARTIST')" th:href="@{/my_artworks}" class="nav-link" th:text="#{navbar.my_artworks}"></a>
           <a><form action="/logout" method="post">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <button type="submit">Log out</button>
+            <button type="submit" th:text="#{navbar.logout}"></button>
           </form></a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/account}">Account</a>
+          <a class="nav-link" th:href="@{/account}" th:text="#{navbar.account}"></a>
         </li>
 
       </ul>

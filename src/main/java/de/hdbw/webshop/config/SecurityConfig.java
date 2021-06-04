@@ -1,6 +1,7 @@
-package de.hdbw.webshop.security;
+package de.hdbw.webshop.config;
 
 import de.hdbw.webshop.listener.MySessionListener;
+import de.hdbw.webshop.handler.MyAuthenticationSuccessHandler;
 import de.hdbw.webshop.service.user.ShoppingCartService;
 import de.hdbw.webshop.service.session.RedirectHelper;
 import de.hdbw.webshop.util.string.UrlUtil;

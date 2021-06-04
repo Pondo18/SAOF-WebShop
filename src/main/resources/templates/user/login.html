@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
   <link rel="icon" type="image/svg+xml" th:href="@{SAOFLogo.svg}" href="SAOFLogo.svg" sizes="any">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login</title>
+  <title th:text="#{login.title}"></title>
   <link rel="shortcut icon" type="image/x-icon" th:href="@{/pictures/SAOFLogo.ico}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -24,23 +24,21 @@
     </div>
     <!-- Login Form -->
     <form th:action="@{/login}" method="post">
-      <input type="email" id="username" name="username" autofocus="autofocus" class="fadeIn second" placeholder="your@email.com">
-      <input type="password" id="password" name="password" class="fadeIn third" placeholder="Password">
+      <input type="email" id="username" name="username" autofocus="autofocus" class="fadeIn second" th:placeholder="#{login.placeholder.email}">
+      <input type="password" id="password" name="password" class="fadeIn third" th:placeholder="#{login.placeholder.password}">
       <input type="hidden" th:if="${jsessionid!=null}" th:value="${jsessionid}" name="jsessionid"/>
       <input type="hidden" th:if="${returnUrl!=null}" th:value="${returnUrl}" name="returnUrl"/>
-      <input type="submit" value="Log in" class="fadeIn fourth">
+      <input type="submit" th:value="#{login.button.login}" class="fadeIn fourth">
     </form>
 
     <!-- Remind Password -->
     <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
+      <a class="underlineHover" href="#" th:text="#{login.password_forgotten}"></a>
     </div>
       <form action="#" th:action="@{/registration/user}" method="get">
-        <button class="underlineHover" type="submit">Signup first</button>
+        <button class="underlineHover" type="submit" th:text="#{login.registration}"></button>
         <input type="hidden" th:if="${returnUrl!=null}" th:value="${returnUrl}" name="returnUrl"/>
       </form>
-
-
   </div>
 </div>
 </body>
