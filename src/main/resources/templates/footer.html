@@ -5,12 +5,27 @@
 <body>
 
 <div th:fragment="copy">
-
     <!-- footer-->
     <footer class="footer">
-        <h3 style="color: white">
-            &copy; Impressum blah
-        </h3>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-1">
+                    <img th:src="@{/pictures/SAOFLogo.svg}" id="icon" alt="Art Icon" width="40" height="40"/>
+                </div>
+                <div class="col-md-3" id="footerlogotext">
+                    <p>
+                        SAOF Logo 2021 &trade;
+                    </p>
+                </div>
+                <div class="col-md-4" id="footercontent">
+                    <a href="http://localhost:8080/contact_us" >Contact us</a>
+                </div>
+                <div class="col-md-4" id="footercontent">
+                    <a href="http://localhost:8080">Legal Information</a>
+                </div>
+            </div>
+        </div>
+
     </footer>
     <!-- footer-->
 </div>
