@@ -74,10 +74,6 @@ public class ShoppingCartService {
         return shoppingCartRepository.findAllByAllUsersEntity_Id(currentUser.getId());
     }
 
-    public List<ShoppingCartEntity> getAllShoppingCartEntitiesForJsessionid(String jsessionid) {
-        return shoppingCartRepository.findAllByAllUsersEntity_UnregisteredUser_Jsessionid(jsessionid);
-    }
-
     public List<ArtworkEntity> convertShoppingCartEntitiesToArtworkEntities(AllUsersEntity currentUser) {
         List<ShoppingCartEntity> shoppingCart = getAllShoppingCartEntitiesForUser(currentUser);
         return shoppingCart.stream().map(

@@ -20,9 +20,9 @@
                 <h1 th:text="#{error_pages.header.first}"></h1>
                 <h3><span th:text="#{error_pages.status_code}"></span> <span th:text="${error.statusCode}"></span></h3>
                 <h4 th:text="#{500er.header.description}"></h4>
-                <div class="error-details">
-                    <p th:text="${error.message}"></p>
-                </div>
+<!--                <div class="error-details">-->
+<!--                    <p th:text="${error.message}"></p>-->
+<!--                </div>-->
                 <div class="error-actions">
                     <a href="../artworks/artworks.html" th:href="@{/artworks}"
                        class="btn btn-primary btn-lg" th:text="#{error_pages.home}"><span class="glyphicon glyphicon-home"></span></a>
