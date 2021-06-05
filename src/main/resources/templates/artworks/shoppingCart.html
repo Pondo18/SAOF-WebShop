@@ -20,7 +20,7 @@
 <div th:insert="~{nav :: copy}"></div>
 
 <div>
-<h2 th:text="#{shopping_cart.header}"></h2>
+<h2 th:text="#{shopping_cart.header.first}"></h2>
 </div>
 <div class="container" th:each="artwork: ${shoppingCart.artworks}" th:attr="onclick=|openArtwork('${artwork.generatedArtworkName}')|">
     <div class="row">
