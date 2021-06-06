@@ -9,6 +9,7 @@ import de.hdbw.webshop.model.artwork.artworks.entity.ArtworkEntity;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.repository.artwork.ArtworkRepository;
 import de.hdbw.webshop.service.artwork.image.ImageService;
+import de.hdbw.webshop.util.language.PriceUtil;
 import de.hdbw.webshop.util.string.NameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,14 +26,16 @@ public class ArtworkDTOService {
     private final ArtworkRepository artworkRepository;
     private final ImageService imageService;
     private final NameHelper nameHelper;
+    private final PriceUtil priceUtil;
     @Value("${host.url}")
     private String host;
 
     @Autowired
-    public ArtworkDTOService(ArtworkRepository artworkRepository, ImageService imageService, NameHelper nameHelper) {
+    public ArtworkDTOService(ArtworkRepository artworkRepository, ImageService imageService, NameHelper nameHelper, PriceUtil priceUtil) {
         this.artworkRepository = artworkRepository;
         this.imageService = imageService;
         this.nameHelper = nameHelper;
+        this.priceUtil = priceUtil;
     }
 
     public ArtworkForDetailedViewDTO getArtworkForDetailedInformationPage(String generatedArtworkName) {
@@ -40,7 +43,7 @@ public class ArtworkDTOService {
                 ArtworkNotFoundException::new
         );
         ArtworkForDetailedViewDTO artwork = new ArtworkForDetailedViewDTO();
-        artwork.build(artworkEntity);
+        artwork.build(artworkEntity, priceUtil.getPriceInCorrectCurrencyInputIsInEUR(artwork.getPrice()));
         List<String> bigArtworkImageUuids = imageService.getAllBigImageUuidsByArtworkAndOrderByPosition(artworkEntity.getId());
         List<String> artworkImageUrls = buildImageUrls(bigArtworkImageUuids, host);
         artwork.setImagesUrl(artworkImageUrls);
@@ -59,7 +62,9 @@ public class ArtworkDTOService {
             primaryImageUuid = getSmallPrimaryImageUuid(artworkEntity);
         } catch (Exception e) {
         }
-        return artworkForDetailedViewDTO.build(artworkEntity, host, primaryImageUuid);
+        return artworkForDetailedViewDTO.build(
+                artworkEntity, host, primaryImageUuid,
+                priceUtil.getPriceInCorrectCurrencyInputIsInEUR(artworkEntity.getPrice()));
     }
 
     public List<ArtworkForListViewDTO> getAllArtworksForListViewByArtworkEntity(List<ArtworkEntity> artworks) {
@@ -71,7 +76,7 @@ public class ArtworkDTOService {
         ArtworkEntity artworkEntity = new ArtworkEntity(
                 editMyArtworkDTO.getArtworkName(), artist,
                 editMyArtworkDTO.getArtworkDescription(),
-                editMyArtworkDTO.getArtworkPrice());
+                priceUtil.getPriceInEURInputIsUnknown(editMyArtworkDTO.getArtworkPrice()));
         artworkEntity.setGeneratedArtworkName(nameHelper.generateArtworkName(artworkEntity.getArtworkName()));
         artworkEntity.setImages(imageService.getImageEntitiesByEditMyArtworkDTO(editMyArtworkDTO, artworkEntity));
         return artworkEntity;
@@ -80,7 +85,7 @@ public class ArtworkDTOService {
     public EditMyArtworkDTO getEditMyArtworkDTOByArtworkEntity(ArtworkEntity artworkEntity) {
         return new EditMyArtworkDTO(
                 artworkEntity.getArtworkName(),
-                artworkEntity.getDescription(), artworkEntity.getPrice(),
+                artworkEntity.getDescription(), priceUtil.getPriceInCorrectCurrencyInputIsInEUR(artworkEntity.getPrice()),
                 imageService.getMultipartWrapperFilesByImageEntities(imageService.getMediumSizedImageEntityByDefaultImages(artworkEntity.getImages())));
     }
 

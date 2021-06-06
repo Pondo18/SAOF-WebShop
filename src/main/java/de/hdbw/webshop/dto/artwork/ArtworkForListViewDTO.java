@@ -14,10 +14,11 @@ public class ArtworkForListViewDTO {
     private double price;
     private String primaryImageUrl;
 
-    public ArtworkForListViewDTO build(ArtworkEntity artworkEntity, String host, String primaryImageUuid) {
+    public ArtworkForListViewDTO build(ArtworkEntity artworkEntity, String host,
+                                       String primaryImageUuid, double priceInCorrectCurrency) {
         generatedArtworkName = artworkEntity.getGeneratedArtworkName();
         artworkName = artworkEntity.getArtworkName();
-        price = artworkEntity.getPrice();
+        price = priceInCorrectCurrency;
         primaryImageUrl = host + "/image/small/" + primaryImageUuid;
         return this;
     }
