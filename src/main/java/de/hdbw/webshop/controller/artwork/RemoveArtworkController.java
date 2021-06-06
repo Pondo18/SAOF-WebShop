@@ -3,6 +3,7 @@ package de.hdbw.webshop.controller.artwork;
 import de.hdbw.webshop.exception.exceptions.ArtworkNotFoundException;
 import de.hdbw.webshop.service.artwork.artworks.ArtworkService;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,7 @@ public class RemoveArtworkController {
         } catch (ArtworkNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
-                    messageSource.getMessage("error.artwork.not_yours", null, Locale.GERMANY),
+                    messageSource.getMessage("error.artwork.not_yours", null, LocaleContextHolder.getLocale()),
                     e
             );
         }

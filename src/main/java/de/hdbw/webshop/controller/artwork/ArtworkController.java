@@ -10,6 +10,7 @@ import de.hdbw.webshop.service.user.ShoppingCartService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -56,7 +57,7 @@ public class ArtworkController {
             HttpSession session = request.getSession();
             boolean isInShoppingCart = shoppingCartService.ArtworkIsInShoppingCart(session, authentication, generatedArtworkName);
             ArtworkForDetailedViewDTO artwork = artworkDTOService.getArtworkForDetailedInformationPage(generatedArtworkName);
-            EditMyArtworkDTO editArtworkDTO = artistService.getEditMyArtworkDtoIfExisting(authentication, generatedArtworkName, artwork.getImagesUrl());
+            EditMyArtworkDTO editArtworkDTO = artistService.getEditMyArtworkDtoIfExisting(authentication, generatedArtworkName);
             log.debug("Returning detailed artwork page for Artwork with generatedArtworkName: " + generatedArtworkName);
             ModelAndView mav = new ModelAndView("artworks/artworkInformation", "artwork", artwork);
             mav.addObject("isInShoppingCart", isInShoppingCart);
@@ -66,7 +67,7 @@ public class ArtworkController {
             log.warn("Artwork with the generatedArtworkName: " + generatedArtworkName + " was not found!");
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
-                    messageSource.getMessage("error.artwork.not_found", null, Locale.GERMANY),
+                    messageSource.getMessage("error.artwork.not_found", null, LocaleContextHolder.getLocale()),
                     artworkNotFoundException
             );
         }
