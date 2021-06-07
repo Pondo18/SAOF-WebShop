@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Locale;
 
@@ -27,9 +28,11 @@ public class RemoveArtworkController {
 
     @PostMapping("/remove_artwork")
     public ModelAndView removeArtwork(Authentication authentication,
-                                      @ModelAttribute("artworkName") String generatedArtworkName) {
+                                      @ModelAttribute("artworkName") String generatedArtworkName,
+                                      RedirectAttributes redirectAttributes) {
         try {
             artworkService.removeArtworkWithGeneratedArtworkName(generatedArtworkName, authentication);
+            redirectAttributes.addFlashAttribute("success", messageSource.getMessage("alert.artwork.remove.success", null, LocaleContextHolder.getLocale()));
         } catch (ArtworkNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
