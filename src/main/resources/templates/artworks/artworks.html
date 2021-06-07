@@ -14,7 +14,8 @@
 
 </head>
 <body>
-<div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+<div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
+<div class="alert alert-danger" role="alert" th:text="${failure}" th:if="${failure}"></div>
 <div th:insert="~{nav :: copy}"></div>
 
 <div class="container-fluid">

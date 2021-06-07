@@ -26,8 +26,12 @@ public class EditArtworkController {
     public ModelAndView editArtwork(EditMyArtworkDTO editMyArtworkDTO,
                                     @ModelAttribute("oldGeneratedArtworkName") String oldGeneratedArtworkName,
                                     Authentication authentication, RedirectAttributes redirectAttributes) {
-        artworkService.editArtwork(editMyArtworkDTO, authentication, oldGeneratedArtworkName);
-        redirectAttributes.addFlashAttribute("success", messageSource.getMessage("alert.artwork.edit.success", null, LocaleContextHolder.getLocale()));
+        try {
+            artworkService.editArtwork(editMyArtworkDTO, authentication, oldGeneratedArtworkName);
+            redirectAttributes.addFlashAttribute("success", messageSource.getMessage("alert.artwork.edit.success", null, LocaleContextHolder.getLocale()));
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("failure", messageSource.getMessage("alert.artwork.edit.failure", null, LocaleContextHolder.getLocale()));
+        }
         return new ModelAndView("redirect:/my_artworks");
     }
 }
