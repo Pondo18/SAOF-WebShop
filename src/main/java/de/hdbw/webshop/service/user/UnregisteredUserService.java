@@ -40,13 +40,14 @@ public class UnregisteredUserService {
     public UnregisteredUserEntity findByJsessionid (String jsessionid) {
         log.debug("Returning UnregisteredUser by Jsessionid: " + jsessionid);
         return unregisteredUserRepository.findByJsessionid(jsessionid).orElseThrow(
-                () ->new UserNotFoundException());
+                UserNotFoundException::new);
     }
 
     public UnregisteredUserEntity findUnregisteredUserEntityBySessionId (String jsessionid) {
         try {
            return findByJsessionid(jsessionid);
         } catch (UserNotFoundException notFoundException) {
+            log.info("Couldn't load anonymous user: " + jsessionid);
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR,
                     "Couldn't load anonymous user",

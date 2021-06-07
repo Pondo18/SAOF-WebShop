@@ -9,6 +9,7 @@ import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import de.hdbw.webshop.repository.user.ArtistRepository;
 import de.hdbw.webshop.service.artwork.artworks.ArtworkService;
 import de.hdbw.webshop.service.user.RegisteredUserService;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class ArtistService {
         return artworkService.createNewArtwork(editMyArtworkDTO, authentication);
     }
 
-    public EditMyArtworkDTO getEditMyArtworkDtoIfExisting(Authentication authentication, String generatedArtworkName, List<String> images) {
+    public EditMyArtworkDTO getEditMyArtworkDtoIfExisting(Authentication authentication, String generatedArtworkName) {
         if (authentication!=null) {
             RegisteredUsersEntity currentUser = registeredUserService.findRegisteredUserEntityByAuthentication(authentication);
             return artworkService.getEditMyArtworkDTOIfExisting(generatedArtworkName, currentUser);

@@ -1,5 +1,6 @@
-package de.hdbw.webshop.security;
+package de.hdbw.webshop.service.authentication;
 
+import de.hdbw.webshop.model.users.MyUserDetails;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import de.hdbw.webshop.model.users.entity.UserPasswordEntity;

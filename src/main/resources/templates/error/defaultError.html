@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Something went wrong :(</title>
+    <title th:text="#{error_pages.title}"></title>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -17,19 +17,18 @@
     <div class="row">
         <div class="col-md-12">
             <div class="error-template">
-                <h1>
-                    Oops!
-                </h1>
-                <h3>Error Code: <span th:text="${error.statusCode}"></span></h3>
-                <h4>Wow! This error does not occur often. Consider telling us about this with our contact form!</h4>
+                <h1 th:text="#{error_pages.header.first}"></h1>
+                <h3><span th:text="#{error_pages.status_code}"></span> <span th:text="${error.statusCode}"></span></h3>
+                <h4 th:text="#{default_error.header.description}"></h4>
                 <div class="error-details">
                     <p th:text="${error.message}"></p>
                 </div>
                 <div class="error-actions">
-                    <a href="../artworks/artworks.html" th:href="@{/artworks}" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
-                        Take Me Home </a>
-                    <a href="#" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span>
-                        Contact Support </a>
+                    <a href="../artworks/artworks.html" th:href="@{/artworks}" class="btn btn-primary btn-lg" th:text="#{error_pages.home}">
+                        <span class="glyphicon glyphicon-home"></span></a>
+                    <a href="#" class="btn btn-default btn-lg" th:text="#{error_pages.support}">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                    </a>
                 </div>
             </div>
         </div>

@@ -29,7 +29,7 @@ public class MySessionListener implements HttpSessionListener {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         HttpSession session = httpsessionEvent.getSession();
         String jsessionid = session.getId();
-        if (authentication.getPrincipal().equals("anonymousUser")) {
+        if (authentication==null || authentication.getPrincipal().equals("anonymousUser")) {
             log.info("Creating new Session for Unregistered User with jsessionid: " + jsessionid);
             int expireDateInSeconds = 50*60*24*14;
             session.setMaxInactiveInterval(expireDateInSeconds);

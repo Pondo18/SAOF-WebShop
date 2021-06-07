@@ -9,6 +9,8 @@ import de.hdbw.webshop.service.artwork.artworks.ArtworkDTOService;
 import de.hdbw.webshop.service.user.ShoppingCartService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Locale;
 
 @CommonsLog
 @Controller
@@ -28,12 +31,14 @@ public class ArtworkController {
     private final ArtworkDTOService artworkDTOService;
     private final ShoppingCartService shoppingCartService;
     private final ArtistService artistService;
+    private final MessageSource messageSource;
 
     @Autowired
-    public ArtworkController(ArtworkDTOService artworkDTOService, ShoppingCartService shoppingCartService, ArtistService artistService) {
+    public ArtworkController(ArtworkDTOService artworkDTOService, ShoppingCartService shoppingCartService, ArtistService artistService, MessageSource messageSource) {
         this.artworkDTOService = artworkDTOService;
         this.shoppingCartService = shoppingCartService;
         this.artistService = artistService;
+        this.messageSource = messageSource;
     }
 
 
@@ -52,7 +57,7 @@ public class ArtworkController {
             HttpSession session = request.getSession();
             boolean isInShoppingCart = shoppingCartService.ArtworkIsInShoppingCart(session, authentication, generatedArtworkName);
             ArtworkForDetailedViewDTO artwork = artworkDTOService.getArtworkForDetailedInformationPage(generatedArtworkName);
-            EditMyArtworkDTO editArtworkDTO = artistService.getEditMyArtworkDtoIfExisting(authentication, generatedArtworkName, artwork.getImagesUrl());
+            EditMyArtworkDTO editArtworkDTO = artistService.getEditMyArtworkDtoIfExisting(authentication, generatedArtworkName);
             log.debug("Returning detailed artwork page for Artwork with generatedArtworkName: " + generatedArtworkName);
             ModelAndView mav = new ModelAndView("artworks/artworkInformation", "artwork", artwork);
             mav.addObject("isInShoppingCart", isInShoppingCart);
@@ -62,7 +67,7 @@ public class ArtworkController {
             log.warn("Artwork with the generatedArtworkName: " + generatedArtworkName + " was not found!");
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
-                    "Artwork Not Found",
+                    messageSource.getMessage("error.artwork.not_found", null, LocaleContextHolder.getLocale()),
                     artworkNotFoundException
             );
         }

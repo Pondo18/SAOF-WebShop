@@ -9,6 +9,7 @@ import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import de.hdbw.webshop.repository.artwork.ArtworkRepository;
 import de.hdbw.webshop.service.artwork.image.ImageService;
 import de.hdbw.webshop.service.user.RegisteredUserService;
+import de.hdbw.webshop.util.language.PriceUtil;
 import de.hdbw.webshop.util.string.NameHelper;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +29,16 @@ public class ArtworkService {
     private final RegisteredUserService registeredUserService;
     private final ImageService imageService;
     private final NameHelper nameHelper;
+    private final PriceUtil priceUtil;
 
     @Autowired
-    public ArtworkService(ArtworkRepository artworkRepository, ArtworkDTOService artworkDTOService, RegisteredUserService registeredUserService, ImageService imageService, NameHelper nameHelper) {
+    public ArtworkService(ArtworkRepository artworkRepository, ArtworkDTOService artworkDTOService, RegisteredUserService registeredUserService, ImageService imageService, NameHelper nameHelper, PriceUtil priceUtil) {
         this.artworkRepository = artworkRepository;
         this.artworkDTOService = artworkDTOService;
         this.registeredUserService = registeredUserService;
         this.imageService = imageService;
         this.nameHelper = nameHelper;
+        this.priceUtil = priceUtil;
     }
 
     public ArtworkEntity getArtworkEntityByGeneratedArtworkName(String generatedArtworkName) {
@@ -105,9 +108,9 @@ public class ArtworkService {
         if (!artworkChanges.getArtworkDescription().equals(existingArtwork.getDescription())) {
             existingArtwork.setDescription(artworkChanges.getArtworkDescription());
         }
-
-        if (!(artworkChanges.getArtworkPrice() == existingArtwork.getPrice())) {
-            existingArtwork.setPrice(artworkChanges.getArtworkPrice());
+        double changedPriceInEuro = priceUtil.getPriceInEURInputIsUnknown(artworkChanges.getArtworkPrice());
+        if (!(changedPriceInEuro == existingArtwork.getPrice())) {
+            existingArtwork.setPrice(changedPriceInEuro);
         }
         return imageService.changeImagesIfNecessary(artworkChanges, existingArtwork);
     }

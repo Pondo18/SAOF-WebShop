@@ -67,6 +67,7 @@ public class ImageService {
             try {
                 return imageService.getDefaultImage();
             } catch (Exception exception) {
+                log.warn("Image not found:" + uuid);
                 throw new ResponseStatusException(
                         HttpStatus.INTERNAL_SERVER_ERROR,
                         "Image not found",

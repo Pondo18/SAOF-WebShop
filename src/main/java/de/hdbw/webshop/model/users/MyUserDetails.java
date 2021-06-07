@@ -1,4 +1,4 @@
-package de.hdbw.webshop.security;
+package de.hdbw.webshop.model.users;
 
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.model.users.RegisteredUsers;

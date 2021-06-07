@@ -1,4 +1,4 @@
-package de.hdbw.webshop.controller.general;
+package de.hdbw.webshop.controller.general.error;
 
 import de.hdbw.webshop.exception.ErrorPayload;
 import lombok.extern.apachecommons.CommonsLog;
@@ -18,7 +18,7 @@ public class MyErrorController implements ErrorController {
     @RequestMapping("/error")
     public ModelAndView handleError(HttpServletRequest request) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-        Integer statusCode = Integer.valueOf(status.toString());
+        int statusCode = Integer.parseInt(status.toString());
 
         ErrorPayload errorPayload = new ErrorPayload(
                 (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE),

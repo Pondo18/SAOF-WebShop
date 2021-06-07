@@ -5,7 +5,6 @@
 <body>
 
 <div th:fragment="copy">
-    <!-- footer-->
     <footer class="footer">
         <div class="container">
             <div class="row">
@@ -17,19 +16,15 @@
                         SAOF Logo 2021 &trade;
                     </p>
                 </div>
-                <div class="col-md-4" id="footercontent">
-                    <a href="http://localhost:8080/contact_us" >Contact us</a>
+                <div class="col-md-4" id="footer_content_contact">
+                    <a href="http://localhost:8080/contact_us" th:text="#{footer.contact_us}"></a>
                 </div>
-                <div class="col-md-4" id="footercontent">
-                    <a href="http://localhost:8080">Legal Information</a>
+                <div class="col-md-4" id="footer_content_legal">
+                    <a href="http://localhost:8080" th:text="#{footer.legal}"></a>
                 </div>
             </div>
         </div>
-
     </footer>
-    <!-- footer-->
 </div>
-
 </body>
-
 </html>

@@ -1,6 +1,9 @@
-package de.hdbw.webshop.security;
+package de.hdbw.webshop.config;
 
+import de.hdbw.webshop.handler.MyAccessDeniedHandler;
 import de.hdbw.webshop.listener.MySessionListener;
+import de.hdbw.webshop.handler.MyAuthenticationSuccessHandler;
+import de.hdbw.webshop.model.users.Roles;
 import de.hdbw.webshop.service.user.ShoppingCartService;
 import de.hdbw.webshop.service.session.RedirectHelper;
 import de.hdbw.webshop.util.string.UrlUtil;
@@ -18,6 +21,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -81,6 +85,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return listenerRegBean;
     }
 
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new MyAccessDeniedHandler();
+    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -92,6 +101,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registration/user").permitAll()
                 .anyRequest().authenticated()
                 .and()
+//                .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
+//                .and()
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/")

@@ -1,4 +1,4 @@
-package de.hdbw.webshop.security;
+package de.hdbw.webshop.handler;
 
 import de.hdbw.webshop.service.user.ShoppingCartService;
 import de.hdbw.webshop.service.session.RedirectHelper;

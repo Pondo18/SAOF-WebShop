@@ -29,7 +29,7 @@ public class RegisteredUserService {
 
     public RegisteredUsersEntity findRegisteredUserEntityByEmail(String email) {
         return registeredUserRepository.findByEmail(email).orElseThrow(
-                () -> new UserNotFoundException()
+                UserNotFoundException::new
         );
     }
 }

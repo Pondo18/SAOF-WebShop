@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en">
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml"  th:href="@{/pictures/SAOFLogo.svg}" href="SAOFLogo.svg" sizes="any">
-    <title>Home - ART</title>
+    <title th:text="#{standard.title}"></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
@@ -15,10 +14,9 @@
 
 </head>
 <body>
-<!-- NAVBAR -->
+
 <div th:insert="~{nav :: copy}"></div>
-<!-- NAVBAR -->
-<!-- Main Content -->
+
 <div class="container-fluid">
     <div class="category1 flex-row" style="
     display: flex;
@@ -29,27 +27,22 @@
 ">
         <div class="arts" style="max-width: 20rem; padding-right: 2rem;"
              th:each="artwork: ${artworks}" th:attr="onclick=|openArtwork('${artwork.generatedArtworkName}')|" title="Click to View more">
-            <h2><span th:text="${artwork.artworkName}">Artworkname</span></h2>
+            <h2><span th:text="${artwork.artworkName}"></span></h2>
             <div class="img" style="border:1px solid black;">
-                <img th:src="${artwork.primaryImageUrl}" alt="this is art img">
+                <img th:src="${artwork.primaryImageUrl}">
             </div>
-            <h4><span th:text="${artwork.price}"></span> €</h4>
+            <h4><span th:text="${artwork.price}"></span><span th:text="#{currency}"></span></h4>
         </div>
     </div>
 </div>
 
-
-
+<div th:insert="~{footer :: copy}"></div>
 
 <script th:src="@{/javascript/open_artwork_func.js}"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>
 <script th:src="@{/javascript/document_ready.js}"></script>
-
-<!-- footer-->
-<div th:insert="~{footer :: copy}"></div>
-<!-- footer-->
+<script th:src="@{/javascript/change_lang.js}"></script>
 </body>
 </html>

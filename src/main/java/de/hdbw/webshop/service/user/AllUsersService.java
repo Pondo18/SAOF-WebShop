@@ -40,7 +40,7 @@ public class AllUsersService {
 
     public AllUsersEntity getCurrentUser(User currentUser) {
         return allUsersRepository.findById(currentUser.getUserId()).orElseThrow(
-                () -> new UserNotFoundException());
+                UserNotFoundException::new);
     }
 
     public AllUsersEntity getCurrentRegisteredUser(Authentication authentication) {
