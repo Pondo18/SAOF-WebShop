@@ -4,6 +4,7 @@ import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public void doAutoLogin(String email, String password, HttpServletRequest request, HttpServletResponse response) {
+    public void doAutoLoginAfterUserRegistration(String email, String password, HttpServletRequest request, HttpServletResponse response) {
         try {
             invalidateSessionIfSessionExists(request, response);
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
@@ -38,7 +39,6 @@ public class AuthenticationService {
     }
 
     public void invalidateSessionIfSessionExists(HttpServletRequest request, HttpServletResponse response) {
-//        new SecurityContextLogoutHandler().logout(request, null, null);
         try {
             request.logout();
             Cookie[] cookies = request.getCookies();
@@ -48,12 +48,15 @@ public class AuthenticationService {
                     response.addCookie(cookie);
                 }
             }
-//            request.getSession(false).invalidate();
-//            SecurityContextHolder.clearContext();
         } catch (ServletException e) {
             e.printStackTrace();
         }
-//        SessionInformation sessionInformation = mySessionRegistry.getSessionInformation(request.getSession(false).getId());
-//        sessionInformation.expireNow();
+    }
+
+
+    public void authenticateArtistAfterRegistration(Object principal) {
+        Authentication authentication = new UsernamePasswordAuthenticationToken(principal, null,
+                AuthorityUtils.createAuthorityList("ROLE_ARTIST"));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }
