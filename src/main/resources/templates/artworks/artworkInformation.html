@@ -20,6 +20,8 @@
 
 <div th:insert="~{nav :: copy}"></div>
 
+<div class="alert alert-danger" role="alert" th:text="${failure}" th:if="${failure}"></div>
+
 <h2><span th:text="${artwork.artworkName}"></span></h2>
 <div class="img">
     <img th:each="imageUrl: ${artwork.imagesUrl}" th:src="${imageUrl}">

@@ -38,18 +38,9 @@ public class ShoppingCartService {
     public ShoppingCartEntity addArtworkToShoppingCart(HttpSession httpSession,
                                                        Authentication authentication,
                                                        String artworkName) {
-        try {
-            AllUsersEntity currentUserBySession = allUsersService.getCurrentUserBySession(httpSession, authentication);
-            ArtworkEntity artworkToAdd = artworkService.getArtworkEntityByGeneratedArtworkName(artworkName);
-            return shoppingCartRepository.save(new ShoppingCartEntity(currentUserBySession, artworkToAdd));
-        } catch (UserNotFoundException | ArtworkNotFoundException e) {
-            log.error("Couldn't get User and Artwork to add to ShoppingCart " + e);
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Couldn't get User and Artwork to add to ShoppingCart",
-                    e
-            );
-        }
+        AllUsersEntity currentUserBySession = allUsersService.getCurrentUserBySession(httpSession, authentication);
+        ArtworkEntity artworkToAdd = artworkService.getArtworkEntityByGeneratedArtworkName(artworkName);
+        return shoppingCartRepository.save(new ShoppingCartEntity(currentUserBySession, artworkToAdd));
     }
 
     public long removeArtworkFromShoppingCart(HttpSession session,
@@ -111,7 +102,7 @@ public class ShoppingCartService {
         AllUsersEntity oldUnregisteredUser = allUsersService.getCurrentUnregisteredUser(jsessionidFromUnregisteredSession);
         List<ShoppingCartEntity> oldShoppingCart = getAllShoppingCartEntitiesForUser(oldUnregisteredUser);
         oldShoppingCart.forEach(shoppingCartEntity -> shoppingCartEntity.setAllUsersEntity(newRegisteredUser));
-        List<ShoppingCartEntity> newShoppingCart =  oldShoppingCart.stream()
+        List<ShoppingCartEntity> newShoppingCart = oldShoppingCart.stream()
                 .filter(this::artworkIsNotInShoppingCartYet)
                 .collect(Collectors.toList());
         return shoppingCartRepository.saveAll(newShoppingCart);

@@ -34,11 +34,7 @@ public class RemoveArtworkController {
             artworkService.removeArtworkWithGeneratedArtworkName(generatedArtworkName, authentication);
             redirectAttributes.addFlashAttribute("success", messageSource.getMessage("alert.artwork.remove.success", null, LocaleContextHolder.getLocale()));
         } catch (ArtworkNotFoundException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.FORBIDDEN,
-                    messageSource.getMessage("error.artwork.not_yours", null, LocaleContextHolder.getLocale()),
-                    e
-            );
+            redirectAttributes.addFlashAttribute("failure", messageSource.getMessage("alert.artwork.remove.failure", null, LocaleContextHolder.getLocale()));
         }
         return new ModelAndView("redirect:/my_artworks");
     }
