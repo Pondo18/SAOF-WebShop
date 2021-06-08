@@ -4,6 +4,7 @@ import de.hdbw.webshop.dto.artwork.ArtworkForListViewDTO;
 import de.hdbw.webshop.dto.artwork.EditMyArtworkDTO;
 import de.hdbw.webshop.service.artist.ArtistService;
 import de.hdbw.webshop.service.artwork.artworks.ArtworkService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ public class MyArtworksController {
         this.artworkService = artworkService;
     }
 
+    @Secured({ "ROLE_ARTIST" })
     @GetMapping("/my_artworks")
     public ModelAndView getMyArtworksPage(Authentication authentication) {
         List<ArtworkForListViewDTO> artworksByArtist = artistService.getAllArtworksByArtist(authentication);

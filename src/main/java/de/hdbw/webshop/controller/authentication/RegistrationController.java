@@ -10,6 +10,7 @@ import de.hdbw.webshop.service.session.RedirectHelper;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -86,12 +87,14 @@ public class RegistrationController {
         }
     }
 
+    @Secured({ "ROLE_REGISTERED_USER" })
     @GetMapping("/artist")
     public ModelAndView getArtistRegistrationForm() {
         ArtistRegistrationFormDTO artistRegistrationFormDTO = new ArtistRegistrationFormDTO();
         return new ModelAndView("artist/registrationArtist", "artist", artistRegistrationFormDTO);
     }
 
+    @Secured({ "ROLE_REGISTERED_USER" })
     @PostMapping("/artist")
     public ModelAndView registerNewArtist(@Valid ArtistRegistrationFormDTO artist,
                                           Authentication authentication,
