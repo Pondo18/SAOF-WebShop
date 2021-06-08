@@ -39,7 +39,7 @@ public class UserRegistrationService {
         UserPasswordEntity userPasswordEntity = registerNewUser(userRegistrationFormDTO);
         String email = userRegistrationFormDTO.getEmail();
         String password = userRegistrationFormDTO.getPassword();
-        authenticationService.doAutoLogin(email, password, request, response);
+        authenticationService.doAutoLoginAfterUserRegistration(email, password, request, response);
         return userPasswordEntity.getRegisteredUser().getAllUsers();
     }
 

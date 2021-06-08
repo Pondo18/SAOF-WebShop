@@ -79,7 +79,7 @@ public class RegistrationController {
             String refererUrl = httpServletRequest.getParameter("returnUrl");
             if (refererUrl!=null) {
                 String returnPath = redirectHelper.getRedirectPath(refererUrl);
-                return new ModelAndView("redirect:/"+returnPath);
+                return new ModelAndView("redirect:"+returnPath);
             }
             log.info("Registering new user with email: '" + userRegistrationForm.getEmail() + "'");
             return new ModelAndView("redirect:/artworks");
