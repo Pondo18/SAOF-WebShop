@@ -17,6 +17,7 @@
     <link href="mainpage.css" rel="stylesheet">-->
 </head>
 <body>
+<div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
 <div th:insert="~{nav :: copy}"></div>
 
 <!-- Button trigger modal -->
