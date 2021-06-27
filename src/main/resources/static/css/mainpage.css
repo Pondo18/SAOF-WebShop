@@ -21,12 +21,12 @@ ul li a{
     transition: transform .2s;
 }
 
-.img:hover {
+/*.img:hover {
     transform: scale(1.05);
-}
+}*/
 
 .button {
-    background-color: #4CAF50; /* Green */
+    background-color: #DB3C3C;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -38,13 +38,13 @@ ul li a{
 
 /*footer*/
 
-.footer{
-    position: fixed;
+.footer {
+    position: absolute;
     bottom: 0;
-    width: 100%;
-/* Height of the footer*/
-    height: 60px;
+    left: 0;
     background: black;
+    height: 3em;
+    width:100%;
 }
 
 #footercontent{
@@ -126,4 +126,3 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
-
