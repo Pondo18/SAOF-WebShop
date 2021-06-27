@@ -36,6 +36,18 @@ ul li a{
     font-size: 16px;
 }
 
+.logoutbutton {
+    border: none;
+    color: white;
+    background-color: #CCCCCC;
+    border-radius: 3px;
+}
+
+.logoutbutton:hover {
+    border: none;
+    color: #DB3C3C;
+}
+
 /*footer*/
 
 .footer {
@@ -84,7 +96,7 @@ ul li a{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: #cccccc;
     -webkit-transition: .4s;
     transition: .4s;
 }
