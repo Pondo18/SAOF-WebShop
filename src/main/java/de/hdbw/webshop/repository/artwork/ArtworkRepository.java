@@ -4,7 +4,6 @@ import de.hdbw.webshop.model.artwork.artworks.entity.ArtworkEntity;
 import de.hdbw.webshop.model.users.entity.ArtistEntity;
 import de.hdbw.webshop.model.users.entity.RegisteredUsersEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -14,10 +13,6 @@ import java.util.Optional;
 @Repository
 public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Long> {
     Optional<ArtworkEntity> findByGeneratedArtworkName (String generatedArtworkName);
-
-    @Query("SELECT id FROM ArtworkEntity WHERE generatedArtworkName = ?1")
-    Optional<Long> findArtworkIdByGeneratedArtworkName(String generatedArtworkName);
-
 
     List<ArtworkEntity> findAllByAvailableGreaterThan(int available);
 
