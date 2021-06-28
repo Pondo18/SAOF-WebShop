@@ -19,54 +19,75 @@
 
 <div th:insert="~{nav :: copy}"></div>
 
-<div>
+<div class="SiteTitle">
 <h2 th:text="#{shopping_cart.header.first}"></h2>
 </div>
 <div class="container" th:each="artwork: ${shoppingCart.artworks}" th:attr="onclick=|openArtwork('${artwork.generatedArtworkName}')|">
     <div class="row">
-        <div class="col-md-3">
+        <div id="ewcolstyle1" class="col-md-4">
             <img th:src="${artwork.primaryImageUrl}">
         </div>
-        <div class="col-md-4">
+        <div id="ewcolstyle2" class="col-md-4">
             <span th:text="${artwork.artworkName}"></span>
         </div>
-        <div class="col-md-2">
+        <div id="ewcolstyle3" class="col-md-2">
             <form action="#" th:action="@{/shopping_cart/remove_artwork}" method="post">
                 <input type="hidden" th:value="${artwork.generatedArtworkName}" name="artworkName"/>
-                <button class="del_button" type="submit" th:text="#{shopping_cart.button.delete}"></button>
+                <button class="ewdelbutton" type="submit" th:text="#{shopping_cart.button.delete}"></button>
             </form>
         </div>
-        <div class="col-md-2">
+        <div id="ewcolstyle4" class="col-md-2">
             <span th:text="${artwork.price}"></span><span th:text="#{currency}"></span>
         </div>
     </div>
 </div>
 
-<div class="container">
+<div class="container" style="padding-top: 1rem;">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
         </div>
         <div class="col-md-4">
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2" style="background-color: #cccccc; border-right-style: solid; border-right-color: #757575; -moz-border-radius-bottomleft: 15px; -moz-border-radius-topleft: 15px;">
             <p>
-                <span th:text="#{shopping_cart.sum.before_taxes}"></span> <span th:text="${shoppingCart.sumBeforeTaxes}"></span>
+                <span th:text="#{shopping_cart.sum.before_taxes}"></span>
             </p>
             <p>
                 <span th:text="#{shopping_cart.taxes}"></span>
             </p>
             <p>
-                <span th:text="#{shopping_cart.sum.after_taxes}"></span> <span th:text="${shoppingCart.sumAfterTaxes}">Test Name</span>
+                <span th:text="#{shopping_cart.sum.after_taxes}"></span>
             </p>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2" style="background-color: #cccccc; -moz-border-radius-bottomright: 15px; -moz-border-radius-topright: 15px;">
+            <p>
+                <span th:text="${shoppingCart.sumBeforeTaxes}"></span>
+            </p>
+            <p>
+                <br>
+            </p>
+            <p>
+                <span th:text="${shoppingCart.sumAfterTaxes}">Test Name</span>
+            </p>
         </div>
     </div>
 </div>
 
-<form th:if="${not #lists.isEmpty(shoppingCart.artworks)}" action="#" th:action="@{checkout}" method="post">
-    <button type="submit" th:text="#{shopping_cart.checkout}"></button>
-</form>
+<div class="container" style="padding-top: 1rem;">
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-2" style="align-content: center">
+            <form th:if="${not #lists.isEmpty(shoppingCart.artworks)}" action="#" th:action="@{checkout}" method="post" s>
+                <button class="ewbutton" type="submit" th:text="#{shopping_cart.checkout}"></button>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div th:insert="~{footer :: copy}"></div>
 

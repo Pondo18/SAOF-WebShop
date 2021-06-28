@@ -43,6 +43,17 @@ body {
     font-size: 16px;
 }
 
+.ewbutton {
+    background-color: #DB3C3C;
+    border: none;
+    color: white;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
 .logoutbutton {
     border: none;
     color: white;
@@ -55,6 +66,11 @@ body {
     color: white;
     background-color: #CCCCCC;
     border-radius: 3px;
+}
+
+.ewdelbutton:hover {
+    border: none;
+    color: #DB3C3C;
 }
 
 .logoutbutton:hover {
@@ -93,6 +109,12 @@ body {
     display: inline-block;
     width: 60px;
     height: 34px;
+}
+
+.SiteTitle {
+    text-align: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 
 /* Hide default HTML checkbox */
@@ -148,4 +170,24 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+/* Einkaufswagen EW */
+
+#ewcolstyle1 {
+    border-right-style: solid;
+    border-color: #cccccc;
+    border-width: thin;
+}
+
+#ewcolstyle2 {
+    border-right-style: solid;
+    border-color: #cccccc;
+    border-width: thin;
+}
+
+#ewcolstyle3 {
+    border-right-style: solid;
+    border-right-color: #cccccc;
+    border-width: thin;
 }
