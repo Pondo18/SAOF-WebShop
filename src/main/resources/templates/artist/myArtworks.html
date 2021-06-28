@@ -22,7 +22,7 @@
 <div th:insert="~{nav :: copy}"></div>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary"
+<button type="button" class="button"
         data-bs-toggle="modal" data-bs-target="#addArtworkModal"
         th:text="#{my_artworks.add_artwork}">
 </button>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{modal.close}"></button>
-                    <button type="submit" class="btn btn-primary" th:text="#{my_artworks.modal_add.add}"></button>
+                    <button type="submit" class="button" th:text="#{my_artworks.modal_add.add}"></button>
                 </div>
             </form>
         </div>
