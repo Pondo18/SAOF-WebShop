@@ -68,7 +68,7 @@ public class MediumImageService implements SizedImageService {
 
     @Override
     public Image getDefaultImage() throws Exception {
-        InputStream is = imageHelperService.getResourceFileAsInputStream("static/images/upload_image.jpg");
+        InputStream is = imageHelperService.getResourceFileAsInputStream("static/images/feature_image_red2.png");
         byte[] bdata = FileCopyUtils.copyToByteArray(is);
         MediumSizedImageEntity image = new MediumSizedImageEntity(bdata);
         return image;
