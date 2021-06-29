@@ -18,34 +18,21 @@
 <!-- NAVBAR -->
 <div th:insert="~{nav :: copy}"></div>
 <!-- NAVBAR -->
+<div class="SiteTitle">
+    <h2>Wer sind wir?</h2>
+</div>
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <div class="impressum-style">
-                <h1>Impressum</h1>
-                <hr>
-                <h3>Betreiber der Website</h3>
-                <p>Moritz Meister</p>
-                <h3>Adresse</h3>
-                <p>Impressumsstraße 7, 22222 Impressumsstadt</p>
-                <h3>Vertretung des Unternehmens</h3>
-                <p>--</p>
-                <h3>Kontakt</h3>
-                <p>Telefon: +49 30 123456</p>
-                <p>Fax: +49 30 123456</p>
-                <p>E-Mail: kontakt@max-meister.de</p>
-                <p>Internet: www.max-meister.de</p>
-                <h3>Aufsichtsbehörde</h3>
-                <p>-</p>
-                <h3>Registereintrag</h3>
-                <p>-</p>
-                <h3>Standeskammer</h3>
-                <p>-</p>
-                <h3>Umsatzsteuer-ID</h3>
-                <p>Umsatzsteueridentifikationsnummer gemäß § 27a Umsatzsteuergesetz: DE 63527364839</p>
-                <h3>Liquidation/Auflösung</h3>
-                <p>-</p>
-            </div>
+        <div class="col-md-4">
+            <img th:src="@{/pictures/HDBW.jpg}" id="aboutuspic" alt="HDBW" />
+        </div>
+        <div class="col-md-8">
+            <p>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+                no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+            </p>
         </div>
     </div>
 </div>
