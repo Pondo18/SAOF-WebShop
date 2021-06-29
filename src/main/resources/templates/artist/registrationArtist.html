@@ -21,7 +21,7 @@
         </a>
         <!---->
         <form action="#" th:action="@{/registration/artist}" th:object="${artist}" method="post">
-            <input type="" th:field="*{country}" id="country" class="fadeIn second" name="country" th:placeholder="#{registration_artist.placeholder.country}" required/>
+            <input type="text" th:field="*{country}" id="country" class="fadeIn second" name="country" th:placeholder="#{registration_artist.placeholder.country}" required/>
             <input type="text" th:field="*{domicile}" id="domicile" class="fadeIn second" name="domicile" th:placeholder="#{registration_artist.placeholder.domicile}" required/>
             <input type="submit" class="fadeIn fourth" th:value="#{registration_artist.button.value}" onclick="">
         </form>
