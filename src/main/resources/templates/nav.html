@@ -28,7 +28,7 @@
                 </li>
                 <li class="nav-item">
                     <a th:href="@{/shopping_cart}" class="nav-link" th:text="#{navbar.shopping_cart}"></a>
-
+                </li>
                 <li sec:authorize="isAnonymous()" class="nav-item">
                     <a th:href="@{/login}" class="nav-link" th:text="#{navbar.login}"></a>
                 </li>
@@ -45,7 +45,7 @@
                     <a>
                         <form action="/logout" method="post">
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                            <button type="submit" th:text="#{navbar.logout}"></button>
+                            <button class="logoutbutton" type="submit" th:text="#{navbar.logout}"></button>
                         </form>
                     </a>
                 </li>

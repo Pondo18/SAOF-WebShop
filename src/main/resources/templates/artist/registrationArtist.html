@@ -16,9 +16,9 @@
     <div id="formContent">
         <!-- Tabs Titles -->
         <!-- Icon -->
-        <div class="fadeIn first">
-            <img th:src="@{/pictures/SAOFLogo.svg}" id="icon" alt="Art Icon" />
-        </div>
+        <a href="http://localhost:8080" class="fadeIn first">
+            <img th:src="@{/pictures/SAOFLogo.svg}" id="icon" alt="Art Icon"/>
+        </a>
         <!---->
         <form action="#" th:action="@{/registration/artist}" th:object="${artist}" method="post">
             <input type="" th:field="*{country}" id="country" class="fadeIn second" name="country" th:placeholder="#{registration_artist.placeholder.country}" required/>

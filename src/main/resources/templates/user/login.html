@@ -16,12 +16,10 @@
 
 <div class="wrapper fadeInDown">
   <div id="formContent">
-    <!-- Tabs Titles -->
-
     <!-- Icon -->
-    <div class="fadeIn first">
-      <img th:src="@{/pictures/SAOFLogo.svg}" id="icon" alt="Art Icon" />
-    </div>
+    <a href="http://localhost:8080" class="fadeIn first">
+      <img th:src="@{/pictures/SAOFLogo.svg}" id="icon" alt="Art Icon"/>
+    </a>
     <!-- Login Form -->
     <form th:action="@{/login}" method="post">
       <input type="email" id="username" name="username" autofocus="autofocus" class="fadeIn second" th:placeholder="#{login.placeholder.email}">
@@ -31,14 +29,15 @@
       <input type="submit" th:value="#{login.button.login}" class="fadeIn fourth">
     </form>
 
-    <!-- Remind Password -->
-    <div id="formFooter">
-      <a class="underlineHover" href="#" th:text="#{login.password_forgotten}"></a>
-    </div>
-      <form action="#" th:action="@{/registration/user}" method="get">
+    <div id="formFooter" class="fadeIn fourth">
+      <form th:action="@{/registration/user}" method="get">
+        <button class="underlineHover" href="#" th:text="#{login.password_forgotten}"></button>
         <button class="underlineHover" type="submit" th:text="#{login.registration}"></button>
         <input type="hidden" th:if="${returnUrl!=null}" th:value="${returnUrl}" name="returnUrl"/>
       </form>
+    </div>
+
+
   </div>
 </div>
 </body>

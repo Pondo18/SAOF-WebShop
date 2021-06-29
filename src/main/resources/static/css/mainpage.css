@@ -21,12 +21,19 @@ ul li a{
     transition: transform .2s;
 }
 
-.img:hover {
-    transform: scale(1.05);
+body {
+    position: relative;
+    min-height: 100%;
+    min-height: 100vh;
+    padding-bottom: 3.5rem;
 }
 
+/*.img:hover {
+    transform: scale(1.05);
+}*/
+
 .button {
-    background-color: #4CAF50; /* Green */
+    background-color: #DB3C3C;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -36,15 +43,50 @@ ul li a{
     font-size: 16px;
 }
 
+.ewbutton {
+    background-color: #DB3C3C;
+    border: none;
+    color: white;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.logoutbutton {
+    border: none;
+    color: white;
+    background-color: #CCCCCC;
+    border-radius: 3px;
+}
+
+.ewdelbutton {
+    border: none;
+    color: white;
+    background-color: #CCCCCC;
+    border-radius: 3px;
+}
+
+.ewdelbutton:hover {
+    border: none;
+    color: #DB3C3C;
+}
+
+.logoutbutton:hover {
+    border: none;
+    color: #DB3C3C;
+}
+
 /*footer*/
 
-.footer{
-    position: fixed;
+.footer {
+    position: absolute;
     bottom: 0;
-    width: 100%;
-/* Height of the footer*/
-    height: 60px;
+    left: 0;
     background: black;
+    height: 3em;
+    width:100%;
 }
 
 #footercontent{
@@ -60,9 +102,6 @@ ul li a{
     vertical-align: middle;
 }
 
-/*footer*/
-
-
 /*navbar*/
 /* The switch - the box around the slider */
 .switch {
@@ -70,6 +109,12 @@ ul li a{
     display: inline-block;
     width: 60px;
     height: 34px;
+}
+
+.SiteTitle {
+    text-align: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 
 /* Hide default HTML checkbox */
@@ -87,7 +132,7 @@ ul li a{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: #cccccc;
     -webkit-transition: .4s;
     transition: .4s;
 }
@@ -127,3 +172,22 @@ input:checked + .slider:before {
     border-radius: 50%;
 }
 
+/* Einkaufswagen EW */
+
+#ewcolstyle1 {
+    border-right-style: solid;
+    border-color: #cccccc;
+    border-width: thin;
+}
+
+#ewcolstyle2 {
+    border-right-style: solid;
+    border-color: #cccccc;
+    border-width: thin;
+}
+
+#ewcolstyle3 {
+    border-right-style: solid;
+    border-right-color: #cccccc;
+    border-width: thin;
+}
