@@ -196,3 +196,10 @@ input:checked + .slider:before {
     border-right-color: #cccccc;
     border-width: thin;
 }
+
+
+.prev_upload {
+    width: 3rem;
+    height: 3rem;
+
+}
