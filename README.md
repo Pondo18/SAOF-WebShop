@@ -9,28 +9,26 @@ To project was created, due to a project work during our studies at the [HDBW](h
 
 ## Deployment
 
+### TODO
+- The .env file needs to be changed if necessary
+
 ### Docker
 
-There is a [docker-compose.yml](docker-compose.yml) located in the root dir.
+There is a [docker-compose.yml](docker-compose.yml) located in the root dir, whicbh builds and deploys spring application and postgreSQL DB.
 ```shell
 docker-compose build 
 docker-compose up 
 ``` 
 
-### TODO
-The application.properties need to be modified as follows:
-```properties
-spring.datasource.url=<DB_URL>
-spring.datasource.username=<DB_USER>
-spring.datasource.password=<DB_PWD>
-```
+### Initial Data
+There is some Initial DB Data included in the [initial_data](initial_data) directory, which may be imported. It contains some dummy data
 
 * * *
 
 ## Implementation
 The application is implemented via the Spring Boot Framework.
 
-## Database 
+## Database
 In development a PostgreSQL DB was used.
 
 ![use_case](src/main/resources/public/readme/db_architecture.png)
@@ -40,10 +38,10 @@ In development a PostgreSQL DB was used.
 
 ![use_case](src/main/resources/public/readme/use_case_diagram.png)
 
-For managing the authentication and user roles Spring Security comes in place. 
-There are multiple roles: 
-- Anonymous user: When due to an interaction with the server the user has to be keep track of, an anonymous user gets created. 
-This interaction may be adding an artwork to the shopping cart. The anonymous user is associated with a session_id, which gets automatically created.
+For managing the authentication and user roles Spring Security comes in place.
+There are multiple roles:
+- Anonymous user: When due to an interaction with the server the user has to be keep track of, an anonymous user gets created.
+  This interaction may be adding an artwork to the shopping cart. The anonymous user is associated with a session_id, which gets automatically created.
 - Registered user: When registering a registered user gets created. This enables the customer to check out his shopping cart.
 - Artist: A registered user is able to register as an artist. An artist may create own artworks, which are later on visible in the list of artworks.
 
