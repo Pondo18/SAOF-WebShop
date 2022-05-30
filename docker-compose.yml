@@ -1,8 +1,19 @@
 version: '3.5'
 
 services:
-  postgres:
-    container_name: postgres_container
+  web_webshop:
+    build:
+      context: .
+    depends_on:
+      - postgres_webshop
+    environment:
+      POSTGRES_URL: ${POSTGRES_URL:-jdbc:postgresql://postgres_webshop:5432/postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-root}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pass}
+    ports:
+      - "8080:8080"
+
+  postgres_webshop:
     image: postgres
     environment:
       POSTGRES_DB: webshop
@@ -10,16 +21,11 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pass}
       PGDATA: /data/postgres
     volumes:
-       - postgres:/data/postgres
+      - postgres:/data/postgres
     ports:
       - "5432:5432"
-    networks:
-      - postgres
     restart: unless-stopped
 
-networks:
-  postgres:
-    driver: bridge
 
 volumes:
-    postgres:
+  postgres:
