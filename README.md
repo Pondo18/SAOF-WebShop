@@ -62,3 +62,4 @@ The project is currently in an early version. We are planning on continuously im
 - [Dennis Hug](https://github.com/hugson-d)
 - [Leo Schuhmann](https://github.com/LeoSchuhmann)
 - [Felix Erhardt]()
+- [Moritz Moser](https://github.com/Pondo18)
